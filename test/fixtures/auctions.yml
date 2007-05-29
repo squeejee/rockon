@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 5
+#
+# Table name: auctions
+#
+#  id            :integer(11)   not null, primary key
+#  nfl_player_id :integer(6)    
+#  week_no       :integer(11)   
+#  updated_at    :datetime      
+#  created_at    :datetime      
+#  expiration    :datetime      
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1

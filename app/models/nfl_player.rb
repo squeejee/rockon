@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 5
+#
+# Table name: nfl_players
+#
+#  id          :integer(11)   not null, primary key
+#  last_name   :string(50)    
+#  first_name  :string(50)    
+#  position_id :integer(6)    
+#  nfl_team_id :integer(11)   
+#
+
 class NflPlayer < ActiveRecord::Base
   has_many :auctions
   belongs_to :fantasy_player

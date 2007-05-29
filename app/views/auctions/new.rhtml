@@ -18,7 +18,7 @@
   
   <p>
   <span id="dd_players">
-    <%= render :partial => "nfl_players", :locals => { :position_id => 1 } %>
+    <%= render :partial => "nfl_players" %>
   </span>
   </p>
   
@@ -31,7 +31,7 @@
   
   <div>
     <%=
-      text_field(:bid, :price)
+      text_field(:bid, :max_price)
     %>
   </div>
   

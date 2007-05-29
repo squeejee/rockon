@@ -2,8 +2,7 @@ class BidsController < ApplicationController
   # GET /bids
   # GET /bids.xml
   def index
-    @auction = Auction.find(params[:auction_id], 
-            :include => :nfl_player)   
+    @auction = Auction.find(params[:auction_id], :include => :nfl_player)   
              
     @bids = Bid.find(:all, :conditions => {:auction_id => params[:auction_id]}, 
             :include => [:nfl_player, :user],
@@ -28,6 +27,7 @@ class BidsController < ApplicationController
 
   # GET /bids/new
   def new
+    @auction = Auction.find(params[:auction_id], :include => :nfl_player)
     @bid = Bid.new
   end
 
@@ -40,11 +40,28 @@ class BidsController < ApplicationController
   # POST /bids.xml
   def create
     @bid = Bid.new(params[:bid])
+    @auction = Auction.find(params[:auction_id], :include => :nfl_player)
+    @bid.auction_id = @auction.id
+    @bid.user_id = current_user
 
+    @top_bid = @auction.bids.find_top_bidder()
+    
+    @existing_bid = Bid.new(:auction_id => @top_bid.auction_id, :user_id => @top_bid.user_id, 
+                       :nfl_player_id => @top_bid.nfl_player_id, :price => @bid.max_price,
+                       :max_price => @top_bid.max_price)
+   
+    if @top_bid.max_price >= @bid.max_price
+      @bid.price = @bid.max_price
+      @existing_bid.price = @bid.max_price + 1
+    else
+      @bid.price = @top_bid.max_price + 1
+      @existing_bid.price = @top_bid.max_price
+    end
+    
     respond_to do |format|
-      if @bid.save
+      if @bid.save and @existing_bid.save
         flash[:notice] = 'Bid was successfully created.'
-        format.html { redirect_to bid_url(@bid) }
+        format.html { redirect_to auction_url(@auction) + "/bids" }
         format.xml  { head :created, :location => bid_url(@bid) }
       else
         format.html { render :action => "new" }

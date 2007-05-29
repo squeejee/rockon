@@ -8,7 +8,7 @@ class AuctionsController < ApplicationController
   
   def index
     @auctions = Auction.find(:all, :conditions => "expiration > now()", :include => [ :nfl_player, :bids] )
-        
+    
     respond_to do |format|
       format.html # index.rhtml
       format.xml  { render :xml => @auctions.to_xml }
@@ -47,12 +47,13 @@ class AuctionsController < ApplicationController
     @bid.user_id = current_user
     
     respond_to do |format|
-      if request.post? and @auction.save and @bid.save
+      if request.post? and @auction.save
         @bid.auction_id = @auction.id
+        @bid.price = 1
         
         if @bid.save
           flash[:notice] = 'Auction was successfully created.'
-          format.html { redirect_to auction_url(@auction) }
+          format.html { redirect_to auction_url(@auction) + "/bids" }
           format.xml  { head :created, :location => auction_url(@auction) }
         else
           format.html { render :action => "new" }

@@ -2,12 +2,24 @@
 
 <table>
   <tr>
+    <td>Player</td>
+    <td>Position</td>
+    <td>Current Bid</td>
+    <td>Top Bidder</td>
   </tr>
   
-<% for auction in @auctions %>
+<% 
+  for auction in @auctions 
+    
+    #We use the following instead of "maximum()" in case two users have the same top bid.
+    #In this case, the first bid entered takes priority.
+    top_bidder = auction.bids.find_top_bidder()
+%>
   <tr>
-    <td><%= auction.nfl_player.first_name %> <%= auction.nfl_player.last_name %></td>
-    <td><%= auction.bids.maximum('price') %> </td>
+    <td><%= auction.nfl_player.display_name %></td>
+    <td><%= auction.nfl_player.position.position_code %></td>
+    <td><%= number_to_currency(top_bidder.price) %></td>
+    <td><%= top_bidder.user.team_name %></td>
     <td><%= link_to 'Show', auction_path(auction) + "/bids" %></td>
     <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
     <td><%= link_to 'Destroy', auction_path(auction), :confirm => 'Are you sure?', :method => :delete %></td>

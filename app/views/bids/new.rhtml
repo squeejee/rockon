@@ -1,8 +1,24 @@
-<h1>New bid</h1>
+<h1>Place a bid for <%= @auction.nfl_player.display_name %></h1>
+The current top bid is <%= number_to_currency(@auction.bids.find_top_bidder().price)%>.
+<br />
 
 <%= error_messages_for :bid %>
 
 <% form_for(:bid, :url => bids_path) do |f| %>
+  
+  <div>
+  <%=
+  @fantasy_players = NflPlayer.find_by_user_id(current_user)
+  collection_select(:bid, :nfl_player_id, @fantasy_players, :id, :display_name, options ={:prompt => "--Select a player to drop--"} )
+  %>
+  </div>
+  
+  <div>
+    <%=
+      text_field(:bid, :max_price)
+    %>
+  </div>
+  
   <p>
     <%= submit_tag "Create" %>
   </p>

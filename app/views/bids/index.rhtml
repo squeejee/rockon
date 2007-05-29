@@ -10,7 +10,7 @@
 <% for bid in @bids %>
   <tr>
     <td><%= bid.user.team_name %></td>
-    <td><%= bid.price %></td>
+    <td><%= number_to_currency(bid.price) %></td>
     <td><%= bid.nfl_player.display_name %></td>
     <td><%= link_to 'Show', bid_path(bid.auction, bid) %></td>
     <td><%= link_to 'Edit', edit_bid_path(bid.auction, bid) %></td>
