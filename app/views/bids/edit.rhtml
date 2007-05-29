@@ -1,0 +1,12 @@
+<h1>Editing bid</h1>
+
+<%= error_messages_for :bid %>
+
+<% form_for(:bid, :url => bid_path(@bid), :html => { :method => :put }) do |f| %>
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', bid_path(@bid) %> |
+<%= link_to 'Back', bids_path %>

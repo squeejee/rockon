@@ -1,0 +1,5 @@
+<ul class="nfl_players">
+<% for nfl_player in @nfl_players do %>
+  <li class="nfl_player"><div class="name"><%= nfl_player.display_name %></div><div class="name"><span class="informal"><%= nfl_player.position.position_code %> - <%= nfl_player.nfl_team.nfl_team_name %></span></div></li>
+<% end %>
+</ul>

@@ -1,0 +1,15 @@
+<h1><%= @auction.nfl_player.display_name%></h1>
+
+<%
+  for bid in @auction.bids.find(:all, :conditions => ["nfl_players.id is not null"], :include => :nfl_player, :order => ["bids.price desc"]) %>
+
+  <div id="auction_bids">
+  <%= bid.price %>: <%= bid.nfl_player.first_name %> <%= bid.nfl_player.last_name %>  <%= bid.updated_at %>
+  </div>
+  
+<% 
+  end 
+%>
+
+<%= link_to 'Edit', edit_auction_path(@auction) %> |
+<%= link_to 'Back', auctions_path %>

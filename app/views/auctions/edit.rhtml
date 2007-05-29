@@ -1,0 +1,12 @@
+<h1>Editing auction</h1>
+
+<%= error_messages_for :auction %>
+
+<% form_for(:auction, :url => auction_path(@auction), :html => { :method => :put }) do |f| %>
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', auction_path(@auction) %> |
+<%= link_to 'Back', auctions_path %>

@@ -1,0 +1,43 @@
+<h1>New auction</h1>
+
+<%= error_messages_for :auction %>
+
+<% form_for(:auction, :url => auctions_path) do |f| %>
+
+  <p>
+  <span id="dd_positions">
+    <%= 
+    collection_select(:position, :id, @positions, :id, :position_code, options ={:prompt => "--Filter by position--"},
+    html_options=
+    {:onChange => "new Ajax.Updater('dd_players','/auctions/position_changed/' + this[this.selectedIndex].value,
+        {asynchronous:true, evalScripts:true});"
+    }
+    ) %>
+  </span>
+  </p>
+  
+  <p>
+  <span id="dd_players">
+    <%= render :partial => "nfl_players", :locals => { :position_id => 1 } %>
+  </span>
+  </p>
+  
+  <div>
+  <%=
+  @fantasy_players = NflPlayer.find_by_user_id(current_user)
+  collection_select(:bid, :nfl_player_id, @fantasy_players, :id, :display_name, options ={:prompt => "--Select a player to drop--"} )
+  %>
+  </div>
+  
+  <div>
+    <%=
+      text_field(:bid, :price)
+    %>
+  </div>
+  
+  <p>
+    <%= submit_tag "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', auctions_path %>

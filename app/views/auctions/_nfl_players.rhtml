@@ -1,0 +1,4 @@
+<%= 
+@nfl_players = NflPlayer.find_by_position_id(position_id)
+collection_select(:auction, :nfl_player_id, @nfl_players, :id, :display_name, options ={:prompt => "--Select a player--"} ) 
+%>

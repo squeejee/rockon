@@ -1,0 +1,11 @@
+<h1>New bid</h1>
+
+<%= error_messages_for :bid %>
+
+<% form_for(:bid, :url => bids_path) do |f| %>
+  <p>
+    <%= submit_tag "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', bids_path %>
