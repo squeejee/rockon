@@ -1,6 +1,7 @@
 <h1>New auction</h1>
 
 <%= error_messages_for :auction %>
+<%= error_messages_for :bid %>
 
 <% form_for(:auction, :url => auctions_path) do |f| %>
 
@@ -28,7 +29,9 @@
   
   <div>
     <%=
-      text_field(:bid, :max_price)
+      detail_text_field(:bid, :max_price, "Maximum Bid Price", 
+      "This is your maximum bid amount NOT your initial bid.  Your initial bid will always be 
+      incremented by $1 until you reach your max bid.", options = {"size" => 1})
     %>
   </div>
   

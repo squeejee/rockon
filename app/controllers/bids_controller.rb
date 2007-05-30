@@ -52,13 +52,15 @@ class BidsController < ApplicationController
     @existing_bid = Bid.new(:auction_id => @top_bid.auction_id, :user_id => @top_bid.user_id, 
                        :nfl_player_id => @top_bid.nfl_player_id, :price => @bid.max_price,
                        :max_price => @top_bid.max_price)
-   
-    if @top_bid.max_price >= @bid.max_price
-      @bid.price = @bid.max_price
-      @existing_bid.price = @bid.max_price + 1
-    else
-      @bid.price = @top_bid.max_price + 1
-      @existing_bid.price = @top_bid.max_price
+
+    unless @bid.max_price.nil?
+      if @top_bid.max_price >= @bid.max_price
+        @bid.price = @bid.max_price
+        @existing_bid.price = @bid.max_price + 1
+      else
+        @bid.price = @top_bid.max_price + 1
+        @existing_bid.price = @top_bid.max_price
+      end
     end
     
     respond_to do |format|

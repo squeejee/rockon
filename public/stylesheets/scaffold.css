@@ -72,3 +72,24 @@ div.progressBar div.background {
   width: 0%;
 }
 
+label {
+  display: block;
+  padding-bottom: 4px;
+  font-weight: bold;
+  color: #666;
+}
+
+input {
+	font-size: 115%;
+	padding: 2px;
+}
+
+.field {
+	margin-bottom: 10px;
+}
+
+.helptext {
+	font-size: 90%;
+	color: #999;
+	font-style: italic;
+}

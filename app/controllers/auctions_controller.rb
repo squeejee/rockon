@@ -42,6 +42,7 @@ class AuctionsController < ApplicationController
   # POST /auctions.xml
   def create
     @auction = Auction.new(params[:auction])
+    @positions = Position.find(:all, :order => 'position_order')
 
     @bid = Bid.new(params[:bid])
     @bid.user_id = current_user
@@ -60,7 +61,7 @@ class AuctionsController < ApplicationController
           format.xml  { render :xml => @auction.errors.to_xml }
         end
         
-      else
+      else        
         format.html { render :action => "new" }
         format.xml  { render :xml => @auction.errors.to_xml }
       end

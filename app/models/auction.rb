@@ -16,6 +16,6 @@ class Auction < ActiveRecord::Base
   belongs_to :user
   belongs_to :nfl_player  
   
-  validates_presence_of :nfl_player_id, :on => :create, :message => "A player must be selected!"
-      
+  validates_presence_of :nfl_player_id, :on => :save, :message => "must be selected!"
+  validates_associated :bids, :on => :save      
 end
