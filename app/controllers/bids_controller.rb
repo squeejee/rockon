@@ -1,6 +1,9 @@
 class BidsController < ApplicationController
   # GET /bids
   # GET /bids.xml
+  
+  helper :auctions
+  
   def index
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)   
              

@@ -23,10 +23,7 @@
   </p>
   
   <div>
-  <%=
-  @fantasy_players = NflPlayer.find_by_user_id(current_user)
-  collection_select(:bid, :nfl_player_id, @fantasy_players, :id, :display_name, options ={:prompt => "--Select a player to drop--"} )
-  %>
+  <%= display_drop_player_dropdown(current_user) %>
   </div>
   
   <div>
