@@ -2,6 +2,8 @@ class BidsController < ApplicationController
   # GET /bids
   # GET /bids.xml
   
+  require 'date'
+  
   helper :auctions
   
   def index

@@ -1,5 +1,7 @@
 <h1><%= @auction.nfl_player.display_name %></h1>
 
+This auction will expire in <%=distance_of_time_in_words_to_now(@auction.expiration, true)%>.
+
 <table>
   <tr>
     <td>Bidding Team</td>

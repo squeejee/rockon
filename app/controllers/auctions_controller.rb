@@ -2,6 +2,9 @@ class AuctionsController < ApplicationController
   # GET /auctions
   # GET /auctions.xml
   
+  #chronic is a gem that allows us to do some cool stuff with dates and times.
+  require 'chronic'
+  
   before_filter :login_required
   
   auto_complete_for :nfl_player, :first_name
@@ -44,6 +47,9 @@ class AuctionsController < ApplicationController
     @auction = Auction.new(params[:auction])
     @positions = Position.find(:all, :order => 'position_order')
 
+    @auction.expiration = Chronic.parse('this wednesday 10:00 pm')
+    @auction.week_no = League.current_week
+    
     @bid = Bid.new(params[:bid])
     @bid.user_id = current_user
     
