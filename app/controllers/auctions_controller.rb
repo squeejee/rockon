@@ -10,7 +10,7 @@ class AuctionsController < ApplicationController
   auto_complete_for :nfl_player, :first_name
   
   def index
-    @auctions = Auction.find(:all, :conditions => "expiration > now()", :include => [ :nfl_player, :bids] )
+    @auctions = Auction.find(:all, :conditions => "expiration > '2007-08-01'", :include => [{:nfl_player=>:position}, :bids], :order => "auctions.week_no desc, positions.position_order asc" )
     
     respond_to do |format|
       format.html # index.rhtml
