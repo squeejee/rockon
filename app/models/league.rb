@@ -11,6 +11,16 @@ class League < ActiveRecord::Base
     nfl_start_week = get_week(league.first_week_date)  
   end
   
+  def self.bid_end_day
+    league = League.find :first
+    return league.bid_end_day
+  end
+
+  def self.bid_end_time
+    league = League.find :first
+    return league.bid_end_time
+  end
+  
   def self.current_week    
     current_date = Time.now
     

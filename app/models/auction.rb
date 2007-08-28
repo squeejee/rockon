@@ -18,4 +18,15 @@ class Auction < ActiveRecord::Base
   
   validates_presence_of :nfl_player_id, :on => :save, :message => "must be selected!"
   validates_associated :bids, :on => :save      
+  
+  def active?
+    if League.current_week == week_no && Time.now.wday < League.bid_end_day 
+      return true
+    elsif League.current_week == week_no && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
+      return true
+    else
+      return false
+    end
+  end
+  
 end

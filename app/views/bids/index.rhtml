@@ -1,6 +1,6 @@
 <h1><%= @auction.nfl_player.display_name %></h1>
 
-This auction will expire in <%=distance_of_time_in_words_to_now(@auction.expiration, true)%>.
+<%="This auction will expire in #{distance_of_time_in_words_to_now(@auction.expiration, true)}." if @auction.expiration > Time.now%>
 
 <table>
   <tr>
@@ -23,4 +23,4 @@ This auction will expire in <%=distance_of_time_in_words_to_now(@auction.expirat
 
 <br />
 
-<%= link_to 'New bid', new_bid_path %>
+<%= link_to 'New bid', new_bid_path if @auction.active? %>

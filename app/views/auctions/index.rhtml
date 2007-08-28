@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <td>Week</td>
     <td>Player</td>
     <td>Position</td>
     <td>Current Bid</td>
@@ -16,12 +17,13 @@
     top_bidder = auction.bids.find_top_bidder()
 %>
   <tr>
+    <td><%= auction.week_no %></td>
     <td><%= auction.nfl_player.display_name %></td>
     <td><%= auction.nfl_player.position.position_code %></td>
     <td><%= number_to_currency(top_bidder.price) %></td>
     <td><%= top_bidder.user.team_name %></td>
     <td><%= link_to 'Bid History', auction_path(auction) + "/bids" %></td>
-    <td><%= link_to 'New bid', new_bid_path(auction) %></td>
+    <td><%= link_to 'New bid', new_bid_path(auction) if auction.active? %></td>
     <td><%= link_to 'Remove Auction', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.bids.count == 1%></td>
   </tr>
 <% end %>
