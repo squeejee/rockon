@@ -57,28 +57,35 @@ class BidsController < ApplicationController
     @top_bid = @auction.bids.find_top_bidder()
     
     @existing_bid = Bid.new(:auction_id => @top_bid.auction_id, :user_id => @top_bid.user_id, 
-                       :nfl_player_id => @top_bid.nfl_player_id, :price => @bid.max_price,
+                       :nfl_player_id => @top_bid.nfl_player_id, :price => @bid.price,
                        :max_price => @top_bid.max_price)
 
     unless @bid.max_price.nil?
-      if @top_bid.max_price >= @bid.max_price
+      if @bid.max_price <= @top_bid.price   
+        winning_bidder = false       
+      elsif @bid.max_price == @top_bid.max_price  
+        winning_bidder = false
+        @bid.price = @bid.max_price - 1
+        @existing_bid.price = @bid.max_price
+        @bid.save and @existing_bid.save
+      elsif @bid.max_price < @top_bid.max_price  
+        winning_bidder = false
         @bid.price = @bid.max_price
         @existing_bid.price = @bid.max_price + 1
-      else
+        @bid.save and @existing_bid.save
+      else  
+        winning_bidder = true
         @bid.price = @top_bid.max_price + 1
         @existing_bid.price = @top_bid.max_price
+        @bid.save
       end
     end
     
-    respond_to do |format|
-      if @bid.save and @existing_bid.save
-        flash[:notice] = 'Bid was successfully created.'
-        format.html { redirect_to auction_url(@auction) + "/bids" }
-        format.xml  { head :created, :location => bid_url(@bid) }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @bid.errors.to_xml }
-      end
+    respond_to do |format|      
+      flash[:notice] = "Congratulations!  You are now the top bidder!" if winning_bidder
+      flash[:notice] = "Whoops!  You are going to have to bid higher than $#{@bid.max_price}!" if !winning_bidder
+      format.html { redirect_to auction_url(@auction) + "/bids" }
+      format.xml  { head :created, :location => bid_url(@bid) }
     end
   end
 

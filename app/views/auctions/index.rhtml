@@ -23,7 +23,7 @@
     <td><%= number_to_currency(top_bidder.price) %></td>
     <td><%= top_bidder.user.team_name %></td>
     <td><%= link_to 'Bid History', auction_path(auction) + "/bids" %></td>
-    <td><%= link_to 'New bid', new_bid_path(auction) if auction.active? %></td>
+    <td><%= link_to top_bidder.user.id == current_user ? 'Edit Bid' : 'New bid', new_bid_path(auction) if auction.active? %></td>
     <td><%= link_to 'Remove Auction', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.bids.count == 1%></td>
   </tr>
 <% end %>
@@ -31,4 +31,4 @@
 
 <br />
 
-<%= link_to 'Start An Auction For A New Player', new_auction_path %>
+<%= link_to 'Start An Auction For A New Player', new_auction_path if League.active?%>

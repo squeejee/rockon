@@ -30,10 +30,15 @@ class AuctionsController < ApplicationController
   end
 
   # GET /auctions/new
-  def new
-    @auction = Auction.new
-    @nfl_players = NflPlayer.find_by_position_id(1)
-    @positions = Position.find(:all, :order => 'position_order')
+  def new  
+    if League.active?
+      @auction = Auction.new
+      @nfl_players = NflPlayer.find_by_position_id(1)
+      @positions = Position.find(:all, :order => 'position_order')
+    else      
+        flash[:error] = "Sorry, Buddy!  No more auctions for the season!!"
+        redirect_to auctions_url
+    end
   end
 
   # GET /auctions/1;edit

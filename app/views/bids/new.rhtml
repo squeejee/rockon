@@ -12,7 +12,9 @@ The current top bid is <%= number_to_currency(@auction.bids.find_top_bidder().pr
   
   <div>
     <%=
-      text_field(:bid, :max_price)
+      detail_text_field(:bid, :max_price, "Maximum Bid Price", 
+      "This is your maximum bid amount NOT your initial bid.  Your initial bid will always be 
+      incremented by $1 until you reach your max bid.", options = {"size" => 1})
     %>
   </div>
   

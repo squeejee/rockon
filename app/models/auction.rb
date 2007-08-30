@@ -20,13 +20,12 @@ class Auction < ActiveRecord::Base
   validates_associated :bids, :on => :save      
   
   def active?
-    if League.current_week == week_no && Time.now.wday < League.bid_end_day 
+    if League.active? && League.current_week == week_no && Time.now.wday < League.bid_end_day 
       return true
-    elsif League.current_week == week_no && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
+    elsif League.active? && League.current_week == week_no && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
       return true
     else
       return false
     end
-  end
-  
+  end  
 end

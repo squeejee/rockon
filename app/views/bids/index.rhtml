@@ -23,4 +23,5 @@
 
 <br />
 
-<%= link_to 'New bid', new_bid_path if @auction.active? %>
+<% top_bidder = @auction.bids.find_top_bidder() %>
+<%= link_to top_bidder.user.id == current_user ? 'Edit Bid' : 'New bid', new_bid_path if @auction.active? %>

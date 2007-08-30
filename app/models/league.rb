@@ -20,7 +20,12 @@ class League < ActiveRecord::Base
     league = League.find :first
     return league.bid_end_time
   end
-  
+
+  def self.last_bid_week
+    league = League.find :first
+    return league.last_bid_week
+  end
+    
   def self.current_week    
     current_date = Time.now
     
@@ -36,6 +41,10 @@ class League < ActiveRecord::Base
       nfl_week_no
     end
   end  
+  
+  def self.active?    
+      self.current_week <= League.last_bid_week
+  end
   
   def self.get_week(date)    
     new_date = Date.new(date.year, date.month, date.day)

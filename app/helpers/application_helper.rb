@@ -24,4 +24,7 @@ module ApplicationHelper
                      }
   end
   
+  def display_bid_link()
+    render :inline => "<%=link_to bid.top_bidder.user.id == current_user ? 'Edit Bid' : 'New bid', new_bid_path(@auction) if @auction.active? %>"
+  end
 end
