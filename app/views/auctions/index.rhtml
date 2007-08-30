@@ -1,12 +1,15 @@
 <h1>Current Auctions</h1>
 
-<table>
+<table class="grid" cellspacing="0" cellpadding="0">
   <tr>
-    <td>Week</td>
-    <td>Player</td>
-    <td>Position</td>
-    <td>Current Bid</td>
-    <td>Top Bidder</td>
+    <th>Week</th>
+    <th>Player</th>
+    <th>Position</th>
+    <th>Current Bid</th>
+    <th>Top Bidder</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
   
 <% 
@@ -24,11 +27,11 @@
     <td><%= top_bidder.user.team_name %></td>
     <td><%= link_to 'Bid History', auction_path(auction) + "/bids" %></td>
     <td><%= link_to top_bidder.user.id == current_user ? 'Edit Bid' : 'New bid', new_bid_path(auction) if auction.active? %></td>
-    <td><%= link_to 'Remove Auction', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.bids.count == 1%></td>
+    <td><%= link_to 'Remove Auction', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.bids.count == 1 && top_bidder.user.id == current_user && auction.active? %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'Start An Auction For A New Player', new_auction_path if League.active?%>
+<%= link_to 'Start An Auction For A New Player', new_auction_path if Auction.active?%>

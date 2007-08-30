@@ -69,15 +69,23 @@ class User < ActiveRecord::Base
   def remember_me
     self.remember_token_expires_at = 2.weeks.from_now.utc
     self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(false)
+    save(true)
   end
 
   def forget_me
     self.remember_token_expires_at = nil
     self.remember_token            = nil
-    save(false)
+    save(true)
   end
-
+  
+  def full_name
+    unless first_name.nil? || last_name.nil? || first_name.empty? || last_name.empty?
+      "#{first_name} #{last_name}"
+    else
+      login
+    end
+  end
+  
   protected
     # before filter 
     def encrypt_password

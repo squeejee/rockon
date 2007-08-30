@@ -27,4 +27,61 @@ module ApplicationHelper
   def display_bid_link()
     render :inline => "<%=link_to bid.top_bidder.user.id == current_user ? 'Edit Bid' : 'New bid', new_bid_path(@auction) if @auction.active? %>"
   end
+    
+  def breadcrumbs
+    r = []
+    r << link_to("Home", "/")
+    url = request.path.split(';')
+    segments = url[0].split('/') 
+    segments << url[1].humanize unless url[1].nil?
+    segments.shift
+    
+    #segments.delete_if {|s| %w(users stores).include?(s); segments.delete}
+    
+    segments.each_with_index do |segment, i|   
+          
+      if logged_in?                        
+          case segments[i]
+           when "stores"
+             next
+           when "users"
+             next 
+            when "memberships"
+              if !current_user.store_owner?
+                next
+              end
+          end
+            
+          if segment.to_i > 0               
+            
+            case segments[i-1]
+              when "memberships"
+                segment = @membership.user.full_name
+              when "stores"
+                if !current_user.store_owner?
+                  next
+                else
+                  segment = @store.name
+                end
+              when "users"
+                segment = @user.full_name
+             end            
+          end
+       else                             
+           case segments[i-1]
+             when "pickup"
+               next
+           end
+       end
+            
+      title = segment.gsub(/-/, ' ').titleize
+      r << link_to_unless_current(title, "/" + 
+           (0..(i)).collect{|seg| segments[seg]}.join("/"))
+           
+    end
+
+    return content_tag("div", r.join(" &raquo; "), :id => "breadcrumbs") if r.length > 1
+           
+  end   
+
 end

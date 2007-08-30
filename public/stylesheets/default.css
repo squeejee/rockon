@@ -34,11 +34,12 @@ body {
 #header {
   height: 75px;
   padding-top: 5px;
+  background: #000 top left no-repeat;
 }
 
 #breadcrumbs {
-  margin: 10px 0px 0px 0px;
-  background: url(/images/breadcrumbs_back.gif) top left no-repeat;
+  margin: 0px 0px 0px 0px;
+  background: #000 url(/images/breadcrumbs_back.png) top left no-repeat;
   padding: 18px 5px 20px 20px;
   color: #fff;
 }
@@ -52,7 +53,8 @@ a#home {
 	display: block;
 	width: 150px;
 	height: 75px;
-	background: url(/images/wildfire_logo.png) top center no-repeat;
+	background: url(/images/rockon_logo.jpg) top center no-repeat;
+  	margin-top: -25px;
 }
 
 #site-name {
@@ -137,6 +139,8 @@ ul#nav-links li {
   float: right;
   margin: 30px 20px 0px 0px ;
   font-size: 110%;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 ul#nav-links li a {
@@ -292,7 +296,7 @@ div.toolbar {
 table.grid {
   font-size: 95%;
   margin-top: 20px;
-  width: 80%;
+  width: 90%;
   border: solid 1px #d5d5d5;
 }
 

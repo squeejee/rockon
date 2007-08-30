@@ -2,11 +2,11 @@
 
 <%="This auction will expire in #{distance_of_time_in_words_to_now(@auction.expiration, true)}." if @auction.expiration > Time.now%>
 
-<table>
+<table class="grid" cellspacing="0" cellpadding="0">
   <tr>
-    <td>Bidding Team</td>
-    <td>Bid Amount</td>
-    <td>Dropped Player</td>
+    <th>Bidding Team</th>
+    <th>Bid Amount</th>
+    <th>Dropped Player</th>
   </tr>
   
 <% for bid in @bids %>
@@ -14,9 +14,6 @@
     <td><%= bid.user.team_name %></td>
     <td><%= number_to_currency(bid.price) %></td>
     <td><%= bid.nfl_player.display_name %></td>
-    <td><%= link_to 'Show', bid_path(bid.auction, bid) %></td>
-    <td><%= link_to 'Edit', edit_bid_path(bid.auction, bid) %></td>
-    <td><%= link_to 'Destroy', bid_path(bid.auction, bid), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

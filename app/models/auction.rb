@@ -19,6 +19,7 @@ class Auction < ActiveRecord::Base
   validates_presence_of :nfl_player_id, :on => :save, :message => "must be selected!"
   validates_associated :bids, :on => :save      
   
+  #This is to determine if a specific auction is active
   def active?
     if League.active? && League.current_week == week_no && Time.now.wday < League.bid_end_day 
       return true
@@ -28,4 +29,15 @@ class Auction < ActiveRecord::Base
       return false
     end
   end  
+  
+  #This is created to determine if auctions are still active for the week in general.
+  def self.active?
+    if League.active? && Time.now.wday < League.bid_end_day 
+      return true
+    elsif League.active? && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
+      return true
+    else
+      return false
+    end    
+  end
 end
