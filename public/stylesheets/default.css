@@ -132,7 +132,8 @@ div#top-nav ul li {
 
 
 ul#nav-links {
-	clear: both;
+  clear: both;	
+  list-style: none;
 }
 
 ul#nav-links li {
@@ -154,7 +155,7 @@ ul#footer-links {
 }
 
 ul#footer-links li {
-	display: inline;
+  display: inline;
   margin: 10px 10px 0px 10px;
 }
 
