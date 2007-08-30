@@ -1,0 +1,618 @@
+/*
+red: #d4392a
+dark red: #a51d2f
+orange: #f4a02e
+*/
+
+body { 
+  background: #efefef url(/images/body_back_n.png) center top repeat-y;
+  color: #333; 
+  margin: 0 auto;
+  font-family: "Lucida Grande", Arial,Verdana,sans-serif;
+  font-size: 13px;
+	line-height: 1.4em;
+}
+
+#wrapper {
+	background: #fff;
+  width: 770px;
+  margin: 0 auto;
+}
+
+#content {
+  min-height: 450px;
+}
+
+#content > * {
+	margin-left: 10px;
+}
+
+#content > p {
+	margin-right: 10px;
+}
+
+#header {
+  height: 75px;
+  padding-top: 5px;
+}
+
+#breadcrumbs {
+  margin: 10px 0px 0px 0px;
+  background: url(/images/breadcrumbs_back.gif) top left no-repeat;
+  padding: 18px 5px 20px 20px;
+  color: #fff;
+}
+
+#breadcrumbs a {
+  color: #fff;
+  padding: 2px;
+}
+
+a#home {
+	display: block;
+	width: 150px;
+	height: 75px;
+	background: url(/images/wildfire_logo.png) top center no-repeat;
+}
+
+#site-name {
+	font-size: 200%;
+	font-weight: bold;
+	letter-spacing: -1px;
+}
+
+#footer {
+  height: 60px;
+  clear: both;
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  color: #999;
+  background: #000 url(/images/footer_back.png) top left no-repeat;
+}
+
+#copyright {
+	text-align: center;
+	font-size: 90%;
+	padding: 5px;
+}
+
+a { 
+  color: #d4392a;  
+}
+a:visited { 
+	color: #d4392a; 
+}
+a:hover {
+	color: #f4a02e;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+h1 {
+	font-size: 140%;
+	letter-spacing: -1px;
+}
+
+h2 {
+	font-size: 125%;
+	letter-spacing: -1px;
+}
+
+em {
+	font-weight: bold;
+	font-style: italic;
+}
+
+strong {
+	font-weight: bold;
+}
+
+p {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+}
+
+div#top-nav {
+	height: 20px;
+	display:none;
+}
+
+div#top-nav ul li {
+	float: right;
+	margin: 10px 10px 0px 0px;
+  font-size: 90%;
+}
+
+
+ul#nav-links {
+	clear: both;
+}
+
+ul#nav-links li {
+  float: right;
+  margin: 30px 20px 0px 0px ;
+  font-size: 110%;
+}
+
+ul#nav-links li a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+ul#footer-links {
+  margin: 0px auto;
+  text-align: center;
+}
+
+ul#footer-links li {
+	display: inline;
+  margin: 10px 10px 0px 10px;
+}
+
+#footer a {
+	color: #fff;
+}
+
+div.error,
+div.notice {
+  margin: 20px;
+  padding: 10px;
+  font-size: 110%;
+  font-weight: bold;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+div.notice {
+  color: #000;
+  background: #ffc;
+  border: solid 1px #ff9;
+}
+
+div.error {
+  background: #c00;
+  color: #fff;
+}
+
+form.signin-form {
+	padding: 20px;
+	width: 300px;
+}
+
+
+label {
+  display: block;
+  text-transform: lowercase;
+  font-weight: bold;
+  color: #666;
+}
+
+input,
+textarea {
+	font-size: 115%;
+	padding: 2px;
+	margin: 3px 0px 3px 0px;
+}
+
+textarea {
+  font-family: "Lucida Grande", Arial,Verdana,sans-serif;
+}
+
+.field {
+	margin-bottom: 1.2em;
+}
+
+.helptext {
+	color: #999;
+}
+
+.form-buttons {
+	clear: both;
+	margin-top: 30px;
+}
+
+div.errorExplanation {
+  color: #d4392a;
+}
+
+div.errorExplanation h2 {
+  margin: 10px;
+  padding: 10px;
+  font-size: 110%;
+  font-weight: bold;
+  background: #ffc;
+  border: solid 1px #c00;
+}
+
+div.errorExplanation ul {
+  margin: 10px;
+  list-style: decimal;
+}
+
+div.errorExplanation li {
+  padding: 5px 0px 2px 0px;
+  margin-left: 20px;
+}
+
+.fieldWithErrors {
+  border: solid 2px #d4392a;
+  display: table;
+}
+
+.inline-error-message {
+  color: #a51d2f;
+}
+
+/* store styles */
+div.store-logo {
+	float: right;
+	margin: 20px;
+}
+
+#field-store_address1 {
+	margin-top: 30px;
+}
+
+#field-store_zip,
+#field-store_state {
+	float: left;
+	margin-right: 20px;
+}
+
+#field-store_zip {
+	margin-bottom: 30px;
+}
+
+#field-store_reward_threshold {
+	clear:both;
+}
+
+div.info {
+  margin: 10px 0px 10px 0px;
+  padding: 10px;
+  color: #000;
+  background: #ffc;
+  border: solid 1px #ff9;
+  width: 290px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
+div.toolbar {
+  float: right;
+  padding: 20px;
+  text-transform: lowercase;
+}
+
+table.grid {
+  font-size: 95%;
+  margin-top: 20px;
+  width: 80%;
+  border: solid 1px #d5d5d5;
+}
+
+table.grid th {
+  font-weight: bold;
+  text-align: center;
+  padding: 3px 5px 3px 5px;
+  background: #efefef; url(/images/header-back.png) top left repeat-x;
+  border-bottom: solid 1px #ccc;
+}
+
+/*
+red: #d4392a
+dark red: #a51d2f
+orange: #f4a02e
+*/
+
+table.grid td {
+  text-align: center;
+  padding: 3px 10px 3px 10px;
+}
+
+table.grid td.grid-id {
+  
+}
+
+p.stats {
+
+}
+
+span.stat-count {
+  font-size: 130%;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 150%;
+  padding: 5px;
+}
+
+span.stat-count a {
+  color: #000;
+}
+
+span#stat-redemption-count {
+	background: #dfc;
+}
+
+table.stats {
+  background: #efefef;
+  width: 240px;	
+  margin-top: 10px;
+}
+
+table.stats td {
+	padding: 4px;
+}
+
+td.stat-label {
+  text-transform: lowercase;
+  text-align: right;
+}
+
+td.stat-value {
+  font-weight: bold;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+div#content div.user-profile-snapshot {
+	width: 200px;
+	margin-right: 0px;
+	float: left;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 110%;	
+}
+
+a.store-vanity-url {
+	font-size: 130%;
+	font-weight: bold;
+}
+
+
+#content div.impact-statement {
+	width: 770px;
+	height: 220px;
+	background: url(/images/impact_main.png) top left no-repeat;
+	margin-left: 0px;
+}
+
+#content div.features {
+  margin-left: 0px;
+}
+
+div.feature-column {
+  width: 230px;
+	margin: 10px;
+  float: left;
+}
+
+div.feature-column p {
+  
+}
+
+/*
+red: #d4392a
+dark red: #a51d2f
+orange: #f4a02e
+*/
+
+div.features div.screenshot {
+	background: url(/images/screenshot.png) center center no-repeat;
+	height: 150px;
+	border: solid 1px #efefef;
+	margin: 10px 0px 10px 0px;
+}
+
+div#store-screencap-1 {
+  background: url(/images/screencaps/store-1.png) center center no-repeat;
+}
+
+div#store-screencap-2 {
+  background: url(/images/screencaps/store-2.png) center center no-repeat;
+}
+
+div#store-screencap-3 {
+  background: url(/images/screencaps/batch_invite.png) top left no-repeat;
+}
+
+div#batch-email-screenshot {
+	float:right;
+	margin: 70px 20px 20px 20px;
+	width: 300px;
+}
+
+div#batch-email-screenshot div{
+	height: 200px;
+	width: 300px;
+	margin-top: 10px;
+	background: url(/images/screencaps/batch_invite.png) center center no-repeat;
+  border: solid 1px #efefef;
+}
+
+a#store-signup {
+	display: block;
+	width: 143px;
+	height: 30px;
+	margin-left: 315px;
+	margin-top: 105px;
+	position: absolute;
+}
+
+div#mini-login {
+	float: right;
+	margin: 15px 10px 0px 0px ;
+}
+
+div#mini-login label {
+	font-size: 90%;
+	display: inline;
+}
+
+div#mini-login input {
+	font-size: 90%;
+}
+
+div.mini-login-text {
+	font-size: 90%;
+	padding: 0px 0px 5px 0px;
+}
+
+div#impact-sub {
+  margin: 170px 0px 0px 10px;
+  position: absolute;
+}
+
+span.wildfire {
+	color: #d4392a;
+	font-weight: bold;
+}
+
+div#what-is-wildfire {
+	margin: -30px 10px 0px 10px;
+}
+
+div.user-memberships,
+div.user-stores {
+	float: right; 
+	width: 500px;
+	margin-right: 10px;
+	border-bottom: solid 1px #efefef;
+	padding-bottom: 10px;
+}
+
+div.user-memberships h3,
+div.user-stores h3 {
+	margin: 0px;
+}
+
+#content > div.membership {
+	width: 570px;
+	margin: 20px;
+	padding: 10px;
+  color: #000;
+  background: #ffc;
+  border: solid 1px #ff9;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
+ul.list-links {
+	float: right;
+	margin: 0px 20px 0px 10px;
+	text-transform: lowercase;
+}
+
+div#terms-of-service,
+div#privacy-policy {
+	margin-right: 1em;
+	text-align: justify;
+}
+
+div.add-more-link {
+	width: 600px;
+	text-align: right;
+}
+
+div#batch-rows table th, 
+div#batch-rows table td {
+	padding: 3px;
+	padding-left: 0px;
+	text-align: left;
+}
+
+div#batch-rows table tr.error td {
+ color: #d4392a;
+ padding-bottom: 30px;
+}
+
+div#batch-rows table th {
+  text-transform: lowercase;
+  font-weight: bold;
+  color: #666;
+  text-align: left;
+}
+
+div.store-thumb {
+	float: left;
+	margin: 10px;
+	height: 75px;
+	width: 75px;
+	border: solid 1px #efefef;
+	background: url(/images/wildfire_logo.png) center center no-repeat;
+}
+
+img.store-thumb-screen {
+	float: right;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+img.store-thumb-print {
+	display: none;
+}
+
+div#reward-detail,
+div#referral-coupon {
+	border: dashed 3px #d4392a;
+	padding: 20px;
+	margin: 20px;
+	
+}
+
+div#reward-detail h1,
+div#referral-coupon h1 {
+	margin: 0px;
+	font-size: 215%;
+	font-style: italic;
+}
+
+h2.referral_coupon_id,
+h2.reward_coupon_id {
+	float: right;
+	width: 200px;
+	margin-right: -130px;
+	margin-top: -20px;
+	color: #999;
+	font-size: 150%;
+}
+
+div#reward-detail #contact-info,
+div#referral-coupon #contact-info {
+	float: right;
+	width: 200px;
+	height: 200px;
+	margin-left: 30px;
+}
+
+div#reward-detail #contact-info .store-name,
+div#referral-coupon #contact-info .store-name {
+	font-size: 110%;
+	font-weight: bold;
+}
+
+div#reward-detail #contact-info pre,
+div#referral-coupon #contact-info pre {
+	clear: both;
+}
+
+div.detail-section {
+  margin-top: 30px;
+  clear: both;
+}
+
+div.detail-section a.view-all {
+
+}
+
+img#clip {
+	position: absolute;
+  margin-top: 21px;	
+  margin-left: 300px;
+}

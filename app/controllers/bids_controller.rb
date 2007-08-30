@@ -33,7 +33,12 @@ class BidsController < ApplicationController
   # GET /bids/new
   def new
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)
-    @bid = Bid.new
+    if @auction.active? 
+      @bid = Bid.new 
+    else
+      flash[:error] = "Sorry, Bro!  This auction has expired!!"
+      redirect_to auction_path(@auction) + "/bids"
+    end
   end
 
   # GET /bids/1;edit

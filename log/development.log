@@ -26898,3 +26898,1267 @@ Rendering bids/index
   [4;36;1mLeague Columns (0.003367)[0m   [0;1mSHOW FIELDS FROM leagues[0m
   [4;35;1mLeague Load (0.001582)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
 Completed in 0.09104 (10 reqs/sec) | Rendering: 0.02736 (30%) | DB: 0.01592 (17%) | 200 OK [http://localhost/auctions/162/bids]
+
+
+Processing UserController#login (for 127.0.0.1 at 2007-08-29 20:57:36) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"login", "controller"=>"user"}
+Rendering  within layouts/application
+Rendering user/login
+Completed in 0.06894 (14 reqs/sec) | Rendering: 0.06727 (97%) | DB: 0.00000 (0%) | 200 OK [http://localhost/user/login]
+
+
+Processing UserController#login (for 127.0.0.1 at 2007-08-29 20:57:43) [POST]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"commit"=>"Log in", "action"=>"login", "controller"=>"user", "login"=>"jim", "password"=>"18oct73"}
+  [4;36;1mUser Columns (0.002653)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mUser Load (0.000407)[0m   [0mSELECT * FROM users WHERE (users.`login` = 'jim') LIMIT 1[0m
+Redirected to http://localhost:3000/auctions
+Completed in 0.09327 (10 reqs/sec) | DB: 0.00306 (3%) | 302 Found [http://localhost/user/login]
+
+
+Processing AuctionsController#index (for 127.0.0.1 at 2007-08-29 20:57:44) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "controller"=>"auctions"}
+  [4;36;1mAuction Columns (0.002526)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.003132)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mPosition Columns (0.002793)[0m   [0;1mSHOW FIELDS FROM positions[0m
+  [4;35;1mBid Columns (0.002942)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mAuction Load Including Associations (0.009862)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, positions.`id` AS t2_r0, positions.`position_code` AS t2_r1, positions.`position_name` AS t2_r2, positions.`position_order` AS t2_r3, bids.`id` AS t3_r0, bids.`auction_id` AS t3_r1, bids.`user_id` AS t3_r2, bids.`nfl_player_id` AS t3_r3, bids.`price` AS t3_r4, bids.`updated_at` AS t3_r5, bids.`created_at` AS t3_r6, bids.`max_price` AS t3_r7 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id LEFT OUTER JOIN positions ON positions.id = nfl_players.position_id LEFT OUTER JOIN bids ON bids.auction_id = auctions.id WHERE (expiration > '2007-08-01') ORDER BY auctions.week_no desc, positions.position_order asc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering auctions/index
+  [4;35;1mBid Load (0.000667)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 123) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Columns (0.003125)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mUser Load (0.001677)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000405)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002188)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000372)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000397)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 123) [0m
+  [4;36;1mBid Load (0.000471)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 122) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000333)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000261)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000216)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000427)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 122) [0m
+  [4;35;1mBid Load (0.000475)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 124) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000330)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 7) [0m
+  [4;35;1mLeague Load (0.000240)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000231)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000365)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 124) [0m
+  [4;36;1mBid Load (0.000491)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 125) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000299)[0m   [0mSELECT * FROM users WHERE (users.`id` = 5) [0m
+  [4;36;1mLeague Load (0.000260)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000227)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000378)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 125) [0m
+  [4;35;1mBid Load (0.000450)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 161) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000334)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000251)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000342)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000383)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 161) [0m
+  [4;36;1mBid Load (0.000502)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 162) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000324)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000256)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000215)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000195)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000362)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000213)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000396)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 162) [0m
+  [4;36;1mBid Load (0.000459)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 160) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000320)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000256)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000220)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000366)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 160) [0m
+  [4;35;1mBid Load (0.000600)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 159) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000379)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000248)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000238)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000475)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 159) [0m
+Completed in 0.20977 (4 reqs/sec) | Rendering: 0.12215 (58%) | DB: 0.04287 (20%) | 200 OK [http://localhost/auctions]
+
+
+Processing AuctionsController#new (for 127.0.0.1 at 2007-08-29 20:58:03) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "controller"=>"auctions"}
+  [4;36;1mAuction Columns (0.002227)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Load (0.002429)[0m   [0mSELECT * FROM nfl_players WHERE (position_id = 1) [0m
+  [4;36;1mPosition Load (0.000461)[0m   [0;1mSELECT * FROM positions ORDER BY position_order[0m
+Rendering  within layouts/application
+Rendering auctions/new
+  [4;35;1mPosition Columns (0.001665)[0m   [0mSHOW FIELDS FROM positions[0m
+  [4;36;1mNflPlayer Load (0.001897)[0m   [0;1mSELECT * FROM nfl_players WHERE (position_id = 3) [0m
+  [4;35;1mNflPlayer Columns (0.001606)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+Rendered layouts/_detail_field (0.01755)
+  [4;36;1mFantasyPlayer Columns (0.016084)[0m   [0;1mSHOW FIELDS FROM fantasy_players[0m
+  [4;35;1mNflPlayer Load Including Associations (0.003066)[0m   [0mSELECT nfl_players.`id` AS t0_r0, nfl_players.`last_name` AS t0_r1, nfl_players.`first_name` AS t0_r2, nfl_players.`position_id` AS t0_r3, nfl_players.`nfl_team_id` AS t0_r4, fantasy_players.`id` AS t1_r0, fantasy_players.`user_id` AS t1_r1, fantasy_players.`nfl_player_id` AS t1_r2, fantasy_players.`position_id` AS t1_r3, fantasy_players.`updated_at` AS t1_r4, fantasy_players.`created_at` AS t1_r5, fantasy_players.`week_acquired` AS t1_r6, fantasy_players.`week_released` AS t1_r7 FROM nfl_players LEFT OUTER JOIN fantasy_players ON fantasy_players.nfl_player_id = nfl_players.id WHERE (fantasy_players.user_id = 1) ORDER BY nfl_players.last_name, nfl_players.first_name[0m
+Rendered layouts/_detail_field (0.00019)
+Rendered layouts/_detail_field (0.00013)
+Completed in 0.13302 (7 reqs/sec) | Rendering: 0.07714 (57%) | DB: 0.02943 (22%) | 200 OK [http://localhost/auctions/new]
+
+
+Processing AuctionsController#position_changed (for 127.0.0.1 at 2007-08-29 20:58:06) [POST]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"position_changed", "id"=>"2", "controller"=>"auctions"}
+  [4;36;1mNflPlayer Load (0.001141)[0m   [0;1mSELECT * FROM nfl_players WHERE (position_id = '2') [0m
+  [4;35;1mNflPlayer Columns (0.002151)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+Rendered layouts/_detail_field (0.00020)
+Rendered auctions/_nfl_players (0.02060)
+Completed in 0.02227 (44 reqs/sec) | Rendering: 0.01773 (79%) | DB: 0.00329 (14%) | 200 OK [http://localhost/auctions/position_changed/2]
+
+
+Processing AuctionsController#create (for 127.0.0.1 at 2007-08-29 20:58:13) [POST]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"commit"=>"Create", "action"=>"create", "controller"=>"auctions", "bid"=>{"nfl_player_id"=>"7150", "max_price"=>"70"}, "auction"=>{"nfl_player_id"=>"1076"}, "position"=>{"id"=>"2"}}
+  [4;36;1mAuction Columns (0.002753)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mPosition Load (0.000436)[0m   [0mSELECT * FROM positions ORDER BY position_order[0m
+  [4;36;1mLeague Load (0.000333)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.004806)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mBid Columns (0.005763)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mSQL (0.001160)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000309)[0m   [0;1mINSERT INTO auctions (`updated_at`, `expiration`, `week_no`, `nfl_player_id`, `created_at`) VALUES('2007-08-29 20:58:13', '2007-09-05 22:00:00', 1, 1076, '2007-08-29 20:58:13')[0m
+  [4;35;1mSQL (0.000176)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000086)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000266)[0m   [0mINSERT INTO bids (`updated_at`, `price`, `auction_id`, `max_price`, `nfl_player_id`, `user_id`, `created_at`) VALUES('2007-08-29 20:58:13', 1, 163, 70, 7150, 1, '2007-08-29 20:58:13')[0m
+  [4;36;1mSQL (0.000078)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/auctions/163/bids
+Completed in 0.06910 (14 reqs/sec) | DB: 0.01617 (23%) | 302 Found [http://localhost/auctions]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 20:58:14) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"163", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002522)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001958)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000373)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 163) [0m
+  [4;36;1mBid Columns (0.002299)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002281)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.000748)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '163') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000457)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 163) [0m
+  [4;36;1mLeague Load (0.000350)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002393)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000341)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000233)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000224)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000217)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.17252 (5 reqs/sec) | Rendering: 0.11488 (66%) | DB: 0.01440 (8%) | 200 OK [http://localhost/auctions/163/bids]
+
+
+Processing AuctionsController#index (for 127.0.0.1 at 2007-08-29 20:58:22) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "controller"=>"auctions"}
+  [4;36;1mAuction Columns (0.002624)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.002662)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mPosition Columns (0.001903)[0m   [0;1mSHOW FIELDS FROM positions[0m
+  [4;35;1mBid Columns (0.002743)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mAuction Load Including Associations (0.013172)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, positions.`id` AS t2_r0, positions.`position_code` AS t2_r1, positions.`position_name` AS t2_r2, positions.`position_order` AS t2_r3, bids.`id` AS t3_r0, bids.`auction_id` AS t3_r1, bids.`user_id` AS t3_r2, bids.`nfl_player_id` AS t3_r3, bids.`price` AS t3_r4, bids.`updated_at` AS t3_r5, bids.`created_at` AS t3_r6, bids.`max_price` AS t3_r7 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id LEFT OUTER JOIN positions ON positions.id = nfl_players.position_id LEFT OUTER JOIN bids ON bids.auction_id = auctions.id WHERE (expiration > '2007-08-01') ORDER BY auctions.week_no desc, positions.position_order asc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering auctions/index
+  [4;35;1mBid Load (0.000770)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 123) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Columns (0.002929)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mUser Load (0.000401)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000330)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002231)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000371)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000447)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 123) [0m
+  [4;36;1mBid Load (0.000473)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 122) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000347)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000370)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000281)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000452)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 122) [0m
+  [4;35;1mBid Load (0.000464)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 124) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000302)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 7) [0m
+  [4;35;1mLeague Load (0.000245)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000221)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000384)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 124) [0m
+  [4;36;1mBid Load (0.000500)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 125) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000299)[0m   [0mSELECT * FROM users WHERE (users.`id` = 5) [0m
+  [4;36;1mLeague Load (0.000238)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000362)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000415)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 125) [0m
+  [4;35;1mBid Load (0.000514)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 161) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000332)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000254)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000290)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000407)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 161) [0m
+  [4;36;1mBid Load (0.000470)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 162) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000379)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000253)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000350)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000209)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000212)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000196)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000412)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 162) [0m
+  [4;36;1mBid Load (0.000518)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 163) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000363)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000252)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000217)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000201)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000218)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000200)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000412)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 163) [0m
+  [4;36;1mBid Load (0.000467)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 160) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000418)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000270)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000304)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000416)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 160) [0m
+  [4;35;1mBid Load (0.000482)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 159) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000357)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000273)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000244)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000392)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 159) [0m
+Completed in 0.19235 (5 reqs/sec) | Rendering: 0.10406 (54%) | DB: 0.04622 (24%) | 200 OK [http://localhost/auctions/]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 20:58:34) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"161", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.076874)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.002314)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.000456)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 161) [0m
+  [4;35;1mBid Columns (0.002498)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mUser Columns (0.002458)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mBid Load Including Associations (0.000951)[0m   [0mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '161') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;36;1mAuction Load (0.000379)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 161) [0m
+  [4;35;1mLeague Load (0.000329)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002284)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000344)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.17046 (5 reqs/sec) | Rendering: 0.03090 (18%) | DB: 0.08889 (52%) | 200 OK [http://localhost/auctions/161/bids]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 20:58:37) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"162", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.002383)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.001652)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.000388)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 162) [0m
+  [4;35;1mBid Columns (0.002443)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mUser Columns (0.002451)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mBid Load Including Associations (0.000942)[0m   [0mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '162') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;36;1mAuction Load (0.000405)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 162) [0m
+  [4;35;1mLeague Load (0.000361)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002683)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000355)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000210)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000229)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000201)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.18183 (5 reqs/sec) | Rendering: 0.12103 (66%) | DB: 0.01470 (8%) | 200 OK [http://localhost/auctions/162/bids]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 20:58:42) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"161", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.006834)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001936)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000376)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 161) [0m
+  [4;36;1mBid Columns (0.002144)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002257)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.000828)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '161') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000341)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 161) [0m
+  [4;36;1mLeague Load (0.000338)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002397)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000356)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.09226 (10 reqs/sec) | Rendering: 0.02694 (29%) | DB: 0.01781 (19%) | 200 OK [http://localhost/auctions/161/bids]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 20:59:00) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"161", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002245)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002102)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000437)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 161) [0m
+  [4;36;1mBid Columns (0.002428)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002530)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.000931)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '161') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000431)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 161) [0m
+  [4;36;1mLeague Load (0.000334)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002291)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000318)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.09431 (10 reqs/sec) | Rendering: 0.03065 (32%) | DB: 0.01405 (14%) | 200 OK [http://localhost/auctions/161/bids]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 20:59:03) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"161", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.004979)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.152926)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000842)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 161) [0m
+  [4;36;1mBid Columns (0.002333)[0m   [0;1mSHOW FIELDS FROM bids[0m
+Rendering  within layouts/application
+Rendering bids/new
+  [4;35;1mBid Load (0.000648)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 161) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mFantasyPlayer Columns (0.002494)[0m   [0;1mSHOW FIELDS FROM fantasy_players[0m
+  [4;35;1mNflPlayer Load Including Associations (0.001108)[0m   [0mSELECT nfl_players.`id` AS t0_r0, nfl_players.`last_name` AS t0_r1, nfl_players.`first_name` AS t0_r2, nfl_players.`position_id` AS t0_r3, nfl_players.`nfl_team_id` AS t0_r4, fantasy_players.`id` AS t1_r0, fantasy_players.`user_id` AS t1_r1, fantasy_players.`nfl_player_id` AS t1_r2, fantasy_players.`position_id` AS t1_r3, fantasy_players.`updated_at` AS t1_r4, fantasy_players.`created_at` AS t1_r5, fantasy_players.`week_acquired` AS t1_r6, fantasy_players.`week_released` AS t1_r7 FROM nfl_players LEFT OUTER JOIN fantasy_players ON fantasy_players.nfl_player_id = nfl_players.id WHERE (fantasy_players.user_id = 1) ORDER BY nfl_players.last_name, nfl_players.first_name[0m
+Rendered layouts/_detail_field (0.00019)
+Completed in 0.24520 (4 reqs/sec) | Rendering: 0.04722 (19%) | DB: 0.16533 (67%) | 200 OK [http://localhost/auctions/161/bids/new]
+
+
+Processing BidsController#create (for 127.0.0.1 at 2007-08-29 20:59:14) [POST]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"commit"=>"Create", "action"=>"create", "auction_id"=>"161", "controller"=>"bids", "bid"=>{"nfl_player_id"=>"7150", "max_price"=>"12"}}
+  [4;36;1mBid Columns (0.002613)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mAuction Columns (0.001970)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001965)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000421)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 161) [0m
+  [4;36;1mBid Load (0.000457)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 161) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mSQL (0.000103)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.000240)[0m   [0;1mINSERT INTO bids (`updated_at`, `price`, `auction_id`, `max_price`, `nfl_player_id`, `user_id`, `created_at`) VALUES('2007-08-29 20:59:14', 2, 161, 12, 7150, 1, '2007-08-29 20:59:14')[0m
+  [4;35;1mSQL (0.000087)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000086)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000221)[0m   [0mINSERT INTO bids (`updated_at`, `price`, `auction_id`, `max_price`, `nfl_player_id`, `user_id`, `created_at`) VALUES('2007-08-29 20:59:14', 1, 161, 1, 511, 1, '2007-08-29 20:59:14')[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/auctions/161/bids
+Completed in 0.04828 (20 reqs/sec) | DB: 0.00823 (17%) | 302 Found [http://localhost/auctions/161/bids]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 20:59:14) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"161", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002265)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001726)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000379)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 161) [0m
+  [4;36;1mBid Columns (0.001792)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002285)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.000786)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '161') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000350)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 161) [0m
+  [4;36;1mAuction Load (0.000248)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 161) [0m
+  [4;35;1mAuction Load (0.000195)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 161) [0m
+  [4;36;1mLeague Load (0.000632)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002374)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000339)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.17820 (5 reqs/sec) | Rendering: 0.12210 (68%) | DB: 0.01337 (7%) | 200 OK [http://localhost/auctions/161/bids]
+
+
+Processing AuctionsController#index (for 127.0.0.1 at 2007-08-29 20:59:32) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "controller"=>"auctions"}
+  [4;35;1mAuction Columns (0.069537)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001953)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mPosition Columns (0.001981)[0m   [0mSHOW FIELDS FROM positions[0m
+  [4;36;1mBid Columns (0.001867)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mAuction Load Including Associations (0.012378)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, positions.`id` AS t2_r0, positions.`position_code` AS t2_r1, positions.`position_name` AS t2_r2, positions.`position_order` AS t2_r3, bids.`id` AS t3_r0, bids.`auction_id` AS t3_r1, bids.`user_id` AS t3_r2, bids.`nfl_player_id` AS t3_r3, bids.`price` AS t3_r4, bids.`updated_at` AS t3_r5, bids.`created_at` AS t3_r6, bids.`max_price` AS t3_r7 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id LEFT OUTER JOIN positions ON positions.id = nfl_players.position_id LEFT OUTER JOIN bids ON bids.auction_id = auctions.id WHERE (expiration > '2007-08-01') ORDER BY auctions.week_no desc, positions.position_order asc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering auctions/index
+  [4;36;1mBid Load (0.000549)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 123) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Columns (0.002770)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mUser Load (0.000344)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000337)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002106)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000336)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000416)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 123) [0m
+  [4;35;1mBid Load (0.000498)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 122) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000339)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000252)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000247)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000403)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 122) [0m
+  [4;36;1mBid Load (0.000485)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 124) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000301)[0m   [0mSELECT * FROM users WHERE (users.`id` = 7) [0m
+  [4;36;1mLeague Load (0.000242)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000214)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000388)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 124) [0m
+  [4;35;1mBid Load (0.000475)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 125) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000295)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 5) [0m
+  [4;35;1mLeague Load (0.000236)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000222)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000416)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 125) [0m
+  [4;36;1mBid Load (0.000474)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 161) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000337)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000238)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000250)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000507)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 161) [0m
+  [4;35;1mBid Load (0.000475)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 162) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000335)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000242)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000228)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000197)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000260)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000202)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000397)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 162) [0m
+  [4;35;1mBid Load (0.000474)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 163) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000333)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000240)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000238)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000197)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000208)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000194)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000413)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 163) [0m
+  [4;35;1mBid Load (0.000590)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 160) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000361)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000288)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000238)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000390)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 160) [0m
+  [4;36;1mBid Load (0.000458)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 159) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000333)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000237)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000216)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000357)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 159) [0m
+Completed in 0.23643 (4 reqs/sec) | Rendering: 0.08556 (36%) | DB: 0.10949 (46%) | 200 OK [http://localhost/auctions/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2007-08-29 21:03:41) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"124", "controller"=>"bids"}
+
+
+SyntaxError (./script/../config/../app/controllers/bids_controller.rb:36: void value expression
+./script/../config/../app/controllers/bids_controller.rb:37: void value expression
+./script/../config/../app/controllers/bids_controller.rb:108: parse error, unexpected $, expecting kEND):
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:203:in `load_without_new_constant_marking'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:203:in `load_file'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:202:in `load_file'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:94:in `require_or_load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:248:in `load_missing_constant'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:452:in `const_missing'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:464:in `const_missing'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/inflector.rb:250:in `constantize'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/core_ext/string/inflections.rb:148:in `constantize'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1284:in `recognize'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:03:55) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"124", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.001542)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001671)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000360)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 124) [0m
+  [4;36;1mBid Columns (0.001917)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002247)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.000712)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '124') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000326)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 124) [0m
+  [4;36;1mLeague Load (0.000333)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002110)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000298)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.08119 (12 reqs/sec) | Rendering: 0.02580 (31%) | DB: 0.01152 (14%) | 200 OK [http://localhost/auctions/124/bids]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:03:59) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"124", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002205)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002301)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000443)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 124) [0m
+
+
+NameError (undefined local variable or method `auction' for #<BidsController:0x3956300>):
+    .//app/controllers/bids_controller.rb:36:in `new'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:04:11) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"124", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.002316)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.002425)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.001668)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 124) [0m
+  [4;35;1mLeague Load (0.000423)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.001758)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000297)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Rendering  within layouts/application
+Rendering bids/new
+  [4;36;1mBid Load (0.000573)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 124) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mBid Columns (0.002026)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mFantasyPlayer Columns (0.002187)[0m   [0;1mSHOW FIELDS FROM fantasy_players[0m
+  [4;35;1mNflPlayer Load Including Associations (0.002435)[0m   [0mSELECT nfl_players.`id` AS t0_r0, nfl_players.`last_name` AS t0_r1, nfl_players.`first_name` AS t0_r2, nfl_players.`position_id` AS t0_r3, nfl_players.`nfl_team_id` AS t0_r4, fantasy_players.`id` AS t1_r0, fantasy_players.`user_id` AS t1_r1, fantasy_players.`nfl_player_id` AS t1_r2, fantasy_players.`position_id` AS t1_r3, fantasy_players.`updated_at` AS t1_r4, fantasy_players.`created_at` AS t1_r5, fantasy_players.`week_acquired` AS t1_r6, fantasy_players.`week_released` AS t1_r7 FROM nfl_players LEFT OUTER JOIN fantasy_players ON fantasy_players.nfl_player_id = nfl_players.id WHERE (fantasy_players.user_id = 1) ORDER BY nfl_players.last_name, nfl_players.first_name[0m
+Rendered layouts/_detail_field (0.00019)
+Completed in 0.08071 (12 reqs/sec) | Rendering: 0.02364 (29%) | DB: 0.02106 (26%) | 200 OK [http://localhost/auctions/124/bids/new]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:07:18) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"122", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.002016)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.001939)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.001122)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;35;1mBid Columns (0.002451)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mUser Columns (0.002543)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mBid Load Including Associations (0.001347)[0m   [0mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '122') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;36;1mAuction Load (0.000368)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000292)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000224)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000286)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000263)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000244)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000210)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000206)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000249)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000223)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000365)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002366)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000322)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.11463 (8 reqs/sec) | Rendering: 0.03907 (34%) | DB: 0.01704 (14%) | 200 OK [http://localhost/auctions/122/bids]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:07:22) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002439)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001950)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000412)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000341)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002307)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000388)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Redirected to http://localhost:3000/auctions/122
+Completed in 0.13745 (7 reqs/sec) | DB: 0.00784 (5%) | 302 Found [http://localhost/auctions/122/bids/new]
+
+
+Processing AuctionsController#show (for 127.0.0.1 at 2007-08-29 21:07:22) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"show", "id"=>"122", "controller"=>"auctions"}
+  [4;35;1mAuction Columns (0.001986)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mAuction Load (0.000269)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+Rendering actionshowcontent_typetext/htmllayoutfalse within layouts/application
+Rendering auctions/show
+  [4;35;1mNflPlayer Columns (0.002119)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mNflPlayer Load (0.000325)[0m   [0;1mSELECT * FROM nfl_players WHERE (nfl_players.`id` = 1755) [0m
+  [4;35;1mBid Columns (0.002297)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mBid Load Including Associations (0.000946)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id WHERE (bids.auction_id = 122 AND (nfl_players.id is not null)) ORDER BY bids.price desc[0m
+Completed in 0.06836 (14 reqs/sec) | Rendering: 0.05054 (73%) | DB: 0.00794 (11%) | 200 OK [http://localhost/auctions/122]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:07:48) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.004240)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001971)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000376)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000345)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002023)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000298)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+
+
+ActionController::RoutingError (bid_url failed to generate from {:action=>"show", :auction_id=>"122", :controller=>"bids"}, expected: {:action=>"show", :controller=>"bids"}, diff: {:auction_id=>"122"}):
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1273:in `raise_named_route_error'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1245:in `generate'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/url_rewriter.rb:104:in `rewrite_path'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/url_rewriter.rb:69:in `rewrite'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:522:in `url_for'
+    (eval):19:in `bid_path'
+    .//app/controllers/bids_controller.rb:40:in `new'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:08:04) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002266)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001914)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000438)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000346)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.001916)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000290)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+
+
+ActionController::RoutingError (bid_url failed to generate from {:action=>"show", :auction_id=>"122", :controller=>"bids"}, expected: {:action=>"show", :controller=>"bids"}, diff: {:auction_id=>"122"}):
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1273:in `raise_named_route_error'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1245:in `generate'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/url_rewriter.rb:104:in `rewrite_path'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/url_rewriter.rb:69:in `rewrite'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:522:in `url_for'
+    (eval):19:in `bid_url'
+    .//app/controllers/bids_controller.rb:40:in `new'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:09:19) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002552)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001955)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000371)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000403)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.001983)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000318)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+
+
+NoMethodError (undefined method `auction_bid_path' for #<BidsController:0x36e0120>):
+    .//app/controllers/bids_controller.rb:40:in `new'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:10:14) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002587)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002102)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000453)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000384)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002478)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000343)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+
+
+ActionController::RoutingError (bid_url failed to generate from {:action=>"show", :auction_id=>"122", :controller=>"bids"}, expected: {:action=>"show", :controller=>"bids"}, diff: {:auction_id=>"122"}):
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1273:in `raise_named_route_error'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1245:in `generate'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/url_rewriter.rb:104:in `rewrite_path'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/url_rewriter.rb:69:in `rewrite'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:522:in `url_for'
+    (eval):19:in `bid_url'
+    .//app/controllers/bids_controller.rb:40:in `new'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:11:22) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002398)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002177)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000528)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000382)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002268)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.001684)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+
+
+NameError (undefined local variable or method `auction' for #<BidsController:0x368f5cc>):
+    .//app/controllers/bids_controller.rb:40:in `new'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:11:33) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002325)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002085)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.001380)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000343)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002332)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000411)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Redirected to http://localhost:3000/auctions/122/bids
+Completed in 0.05854 (17 reqs/sec) | DB: 0.05067 (86%) | 302 Found [http://localhost/auctions/122/bids/new]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:11:33) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002140)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002028)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000382)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mBid Columns (0.002222)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002629)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.001337)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '122') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000386)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000432)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000250)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000236)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000247)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000229)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000225)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000227)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000251)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000242)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mLeague Load (0.000335)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002252)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000387)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.20137 (4 reqs/sec) | Rendering: 0.04340 (21%) | DB: 0.01644 (8%) | 200 OK [http://localhost/auctions/122/bids]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:12:49) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.002117)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.001558)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.000367)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;35;1mLeague Load (0.000389)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002065)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000343)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Redirected to http://localhost:3000/auctions/122/bids
+Completed in 0.04845 (20 reqs/sec) | DB: 0.00684 (14%) | 302 Found [http://localhost/auctions/122/bids/new]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:12:49) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"122", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.002246)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.001936)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.000463)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;35;1mBid Columns (0.002449)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mUser Columns (0.002516)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mBid Load Including Associations (0.001344)[0m   [0mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '122') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;36;1mAuction Load (0.000376)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000295)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000238)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000253)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000324)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000250)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000245)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000229)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000224)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000314)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000342)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002275)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000332)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+
+
+ActionView::TemplateError (undefined local variable or method `breadcrumbs' for #<#<Class:0x3918bb8>:0x3918b90>) on line #16 of app/views/layouts/application.rhtml:
+13: <p style="color: green"><%= flash[:notice] %></p>
+14: 
+15: <div id="content">
+16: 	<%= breadcrumbs %>
+17: 	<% unless flash[:authorization].nil? %>
+18: 		<div class="error"><%= flash[:authorization] %></div>
+19: 	<%end %>
+
+    #{RAILS_ROOT}/app/views/layouts/application.rhtml:16:in `_run_rhtml_47app47views47layouts47application46rhtml'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:326:in `compile_and_render_template'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:301:in `render_template'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_view/base.rb:260:in `render_file'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/layout.rb:254:in `render_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:50:in `render'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:50:in `render'
+    app/controllers/bids_controller.rb:16:in `index'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/mime_responds.rb:167:in `respond'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/mime_responds.rb:161:in `respond'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/mime_responds.rb:105:in `respond_to'
+    app/controllers/bids_controller.rb:16:in `index'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:1095:in `perform_action_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:632:in `call_filter'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:619:in `perform_action_without_benchmark'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/benchmarking.rb:66:in `perform_action_without_rescue'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/rescue.rb:83:in `perform_action'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:430:in `process_without_filters'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/filters.rb:624:in `process_without_session_management_support'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/session_management.rb:114:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/base.rb:330:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:41:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (500 Internal Error)
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:13:07) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002530)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001804)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000514)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mBid Columns (0.002475)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002610)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.001332)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '122') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000365)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000305)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000250)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000292)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000238)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000227)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000268)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000350)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000300)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000245)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mLeague Load (0.000305)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002387)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000328)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.11419 (8 reqs/sec) | Rendering: 0.04716 (41%) | DB: 0.02282 (19%) | 200 OK [http://localhost/auctions/122/bids]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:13:22) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.073819)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.002107)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.000413)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;35;1mLeague Load (0.000330)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.001642)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000282)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Redirected to http://localhost:3000/auctions/122/bids
+Completed in 0.12026 (8 reqs/sec) | DB: 0.07859 (65%) | 302 Found [http://localhost/auctions/122/bids/new]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:13:22) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"122", "controller"=>"bids"}
+  [4;36;1mAuction Columns (0.002261)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.001976)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mAuction Load Including Associations (0.000400)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;35;1mBid Columns (0.002481)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mUser Columns (0.002593)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mBid Load Including Associations (0.001441)[0m   [0mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '122') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;36;1mAuction Load (0.000357)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000263)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000230)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000281)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000220)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000210)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000227)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000222)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000216)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000222)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000331)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002254)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000289)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.10709 (9 reqs/sec) | Rendering: 0.03916 (36%) | DB: 0.01647 (15%) | 200 OK [http://localhost/auctions/122/bids]
+
+
+Processing BidsController#new (for 127.0.0.1 at 2007-08-29 21:16:20) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"new", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.002303)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.002115)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000469)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mLeague Load (0.000328)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002044)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000503)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+Redirected to http://localhost:3000/auctions/122/bids
+Completed in 0.09750 (10 reqs/sec) | DB: 0.00776 (7%) | 302 Found [http://localhost/auctions/122/bids/new]
+
+
+Processing BidsController#index (for 127.0.0.1 at 2007-08-29 21:16:20) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "auction_id"=>"122", "controller"=>"bids"}
+  [4;35;1mAuction Columns (0.001677)[0m   [0mSHOW FIELDS FROM auctions[0m
+  [4;36;1mNflPlayer Columns (0.001993)[0m   [0;1mSHOW FIELDS FROM nfl_players[0m
+  [4;35;1mAuction Load Including Associations (0.000363)[0m   [0mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id WHERE (auctions.`id` = 122) [0m
+  [4;36;1mBid Columns (0.002137)[0m   [0;1mSHOW FIELDS FROM bids[0m
+  [4;35;1mUser Columns (0.002350)[0m   [0mSHOW FIELDS FROM users[0m
+  [4;36;1mBid Load Including Associations (0.001062)[0m   [0;1mSELECT bids.`id` AS t0_r0, bids.`auction_id` AS t0_r1, bids.`user_id` AS t0_r2, bids.`nfl_player_id` AS t0_r3, bids.`price` AS t0_r4, bids.`updated_at` AS t0_r5, bids.`created_at` AS t0_r6, bids.`max_price` AS t0_r7, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, users.`id` AS t2_r0, users.`team_name` AS t2_r1, users.`crypted_password` AS t2_r2, users.`last_name` AS t2_r3, users.`first_name` AS t2_r4, users.`email` AS t2_r5, users.`commish` AS t2_r6, users.`login_no` AS t2_r7, users.`last_login` AS t2_r8, users.`updated_at` AS t2_r9, users.`created_at` AS t2_r10, users.`login` AS t2_r11, users.`salt` AS t2_r12, users.`remember_token` AS t2_r13, users.`remember_token_expires_at` AS t2_r14 FROM bids LEFT OUTER JOIN nfl_players ON nfl_players.id = bids.nfl_player_id LEFT OUTER JOIN users ON users.id = bids.user_id WHERE (bids.`auction_id` = '122') ORDER BY bids.price desc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering bids/index
+  [4;35;1mAuction Load (0.000336)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000234)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000186)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000203)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000184)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000237)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000193)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000213)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mAuction Load (0.000195)[0m   [0mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;36;1mAuction Load (0.000214)[0m   [0;1mSELECT * FROM auctions WHERE (auctions.`id` = 122) [0m
+  [4;35;1mLeague Load (0.000296)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Columns (0.002306)[0m   [0;1mSHOW FIELDS FROM leagues[0m
+  [4;35;1mLeague Load (0.000338)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+Completed in 0.09647 (10 reqs/sec) | Rendering: 0.03805 (39%) | DB: 0.01472 (15%) | 200 OK [http://localhost/auctions/122/bids]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2007-08-29 21:16:21) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {}
+
+
+ActionController::RoutingError (no route found to match "/images/body_back_n.png" with {:method=>:get}):
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1292:in `recognize_path'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1282:in `recognize'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
+
+
+Processing AuctionsController#index (for 127.0.0.1 at 2007-08-29 21:16:31) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {"action"=>"index", "controller"=>"auctions"}
+  [4;36;1mAuction Columns (0.002583)[0m   [0;1mSHOW FIELDS FROM auctions[0m
+  [4;35;1mNflPlayer Columns (0.001928)[0m   [0mSHOW FIELDS FROM nfl_players[0m
+  [4;36;1mPosition Columns (0.001708)[0m   [0;1mSHOW FIELDS FROM positions[0m
+  [4;35;1mBid Columns (0.002037)[0m   [0mSHOW FIELDS FROM bids[0m
+  [4;36;1mAuction Load Including Associations (0.009413)[0m   [0;1mSELECT auctions.`id` AS t0_r0, auctions.`nfl_player_id` AS t0_r1, auctions.`week_no` AS t0_r2, auctions.`updated_at` AS t0_r3, auctions.`created_at` AS t0_r4, auctions.`expiration` AS t0_r5, nfl_players.`id` AS t1_r0, nfl_players.`last_name` AS t1_r1, nfl_players.`first_name` AS t1_r2, nfl_players.`position_id` AS t1_r3, nfl_players.`nfl_team_id` AS t1_r4, positions.`id` AS t2_r0, positions.`position_code` AS t2_r1, positions.`position_name` AS t2_r2, positions.`position_order` AS t2_r3, bids.`id` AS t3_r0, bids.`auction_id` AS t3_r1, bids.`user_id` AS t3_r2, bids.`nfl_player_id` AS t3_r3, bids.`price` AS t3_r4, bids.`updated_at` AS t3_r5, bids.`created_at` AS t3_r6, bids.`max_price` AS t3_r7 FROM auctions LEFT OUTER JOIN nfl_players ON nfl_players.id = auctions.nfl_player_id LEFT OUTER JOIN positions ON positions.id = nfl_players.position_id LEFT OUTER JOIN bids ON bids.auction_id = auctions.id WHERE (expiration > '2007-08-01') ORDER BY auctions.week_no desc, positions.position_order asc[0m
+Rendering actionindexcontent_typetext/htmllayoutfalse within layouts/application
+Rendering auctions/index
+  [4;35;1mBid Load (0.000530)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 123) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Columns (0.002778)[0m   [0;1mSHOW FIELDS FROM users[0m
+  [4;35;1mUser Load (0.000541)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000347)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Columns (0.002377)[0m   [0mSHOW FIELDS FROM leagues[0m
+  [4;36;1mLeague Load (0.000340)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000424)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 123) [0m
+  [4;36;1mBid Load (0.000477)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 122) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000333)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000264)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000243)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000505)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 122) [0m
+  [4;35;1mBid Load (0.000445)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 124) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000267)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 7) [0m
+  [4;35;1mLeague Load (0.000221)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000243)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000365)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 124) [0m
+  [4;36;1mBid Load (0.000447)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 125) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000266)[0m   [0mSELECT * FROM users WHERE (users.`id` = 5) [0m
+  [4;36;1mLeague Load (0.000212)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000197)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000363)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 125) [0m
+  [4;35;1mBid Load (0.000388)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 161) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000270)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000209)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000279)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000366)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 161) [0m
+  [4;36;1mBid Load (0.000364)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 162) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000264)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000206)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000193)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000162)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000177)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000155)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000333)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 162) [0m
+  [4;36;1mBid Load (0.000388)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 163) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000263)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000223)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000191)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000158)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000167)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000166)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000321)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 163) [0m
+  [4;36;1mBid Load (0.000365)[0m   [0;1mSELECT * FROM bids WHERE (bids.auction_id = 160) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;35;1mUser Load (0.000277)[0m   [0mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;36;1mLeague Load (0.000203)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mLeague Load (0.000176)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mSQL (0.000343)[0m   [0;1mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 160) [0m
+  [4;35;1mBid Load (0.000372)[0m   [0mSELECT * FROM bids WHERE (bids.auction_id = 159) ORDER BY price desc, id asc LIMIT 1[0m
+  [4;36;1mUser Load (0.000270)[0m   [0;1mSELECT * FROM users WHERE (users.`id` = 1) [0m
+  [4;35;1mLeague Load (0.000199)[0m   [0mSELECT * FROM leagues LIMIT 1[0m
+  [4;36;1mLeague Load (0.000174)[0m   [0;1mSELECT * FROM leagues LIMIT 1[0m
+  [4;35;1mSQL (0.000339)[0m   [0mSELECT count(*) AS count_all FROM bids WHERE (bids.auction_id = 159) [0m
+Completed in 0.24475 (4 reqs/sec) | Rendering: 0.16801 (68%) | DB: 0.03782 (15%) | 200 OK [http://localhost/auctions/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2007-08-29 21:16:32) [GET]
+  Session ID: a77812e213139ed938590f53f21ac2b7
+  Parameters: {}
+
+
+ActionController::RoutingError (no route found to match "/images/body_back_n.png" with {:method=>:get}):
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1292:in `recognize_path'
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/routing.rb:1282:in `recognize'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/dispatcher.rb:40:in `dispatch'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:78:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/rails.rb:76:in `process'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:618:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:617:in `process_client'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:736:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel.rb:720:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:271:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/configurator.rb:270:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:127:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/lib/mongrel/command.rb:211:in `run'
+    /usr/local/lib/ruby/gems/1.8/gems/mongrel-1.0.1/bin/mongrel_rails:243
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:488:in `load'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/servers/mongrel.rb:60
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:342:in `new_constants_in'
+    /usr/local/lib/ruby/gems/1.8/gems/activesupport-1.4.2/lib/active_support/dependencies.rb:495:in `require'
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.2.3/lib/commands/server.rb:39
+    /usr/local/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+    script/server:3
+
+
+Rendering /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.13.3/lib/action_controller/templates/rescues/layout.rhtml (404 Page Not Found)
