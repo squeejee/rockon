@@ -1,0 +1,12 @@
+<h1>Editing league</h1>
+
+<%= error_messages_for :league %>
+
+<% form_for(:league, :url => league_path(@league), :html => { :method => :put }) do |f| %>
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', league_path(@league) %> |
+<%= link_to 'Back', leagues_path %>
