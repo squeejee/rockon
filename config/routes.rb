@@ -22,9 +22,12 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect '', :controller => "welcome"
   map.home '', :controller => 'auctions'
   
-  map.logout '/login', :controller => 'user', :action => 'login'
-  map.logout '/logout', :controller => 'user', :action => 'logout'
+  map.resources :users
+  map.resource :session, :controller => 'sessions'
   
+  map.logout '/login', :controller => 'sessions', :action => 'login'
+  map.logout '/logout', :controller => 'sessions', :action => 'logout'
+    
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

@@ -1,35 +1,13 @@
-# == Schema Information
-# Schema version: 5
-#
-# Table name: users
-#
-#  id                        :integer(11)   not null, primary key
-#  team_name                 :string(50)    
-#  crypted_password          :string(40)    
-#  last_name                 :string(50)    
-#  first_name                :string(50)    
-#  email                     :string(50)    
-#  commish                   :boolean(1)    not null
-#  login_no                  :integer(11)   
-#  last_login                :datetime      
-#  updated_at                :datetime      
-#  created_at                :datetime      
-#  login                     :string(255)   
-#  salt                      :string(40)    
-#  remember_token            :string(255)   
-#  remember_token_expires_at :datetime      
-#
-
 require 'digest/sha1'
 class User < ActiveRecord::Base
+  # Virtual attribute for the unencrypted password
+  attr_accessor :password
+  
   has_many :fantasy_players
   has_many :auctions
   has_many :bids
   has_many :auto_bids
   has_many :kitties
-  
-  # Virtual attribute for the unencrypted password
-  attr_accessor :password
 
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
@@ -69,13 +47,13 @@ class User < ActiveRecord::Base
   def remember_me
     self.remember_token_expires_at = 2.weeks.from_now.utc
     self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(true)
+    save(false)
   end
 
   def forget_me
     self.remember_token_expires_at = nil
     self.remember_token            = nil
-    save(true)
+    save(false)
   end
   
   def full_name
@@ -85,7 +63,7 @@ class User < ActiveRecord::Base
       login
     end
   end
-  
+
   protected
     # before filter 
     def encrypt_password

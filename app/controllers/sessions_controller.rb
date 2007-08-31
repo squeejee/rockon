@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class SessionsController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   # If you want "remember me" functionality, add this before_filter to Application Controller
@@ -12,16 +12,13 @@ class UserController < ApplicationController
   def login
     return unless request.post?
     self.current_user = User.authenticate(params[:login], params[:password])
-    if !self.current_user.nil?
+    if logged_in?
       if params[:remember_me] == "1"
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       redirect_back_or_default(:controller => '/auctions', :action => 'index')
       flash[:notice] = "Logged in successfully"
-    else
-      flash[:notice] = "Incorrect login or password."
-      render :action => "login" and return false
     end
   end
 
@@ -30,18 +27,17 @@ class UserController < ApplicationController
     return unless request.post?
     @user.save!
     self.current_user = @user
-    redirect_back_or_default(:controller => '/user', :action => 'index')
+    redirect_back_or_default(:controller => '/sessions', :action => 'index')
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end
   
   def logout
-    self.find(current_user).forget_me if logged_in?
+    self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/users', :action => 'login')
+    redirect_back_or_default(:controller => '/sessions', :action => 'index')
   end
-  
 end
