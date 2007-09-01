@@ -1,14 +1,17 @@
-<% form_tag do -%>
-<p><label for="login">Login</label><br/>
-<%= text_field_tag 'login' %></p>
+<h1>Please sign in</h1>
 
-<p><label for="password">Password</label><br/>
-<%= password_field_tag 'password' %></p>
+<% form_tag "/sessions/create" do -%>
+<div class="field">
+	<label for="login">Login</label>
+	<%= text_field_tag 'login' %>
+</div>
 
-<!-- Uncomment this if you want this functionality
-<p><label for="remember_me">Remember me:</label>
-<%= check_box_tag 'remember_me' %></p>
--->
-
-<p><%= submit_tag 'Log in' %></p>
+<div class="field">
+	<label for="password">Password</label>
+	<%= password_field_tag 'password' %>
+</div>
+<div class="field">
+	<%= check_box_tag 'remember_me' %> <label for="remember_me" style="display:inline">Remember me</label>
+</div>
+<%= submit_tag 'sign in' %>
 <% end -%>
