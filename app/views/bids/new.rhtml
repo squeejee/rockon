@@ -1,7 +1,9 @@
 <h1>Place a bid for <%= @auction.nfl_player.display_name %></h1>
-The current top bid is <%= number_to_currency(@auction.bids.find_top_bidder().price)%>.
-<br />
-
+<ul>
+<li>Current bid: <em><%= number_to_currency(@auction.top_bidder.price)%></em>.
+<%= "<li>Top bidder: <em>#{@auction.top_bidder.user_id == current_user ? 'You' : @auction.top_bidder.user.full_name}</em>." %>
+<%= "<li>Your current max bid: <em>#{number_to_currency(@auction.top_bidder.max_price)}</em>." if @auction.top_bidder.user_id == current_user %>
+</ul>
 <%= error_messages_for :bid %>
 
 <% form_for(:bid, :url => bids_path) do |f| %>
@@ -14,12 +16,16 @@ The current top bid is <%= number_to_currency(@auction.bids.find_top_bidder().pr
     <%=
       detail_text_field(:bid, :max_price, "Maximum Bid Price", 
       "This is your maximum bid amount NOT your initial bid.  Your initial bid will always be 
-      incremented by $1 until you reach your max bid.", options = {"size" => 1})
+      incremented by $1 until you reach your max bid.", options = {"size" => 2})
     %>
   </div>
   
   <p>
-    <%= submit_tag "Create" %>
+    <% if @auction.top_bidder.user_id == current_user %>      
+      <%= submit_tag "Update Max Bid" %>
+    <% else %>
+      <%= submit_tag "Create" %>
+    <% end %>
   </p>
 <% end %>
 

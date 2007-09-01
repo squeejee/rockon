@@ -1,7 +1,10 @@
 <h1><%= @auction.nfl_player.display_name %></h1>
 
-<%="This auction will expire in #{distance_of_time_in_words_to_now(@auction.expiration, true)}." if @auction.expiration > Time.now%>
-
+<% if @auction.expiration > Time.now %>
+  <%="This auction will expire in #{distance_of_time_in_words_to_now(@auction.expiration, true)}."%>
+<% else %>
+  <%="This auction ended #{distance_of_time_in_words_to_now(@auction.expiration, true)} ago." %>
+<% end %>
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
     <th>Bidding Team</th>

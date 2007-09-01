@@ -19,6 +19,8 @@ class Bid < ActiveRecord::Base
   belongs_to :nfl_player  
   validates_presence_of :nfl_player_id, :on => :save, :message => "can't be blank."
   validates_numericality_of :max_price, :on => :save, :only_integer => true, :message => "must exist and be an integer."
+  validates_numericality_of :price, :on => :save, :only_integer => true, :message => "must exist and be an integer."
+  
     
   def self.find_top_bidder()  
     #We use the following instead of "maximum()" in case two users have the same top bid.

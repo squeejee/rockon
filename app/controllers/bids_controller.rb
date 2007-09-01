@@ -49,6 +49,7 @@ class BidsController < ApplicationController
   # POST /bids
   # POST /bids.xml
   def create
+            
     @bid = Bid.new(params[:bid])
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)
     @bid.auction_id = @auction.id
@@ -60,35 +61,55 @@ class BidsController < ApplicationController
                        :nfl_player_id => @top_bid.nfl_player_id, :price => @bid.price,
                        :max_price => @top_bid.max_price)
 
+    existing_bidder = false
     unless @bid.max_price.nil?
-      if @bid.max_price <= @top_bid.price   
-        winning_bidder = false       
-      elsif @bid.max_price == @top_bid.max_price  
-        winning_bidder = false
-        @bid.price = @bid.max_price - 1
-        @existing_bid.price = @bid.max_price
-        @bid.save and @existing_bid.save
-      elsif @bid.max_price < @top_bid.max_price  
-        winning_bidder = false
-        @bid.price = @bid.max_price
-        @existing_bid.price = @bid.max_price + 1
-        @bid.save and @existing_bid.save
-      else  
-        winning_bidder = true
-        @bid.price = @top_bid.max_price + 1
-        @existing_bid.price = @top_bid.max_price
-        @bid.save
+      if @auction.top_bidder.user_id == current_user 
+        if @bid.max_price >= @top_bid.price 
+          existing_bidder = true
+          @top_bid.max_price = @bid.max_price
+          @top_bid.save ? success_display=true : error_display=true
+        else 
+          winning_bidder = false 
+          success_display = true        
+        end
+      else
+        if @bid.max_price <= @top_bid.price   
+          winning_bidder = false 
+          success_display = true
+        elsif @bid.max_price == @top_bid.max_price  
+          winning_bidder = false
+          @bid.price = @bid.max_price - 1
+          @existing_bid.price = @bid.max_price
+          @bid.save && @existing_bid.save ? success_display=true : error_display=true
+        elsif @bid.max_price < @top_bid.max_price  
+          winning_bidder = false
+          @bid.price = @bid.max_price
+          @existing_bid.price = @bid.max_price + 1
+          @bid.save && @existing_bid.save ? success_display=true : error_display=true
+        else  
+          winning_bidder = true
+          @bid.price = @top_bid.max_price + 1
+          @existing_bid.price = @top_bid.max_price
+          @bid.save ? success_display=true : error_display=true
+        end
       end
     end
-    
-    respond_to do |format|      
-      flash[:notice] = "Congratulations!  You are now the top bidder!" if winning_bidder
-      flash[:notice] = "Whoops!  You are going to have to bid higher than $#{@bid.max_price}!" if !winning_bidder
-      format.html { redirect_to auction_url(@auction) + "/bids" }
-      format.xml  { head :created, :location => bid_url(@bid) }
+        
+    if existing_bidder && success_display
+      flash[:notice] = "Your max bid has been updated!"
+      render(:action => 'new')
+    elsif winning_bidder && success_display
+      flash[:notice] = "Congratulations!  You are now the top bidder!" 
+      redirect_to auction_url(@auction) + "/bids"
+    elsif !winning_bidder && success_display
+      flash[:notice] = "Whoops!  You are going to have to bid higher than $#{@bid.max_price}!"
+      render(:action => 'new')
+    else
+      flash[:error] = "Please fill in all fields!"
+      render(:action => 'new')
     end
   end
-
+   
   # PUT /bids/1
   # PUT /bids/1.xml
   def update
