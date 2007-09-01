@@ -23,10 +23,20 @@ ActionController::Routing::Routes.draw do |map|
   map.home '', :controller => 'auctions'
   
   map.resources :users
-  map.resource :session, :controller => 'sessions'
+  #easier routes for restful_authentication
+  map.signup '/signup', :controller => 'users', :action => 'new'
+  map.login '/login', :controller => 'sessions', :action => 'new'
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
+  map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
+  map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
+  map.tour '/tour', :controller => 'stores'
+  map.about "/about", :controller => "stores"
+  map.privacy "/privacy", :controller => "sessions", :action => "privacy"
+  map.terms "/terms", :controller => "sessions", :action => "terms"
   
-  map.logout '/login', :controller => 'sessions', :action => 'login'
-  map.logout '/logout', :controller => 'sessions', :action => 'logout'
+  map.pickup '/pickup/:code', :controller => 'referrals', :action => 'pickup'
+  map.connect '/:short_name/', :controller => 'stores', :action => 'show'
     
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

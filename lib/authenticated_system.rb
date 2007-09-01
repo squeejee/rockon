@@ -3,12 +3,15 @@ module AuthenticatedSystem
     # Returns true or false if the user is logged in.
     # Preloads @current_user with the user model if they're logged in.
     def logged_in?
-      current_user != :false
+      !current_user.nil? 
     end
     
     # Accesses the current user from the session.
     def current_user
-      @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
+      if session[:user].exists?
+        @current_user = User.find_by_id(session[:user])
+      end
+     # @current_user ||= (session[:user] && User.find_by_id(session[:user])) || :false
     end
     
     # Store the given user in the session.
@@ -47,10 +50,22 @@ module AuthenticatedSystem
     #
     #   skip_before_filter :login_required
     #
+    
+    def login_required_asdfasf
+      username, passwd = get_auth_data
+      if self.current_user == false && username && passwd
+          self.current_user = User.authenticate(username, passwd) || false
+      end
+      flash[:notice] = "Oops, you do not have access to the page requested" unless authorized?
+      logged_in? && authorized? ? true : access_denied
+    end
+    
     def login_required
       username, passwd = get_auth_data
       self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
-      logged_in? && authorized? ? true : access_denied
+      auth = authorized?
+      flash[:notice] = "Oops, you do not have access to the page requested" unless auth
+      logged_in? && auth ? true : access_denied
     end
     
     # Redirect as appropriate when an access request fails.
@@ -65,7 +80,7 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
           store_location
-          redirect_to :controller => '/sessions', :action => 'login'
+          redirect_to :controller => 'sessions', :action => 'new'
         end
         accepts.xml do
           headers["Status"]           = "Unauthorized"
