@@ -63,7 +63,11 @@ class User < ActiveRecord::Base
       login
     end
   end
-
+  
+   def User.generate_password
+     ( (1..8).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join.upcase.gsub(/[0O]/, "X")).downcase!
+   end
+ 
   protected
     # before filter 
     def encrypt_password

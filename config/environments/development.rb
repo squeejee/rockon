@@ -17,5 +17,17 @@ config.action_controller.perform_caching             = false
 config.action_view.cache_template_extensions         = false
 config.action_view.debug_rjs                         = true
 
+# We need to require this file to send email from Gmail.
+require "smtp_tls"
+
+ActionMailer::Base.server_settings = {
+  :address  => "smtp.gmail.com",
+  :port  => 587, 
+  :domain => "praexis.com",
+  :authentication  => :plain,
+  :user_name  => "mailer@praexis.com",
+  :password  => '!SvnTrac'
+    }
+
 # Don't care if the mailer can't send
-config.action_mailer.raise_delivery_errors = false
+config.action_mailer.raise_delivery_errors = true
