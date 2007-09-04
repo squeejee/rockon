@@ -4,9 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   
   has_many :fantasy_players
-  has_many :auctions
   has_many :bids
-  has_many :auto_bids
   has_many :kitties
 
   validates_presence_of     :login, :email
