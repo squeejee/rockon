@@ -5,7 +5,7 @@
 
 <% @players.search(:player).each do |player| %>
   <%
-  positions = %w'QB RB WR TE Def PK' 
+
   if player[:position] == "QB" || player[:position] == "RB" || player[:position] == "WR" \
      || player[:position] == "TE" || player[:position] == "Def" || player[:position] == "PK"   
   %>
