@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect '', :controller => "welcome"
   map.home '', :controller => 'auctions'
   
+  map.resources :leagues
+  
   map.resources :users
   #easier routes for restful_authentication
   map.signup '/signup', :controller => 'users', :action => 'new'

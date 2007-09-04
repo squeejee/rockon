@@ -6,6 +6,10 @@ module AuthenticatedSystem
       !current_user.nil? 
     end
     
+    def commish_required
+      User.find(current_user).commish? ? true : commish_required
+    end
+    
     # Accesses the current user from the session.
     def current_user
       if session[:user].exists?
@@ -50,16 +54,7 @@ module AuthenticatedSystem
     #
     #   skip_before_filter :login_required
     #
-    
-    def login_required_asdfasf
-      username, passwd = get_auth_data
-      if self.current_user == false && username && passwd
-          self.current_user = User.authenticate(username, passwd) || false
-      end
-      flash[:notice] = "Oops, you do not have access to the page requested" unless authorized?
-      logged_in? && authorized? ? true : access_denied
-    end
-    
+        
     def login_required
       username, passwd = get_auth_data
       self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
@@ -90,6 +85,30 @@ module AuthenticatedSystem
       end
       false
     end  
+    
+    # Redirect as appropriate when an access request fails.
+    #
+    # The default action is to redirect to the login screen.
+    #
+    # Override this method in your controllers if you want to have special
+    # behavior in case the user is not authorized
+    # to access the requested action.  For example, a popup window might
+    # simply close itself.
+    def commish_required
+      respond_to do |accepts|
+        accepts.html do
+          store_location
+          redirect_to :controller => 'auctions', :action => 'index'
+          flash[:notice] = "You must be a commissioner to access that page."
+        end
+        accepts.xml do
+          headers["Status"]           = "Unauthorized"
+          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+          render :text => "Could't authenticate you", :status => '401 Unauthorized'
+        end
+      end
+      false
+    end
     
     # Store the URI of the current request in the session.
     #

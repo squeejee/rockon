@@ -1,8 +1,22 @@
 <h1>Listing leagues</h1>
 
+
 <table>
-  <tr>
-  </tr>
+
+<% @players.search(:player).each do |player| %>
+  <%
+  positions = %w'QB RB WR TE Def PK' 
+  if player[:position] == "QB" || player[:position] == "RB" || player[:position] == "WR" \
+     || player[:position] == "TE" || player[:position] == "Def" || player[:position] == "PK"   
+  %>
+    <tr>
+      <td><%= player[:id].to_i %></td>
+      <td><%= player[:name] %></td>
+      <td><%= player[:team] %></td>
+      <td><%= player[:position] %></td>
+    </tr>
+  <% end %>
+<% end %>
   
 <% for league in @leagues %>
   <tr>
