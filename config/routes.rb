@@ -27,6 +27,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :nfl_players, :name_prefix => 'admin_', :controller => 'admin/nfl_players'
   end
   
+  map.sync_nfl_players '/admin/sync_nfl_players', :controller => 'admin', :action => 'sync_nfl_players'
+  map.sync_rosters '/admin/sync_rosters', :controller => 'admin', :action => 'sync_rosters'
+  
   map.resources :leagues
   
   map.resources :users
