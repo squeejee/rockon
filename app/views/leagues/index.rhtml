@@ -3,20 +3,19 @@
 
 <table>
 
-<% @players.search(:player).each do |player| %>
-  <%
-
-  if player[:position] == "QB" || player[:position] == "RB" || player[:position] == "WR" \
-     || player[:position] == "TE" || player[:position] == "Def" || player[:position] == "PK"   
-  %>
-    <tr>
-      <td><%= player[:id].to_i %></td>
-      <td><%= player[:name] %></td>
-      <td><%= player[:team] %></td>
-      <td><%= player[:position] %></td>
-    </tr>
-  <% end %>
-<% end %>
+    <% 
+    @players.search(:franchise).each do |franchise| 
+        franchise_id = franchise[:id].to_i
+        franchise.search(:player).each do |player|
+    %>
+        <tr>
+          <td><%= franchise_id %></td>
+          <td><%= player[:id].to_i %></td>      
+        </tr>
+    <% 
+        end
+    end 
+    %>
   
 <% for league in @leagues %>
   <tr>

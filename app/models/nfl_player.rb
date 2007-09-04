@@ -11,11 +11,11 @@
 #
 
 class NflPlayer < ActiveRecord::Base
-#  has_many :auctions
+  has_many :auctions
   belongs_to :nfl_team
   belongs_to :position
-#  has_many :bids
-#  has_many :fantasy_players
+  has_many :bids
+  has_many :fantasy_players
   
   def display_name
     first_name + ' ' + last_name
@@ -25,7 +25,7 @@ class NflPlayer < ActiveRecord::Base
     if position_id.nil?
       find(:all)
     else
-      find(:all, :conditions => ["position_id = ?", position_id])
+      find(:all, :conditions => ["position_id = ?", position_id], :order => "last_name, first_name asc")
     end
   end
     

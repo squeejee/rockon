@@ -10,7 +10,7 @@ class LeaguesController < ApplicationController
   def index
     @leagues = League.find(:all)
 
-    @players = Hpricot.XML(open("http://football9.myfantasyleague.com/2007/export?TYPE=players&L=18664&W=")) 
+    @players = Hpricot.XML(open("http://football9.myfantasyleague.com/2007/export?TYPE=rosters&L=18664&W=")) 
 
     respond_to do |format|
       format.html # index.rhtml

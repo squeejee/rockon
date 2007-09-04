@@ -16,7 +16,7 @@ class AdminController < ApplicationController
     @players.search(:player).each do |player|
       if (player[:position] == "QB" || player[:position] == "RB" || player[:position] == "WR" \
       || player[:position] == "TE" || player[:position] == "Def" || player[:position] == "PK") \
-      && player[:id].to_i > 8000
+      && player[:id].to_i > NflPlayer.maximum('id').to_i
         nfl_player = NflPlayer.new()
         nfl_player.id = player[:id].to_i 
         player_name = player[:name].split(',')
@@ -28,8 +28,27 @@ class AdminController < ApplicationController
       end
     end
     
-    flash[:notice] = "NFL Players Successfully Synced. #{NflPlayer.maximum('id')}"
+    flash[:notice] = "NFL Players Successfully Synced."
     render(:action => 'show')
+  end
+  
+  def sync_rosters
+    @players = Hpricot.XML(open("http://football9.myfantasyleague.com/2007/export?TYPE=rosters&L=18664&W="))   
+        
+    @players.search(:franchise).each do |franchise| 
+        franchise_id = franchise[:id].to_i
+        
+        franchise.search(:player).each do |player|          
+          roster_spot = FantasyPlayer.new()
+          roster_spot.user_id = franchise_id
+          roster_spot.nfl_player_id = player[:id].to_i
+          roster_spot.save
+        end
+    end 
+    
+    flash[:notice] = "Fantasy Rosters Successfully Synced."
+    render(:action => 'show')
+    
   end
   
 end
