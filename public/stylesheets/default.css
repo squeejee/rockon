@@ -54,7 +54,7 @@ a#home {
 	width: 150px;
 	height: 75px;
 	background: url(/images/rockon_logo.jpg) top center no-repeat;
-  	margin-top: -25px;
+  	margin-top: -40px;
 }
 
 #site-name {
@@ -125,11 +125,10 @@ div#top-nav {
 }
 
 div#top-nav ul li {
-	float: right;
-	margin: 10px 10px 0px 0px;
+  float: right;
+  margin: 10px 10px 0px 0px;
   font-size: 90%;
 }
-
 
 ul#nav-links {
   clear: both;	
@@ -137,14 +136,29 @@ ul#nav-links {
 }
 
 ul#nav-links li {
+  color: #999999;
   float: right;
-  margin: 30px 20px 0px 0px ;
+  margin: 0px 20px 0px 0px ;
   font-size: 110%;
   text-decoration: none;
   font-weight: bold;
 }
 
 ul#nav-links li a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+ul#nav-welcome {
+  clear: both;	
+  list-style: none;
+}
+
+ul#nav-welcome li {
+  color: #999999;
+  float: right;
+  margin: 12px 20px 0px 0px ;
+  font-size: 110%;
   text-decoration: none;
   font-weight: bold;
 }
