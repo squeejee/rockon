@@ -44,4 +44,12 @@ class Auction < ActiveRecord::Base
   def top_bidder
     self.bids.find_top_bidder()
   end
+  
+  def top_bidder?
+    top_bidder.user.id == current_user
+  end
+  
+  def hidden_auction
+    self.bids.count == 1 && self.active?
+  end
 end

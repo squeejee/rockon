@@ -19,15 +19,20 @@
     #In this case, the first bid entered takes priority.
     top_bidder = auction.bids.find_top_bidder()
 %>
-  <tr>
+  <tr class="<%= cycle('odd', 'even') %> <%= 'hidden_auction' if auction.hidden_auction %>" >
     <td><%= auction.week_no %></td>
-    <td><%= link_to auction.nfl_player.display_name, auction_path(auction) + "/bids" %></td>
-    <td><%= auction.nfl_player.position.position_code %></td>
+    
+    <% if auction.hidden_auction && !auction.top_bidder? %>
+        <td>HIDDEN</td>
+    <% else %>
+        <td><%= link_to auction.nfl_player.display_name, auction_path(auction) + "/bids" %></td>
+    <% end %>
+    <td><%= auction.hidden_auction && !auction.top_bidder? ? "XX" : auction.nfl_player.position.position_code %></td>
     <td><%= top_bidder.user.team_name %></td>
     <td><%= top_bidder.nfl_player.display_name %></td>
     <td><%= number_to_currency(top_bidder.price) %></td>
-    <td><%= link_to top_bidder.user.id == current_user ? 'Edit Bid' : 'New bid', new_bid_path(auction) if auction.active? %></td>
-    <td><%= link_to 'Remove Auction', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.bids.count == 1 && top_bidder.user.id == current_user && auction.active? %></td>
+    <td><%= link_to auction.top_bidder? ? 'Edit' : 'Bid', new_bid_path(auction) if auction.active? && !auction.hidden_auction %></td>
+    <td><%= link_to 'DELETE', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.hidden_auction && auction.top_bidder? %></td>
   </tr>
 <% end %>
 </table>

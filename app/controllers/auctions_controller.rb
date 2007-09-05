@@ -49,13 +49,22 @@ class AuctionsController < ApplicationController
   # POST /auctions
   # POST /auctions.xml
   def create
+    
     @auction = Auction.new(params[:auction])
+    @bid = Bid.new(params[:bid])
+    
+    @existing_auction = Auction.find(:first, :conditions => ["nfl_player_id = ? and week_no = ?", @auction.nfl_player_id, League.current_week])
+    
+    if @existing_auction
+      redirect_to :controller => 'bids', :action => 'create', :auction_id => @existing_auction.id, :bid => @bid
+      return false
+    end
+    
     @positions = Position.find(:all, :order => 'position_order')
 
     @auction.expiration = Chronic.parse('this wednesday 10:00 pm')
     @auction.week_no = League.current_week
     
-    @bid = Bid.new(params[:bid])
     @bid.user_id = current_user
     
     respond_to do |format|
