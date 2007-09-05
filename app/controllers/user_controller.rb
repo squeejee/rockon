@@ -52,9 +52,15 @@ class UserController < ApplicationController
   end
   
   # GET /users/1;edit
-  def edit
-  
-    @page_title = "Update profile for #{@user.full_name}"
+  def edit  
+    @user = User.find(params[:id])
+    if (@user.id == current_user || User.find(current_user).commish?)
+      @page_title = "Update profile for #{@user.full_name}"
+    else
+      flash[:error] = "Sorry, you don't have permission to view this page"
+      redirect_to edit_user_url(current_user)
+      return false
+    end
   end
   
   # PUT /users/1

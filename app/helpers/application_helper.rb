@@ -80,7 +80,7 @@ module ApplicationHelper
            
     end
 
-    return content_tag("div", r.join(" &raquo; "), :id => "breadcrumbs") if r.length > 1
+    return content_tag("div", r.join(" &raquo; "), :id => "breadcrumbs") 
            
   end   
 

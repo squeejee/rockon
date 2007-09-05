@@ -3,6 +3,15 @@
 <p><label for="login">Login</label><br/>
 <%= f.text_field :login %></p>
 
+<p><label for="email">Team Name</label><br/>
+<%= f.text_field :team_name %></p>
+
+<p><label for="email">First Name</label><br/>
+<%= f.text_field :first_name %> </p>
+
+<p><label for="email">Last Name</label><br/>
+<%= f.text_field :last_name %></p>
+
 <p><label for="email">Email</label><br/>
 <%= f.text_field :email %></p>
 
@@ -12,5 +21,5 @@
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= f.password_field :password_confirmation %></p>
 
-<p><%= submit_tag 'Sign up' %></p>
+<p><%= submit_tag 'Edit User Info' %></p>
 <% end -%>

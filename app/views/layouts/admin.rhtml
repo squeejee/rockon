@@ -13,24 +13,12 @@
 
 <div id="wrapper">
   <div id="header">
-  
-  	<ul id="nav-links">
-    	<% if logged_in? %>
-    		<li><%= link_to("sign out &raquo;", logout_url) unless current_user.nil?%></li>
-    		<li><%= link_to("admin &raquo;", admin_url) if User.find(current_user).commish? %></li>
-    		<li><%= "Welcome #{User.find(current_user).full_name}" unless current_user.nil? %></li>
-        <% else %>
-    		<li><%= link_to("sign in &raquo;", "#{login_url}?return_to=#{request.request_uri}") %></li>
-    	<% end %>
-    </ul>
+      
+    <%= render :partial => 'layouts/header' -%>  
     
-  	<div id="site-name">
-  		<a href="/" id="home" title="Rock On Fantasy Auctions!"></a>
-  	</div>
-  	
   </div> <!--End Header-->
   <div id="content">
-	  <%= breadcrumbs %>
+	<%= breadcrumbs %>
   	<% unless flash[:authorization].nil? %>
   		<div class="error"><%= flash[:authorization] %></div>
   	<%end %>
