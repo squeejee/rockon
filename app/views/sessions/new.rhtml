@@ -3,7 +3,7 @@
 <% form_tag "/sessions/create" do -%>
 <div class="field">
 	<label for="login">Login</label>
-	<%= text_field_tag 'login' %>
+        <%= collection_select(:user, :login, @users, :login, :login, options ={:prompt => "--Login Name--"}) %>
 </div>
 
 <div class="field">

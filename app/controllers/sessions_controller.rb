@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
 
   # render new.rhtml
   def new
+    @users = User.find :all
     unless params[:return_to].nil?
       session[:return_to] = params[:return_to]
     end
@@ -19,8 +20,10 @@ class SessionsController < ApplicationController
   end
 
   def create
+    @users = User.find :all
     @page_title = "Please sign in"
-    self.current_user = User.authenticate(params[:login], params[:password])
+    @user = User.new(params[:user]) 
+    self.current_user = User.authenticate(@user.login, params[:password])
     if logged_in?
       if params[:remember_me] == "1"
         User.find(current_user).remember_me
