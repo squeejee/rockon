@@ -25,7 +25,7 @@ class NflPlayer < ActiveRecord::Base
     if position_id.nil?
       find(:all)
     else
-      find(:all, :conditions => ["position_id = ?", position_id], :order => "last_name, first_name asc")
+      find(:all, :conditions => ["id not in (select nfl_player_id from fantasy_players) and position_id = ?", position_id], :order => "last_name, first_name asc")
     end
   end
     
