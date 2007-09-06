@@ -61,8 +61,8 @@ class AuctionsController < ApplicationController
     end
     
     @positions = Position.find(:all, :order => 'position_order')
-
-    @auction.expiration = Chronic.parse('this wednesday 10:00 pm')
+    
+    @auction.expiration = League.auction_end_date
     @auction.week_no = League.current_week
     
     @bid.user_id = current_user

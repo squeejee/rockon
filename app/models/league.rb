@@ -55,4 +55,18 @@ class League < ActiveRecord::Base
     # still starts on Sundays.
     new_date.wday == 0 ? week_no + 1 : week_no
   end
+  
+  def self.auction_end_date
+    current_date = Time.now    
+    days_until_expiration = current_date.wday - League.bid_end_day    
+    
+    if days_until_expiration >= 0
+      expiration_date = current_date + days_until_expiration.days
+      
+      #Set the end date to 
+      return DateTime.new(expiration_date.year, expiration_date.month, expiration_date.day, self.bid_end_time, 0, 0)
+    end
+
+  end
+
 end
