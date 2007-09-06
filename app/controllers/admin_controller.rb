@@ -14,9 +14,7 @@ class AdminController < ApplicationController
     @players = Hpricot.XML(open("http://football9.myfantasyleague.com/2007/export?TYPE=players&L=18664&W=")) 
     
     @players.search(:player).each do |player|
-      if (player[:position] == "QB" || player[:position] == "RB" || player[:position] == "WR" \
-      || player[:position] == "TE" || player[:position] == "Def" || player[:position] == "PK") \
-      && player[:id].to_i > NflPlayer.maximum('id').to_i
+      if %w[QB RB WR TE Def PK].include?(player[:position]) && player[:id].to_i > NflPlayer.maximum('id').to_i
         nfl_player = NflPlayer.new()
         nfl_player.id = player[:id].to_i 
         player_name = player[:name].split(',')
