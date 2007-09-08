@@ -13,6 +13,11 @@
 
 class Auction < ActiveRecord::Base
   has_many :bids
+  
+  #####
+  has_one :top_bidder, :class_name => 'Bid', :order => 'price desc'
+  #####
+  
   belongs_to :user
   belongs_to :nfl_player  
   
@@ -41,9 +46,9 @@ class Auction < ActiveRecord::Base
     end    
   end
   
-  def top_bidder
-    self.bids.find_top_bidder()
-  end
+#  def top_bidder
+#    self.bids.find_top_bidder()
+#  end
   
   def top_bidder?
     top_bidder.user.id == current_user
