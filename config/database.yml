@@ -26,11 +26,11 @@ test:
   database: rockon_test
   username: root
   password:
-  socket: /tmp/mysql.sock
+  host: localhost
 
 production:
   adapter: mysql
   database: rockon_production
   username: root
-  password: 
-  socket: /tmp/mysql.sock
+  password: dilb3rt!
+  host: localhost
