@@ -67,12 +67,14 @@ class UserController < ApplicationController
   # PUT /users/1.xml
   def update
 
+    @user = User.find(params[:id])
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'Your profile has been updated.'
-        format.html { redirect_to user_url(@user) }
+        format.html { redirect_to edit_user_url(current_user) }
         format.xml  { head :ok }
       else
+        flash[:error] = 'An error occurred.  Your profile was not updated.'
         format.html { render :action => "edit" }
         format.xml  { render :xml => @user.errors.to_xml }
       end

@@ -37,6 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   #easier routes for restful_authentication
   map.edit_user '/edit/:id', :controller => 'user', :action => 'edit'
+  map.update_user '/update/:id', :controller => 'user', :action => 'update'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
