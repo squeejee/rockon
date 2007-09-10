@@ -311,7 +311,7 @@ div.toolbar {
 table.grid {
   font-size: 95%;
   margin-top: 20px;
-  width: 90%;
+  width: 98%;
   border: solid 1px #d5d5d5;
 }
 
@@ -332,6 +332,13 @@ orange: #f4a02e
 table.grid td {
   text-align: center;
   padding: 3px 10px 3px 10px;
+}
+
+table.grid tr.even {  background: #efefef; } /* for use in alternating background row tables */
+
+table.grid tr.hidden_auction {
+    color: #999999;
+    font-style: italic;
 }
 
 table.grid td.grid-id {
