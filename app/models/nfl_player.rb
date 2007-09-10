@@ -15,7 +15,7 @@ class NflPlayer < ActiveRecord::Base
   belongs_to :nfl_team
   belongs_to :position
   has_many :bids
-  has_one :fantasy_player
+  has_many :fantasy_players
   
   def display_name
     first_name + ' ' + last_name
