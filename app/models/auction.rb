@@ -61,8 +61,8 @@ class Auction < ActiveRecord::Base
   def time_remaining
     require 'date'
     intervals = [["d", 1], ["h", 24], ["m", 60], ["s", 60]]
-    elapsed = self.expiration - Time.now
-    elapsed = elapsed/(24*3600) #This is a hack to convert the seconds into days to use the below formula
+    diff = self.expiration - Time.now
+    elapsed = diff/(24*3600) #This is a hack to convert the seconds into days to use the below formula
     
     interval = 1.0
     parts = intervals.collect do |name, new_interval|
@@ -71,13 +71,13 @@ class Auction < ActiveRecord::Base
       "#{number.to_i}#{name}"
     end
     
-    if elapsed < 1
+    if diff/(24*3600) < 1
       parts.slice!(0)
     else
       parts.slice!(3)
     end
     
-    return "#{parts.join(" ")}"
+    return "#{parts.join(' ')}"
   end
 end
 
