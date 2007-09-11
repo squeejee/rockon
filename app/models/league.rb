@@ -57,16 +57,16 @@ class League < ActiveRecord::Base
   end
   
   def self.auction_end_date
-    current_date = Time.now    
+    current_date = Time.now  
     days_until_expiration = League.bid_end_day - current_date.wday
-    
-    if days_until_expiration >= 0
+        
+    #if days_until_expiration >= 0
       expiration_date = current_date + days_until_expiration.days
-      
+            
       #Set the end date to 
-      return DateTime.new(expiration_date.year, expiration_date.month, expiration_date.day, self.bid_end_time, 0, 0)
-    end
-
+      end_date = DateTime.new(expiration_date.year, expiration_date.month, expiration_date.day, League.bid_end_time, 0, 0, DateTime.now.offset)
+      return end_date
+      
   end
 
 end

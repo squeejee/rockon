@@ -1,5 +1,6 @@
 <h1>Current Auctions</h1>
 
+
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
     <th>Week</th>
@@ -8,6 +9,7 @@
     <th>Top Bidder</th>
     <th>Dropped Player</th>
     <th>Current Bid</th>
+    <th>Time Left</th>
     <th></th>
     <th></th>
   </tr>
@@ -31,6 +33,7 @@
     <td><%= top_bidder.user.team_name %></td>
     <td><%= top_bidder.nfl_player.display_name %></td>
     <td><%= number_to_currency(top_bidder.price) %></td>
+    <td nowrap><%= auction.active? ? auction.time_remaining : "COMPLETE"%></td>
     <td><%= link_to auction.top_bidder? ? 'Edit' : 'Bid', new_bid_path(auction) if auction.active? && !auction.hidden_auction %></td>
     <td><%= link_to 'DELETE', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.hidden_auction && auction.top_bidder? %></td>
   </tr>
