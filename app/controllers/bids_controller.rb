@@ -11,7 +11,7 @@ class BidsController < ApplicationController
   def index
     
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)   
-    
+              
     unless @auction.hidden_auction && !@auction.top_bidder?             
       @bids = Bid.find(:all, :conditions => {:auction_id => params[:auction_id]}, 
               :include => [:nfl_player, :user],
@@ -42,17 +42,12 @@ class BidsController < ApplicationController
   def new
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)
     
-    unless @auction.hidden_auction && !@auction.top_bidder? 
       if @auction.active? 
         @bid = Bid.new 
       else
         flash[:error] = "Sorry, Bro!  This auction has expired!!"
         redirect_to auction_path(@auction) + "/bids"
       end
-    else
-      flash[:notice] = "Yo!  That auction is hidden and not yours!!"
-      redirect_to auctions_url
-    end
   end
 
   # GET /bids/1;edit
@@ -76,29 +71,27 @@ class BidsController < ApplicationController
                        :max_price => @top_bid.max_price)
 
     existing_bidder = false
+    
+    
     unless @bid.max_price.nil?
-      if @auction.top_bidder.user_id == current_user 
+      if @auction.top_bidder.user_id == current_user  
+        @bid = Bid.find(@top_bid.id)
         if @bid.max_price >= @top_bid.price 
-          existing_bidder = true
-          @top_bid.max_price = @bid.max_price
-          @top_bid.save ? success_display=true : error_display=true
+          existing_bidder = true   
+          success_display = true
+          @bid.update_attributes(params[:bid]) ? success_display=true : error_display=true
         else 
-          winning_bidder = false 
-          success_display = true        
+          winning_bidder = false     
         end
+
       else
         if @bid.max_price <= @top_bid.price   
           winning_bidder = false 
           success_display = true
-        elsif @bid.max_price == @top_bid.max_price  
+        elsif @bid.max_price <= @top_bid.max_price  
           winning_bidder = false
           @bid.price = @bid.max_price - 1
           @existing_bid.price = @bid.max_price
-          @bid.save && @existing_bid.save ? success_display=true : error_display=true
-        elsif @bid.max_price < @top_bid.max_price  
-          winning_bidder = false
-          @bid.price = @bid.max_price
-          @existing_bid.price = @bid.max_price + 1
           @bid.save && @existing_bid.save ? success_display=true : error_display=true
         else  
           winning_bidder = true

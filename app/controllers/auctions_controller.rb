@@ -53,7 +53,7 @@ class AuctionsController < ApplicationController
     @existing_auction = Auction.find(:first, :conditions => ["nfl_player_id = ? and week_no = ?", @auction.nfl_player_id, League.current_week])
     
     if @existing_auction
-      redirect_to :controller => 'bids', :action => 'create', :auction_id => @existing_auction.id, :bid => @bid
+      redirect_to :controller => 'bids', :action => 'new', :auction_id => @existing_auction.id, :bid => @bid
       return false
     end
     
