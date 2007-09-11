@@ -18,11 +18,11 @@ class NflPlayer < ActiveRecord::Base
   has_many :fantasy_players
   
   def display_name
-    first_name + ' ' + last_name
+    last_name + ', ' + first_name
   end
     
   def display_name_with_team_code
-    first_name + ' ' + last_name + '--' + nfl_team.nfl_team_code
+    last_name + ', ' + first_name + '--' + nfl_team.nfl_team_code
   end
   
   def self.find_by_position_id(position_id)

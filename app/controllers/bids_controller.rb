@@ -2,20 +2,28 @@ class BidsController < ApplicationController
   # GET /bids
   # GET /bids.xml
   
+  before_filter :login_required, :except=>[:index]
+  
   require 'date'
   
   helper :auctions
   
   def index
+    
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)   
-             
-    @bids = Bid.find(:all, :conditions => {:auction_id => params[:auction_id]}, 
-            :include => [:nfl_player, :user],
-            :order => "bids.price desc")
+    
+    unless @auction.hidden_auction && !@auction.top_bidder?             
+      @bids = Bid.find(:all, :conditions => {:auction_id => params[:auction_id]}, 
+              :include => [:nfl_player, :user],
+              :order => "bids.price desc")
 
-    respond_to do |format|
-      format.html # index.rhtml
-      format.xml  { render :xml => @bids.to_xml }
+      respond_to do |format|
+        format.html # index.rhtml
+        format.xml  { render :xml => @bids.to_xml }
+      end
+    else
+      flash[:notice] = "Yo!  That auction is hidden and not yours!!"
+      redirect_to auctions_url
     end
   end
 
@@ -33,11 +41,17 @@ class BidsController < ApplicationController
   # GET /bids/new
   def new
     @auction = Auction.find(params[:auction_id], :include => :nfl_player)
-    if @auction.active? 
-      @bid = Bid.new 
+    
+    unless @auction.hidden_auction && !@auction.top_bidder? 
+      if @auction.active? 
+        @bid = Bid.new 
+      else
+        flash[:error] = "Sorry, Bro!  This auction has expired!!"
+        redirect_to auction_path(@auction) + "/bids"
+      end
     else
-      flash[:error] = "Sorry, Bro!  This auction has expired!!"
-      redirect_to auction_path(@auction) + "/bids"
+      flash[:notice] = "Yo!  That auction is hidden and not yours!!"
+      redirect_to auctions_url
     end
   end
 

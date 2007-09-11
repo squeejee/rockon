@@ -2,10 +2,7 @@ class AuctionsController < ApplicationController
   # GET /auctions
   # GET /auctions.xml
   
-  #chronic is a gem that allows us to do some cool stuff with dates and times.
-  # require 'chronic'
-  
-  before_filter :login_required
+  before_filter :login_required, :except=>[:index]
   
   auto_complete_for :nfl_player, :first_name
   
