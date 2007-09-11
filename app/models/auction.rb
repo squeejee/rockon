@@ -68,7 +68,7 @@ class Auction < ActiveRecord::Base
     parts = intervals.collect do |name, new_interval|
       interval /= new_interval
       number, elapsed = elapsed.abs.divmod(interval)
-      "#{number.to_i} #{name}"
+      "#{number.to_i}#{name}"
     end
     
     if elapsed < 1
@@ -77,7 +77,7 @@ class Auction < ActiveRecord::Base
       parts.slice!(3)
     end
     
-    return "#{parts.join(", ")}"
+    return "#{parts.join(" ")}"
   end
 end
 

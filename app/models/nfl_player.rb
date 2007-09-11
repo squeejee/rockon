@@ -20,12 +20,16 @@ class NflPlayer < ActiveRecord::Base
   def display_name
     first_name + ' ' + last_name
   end
+    
+  def display_name_with_team_code
+    first_name + ' ' + last_name + '--' + nfl_team.nfl_team_code
+  end
   
   def self.find_by_position_id(position_id)
     if position_id.nil?
-      find(:all, :order => "last_name, first_name asc")
+      find(:all, :include=>:nfl_team, :order => "last_name, first_name asc")
     else
-      find(:all, :conditions => ["id not in (select nfl_player_id from fantasy_players) and position_id = ?", position_id], :order => "last_name, first_name asc")
+      find(:all, :include=>:nfl_team, :conditions => ["nfl_players.id not in (select nfl_player_id from fantasy_players) and position_id = ?", position_id], :order => "last_name, first_name asc")
     end
   end
     
