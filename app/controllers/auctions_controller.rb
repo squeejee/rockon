@@ -53,7 +53,14 @@ class AuctionsController < ApplicationController
     @existing_auction = Auction.find(:first, :conditions => ["nfl_player_id = ? and week_no = ?", @auction.nfl_player_id, League.current_week])
     
     if @existing_auction
-      redirect_to :controller => 'bids', :action => 'new', :auction_id => @existing_auction.id, :bid => @bid
+      flash[:notice] = 'This player already has a bid out.  Please bid again.'
+      
+      #*************I CANNOT FIGURE OUT HOW TO REDIRECT DIRECTLY TO THE BIDS/CREATE METHOD WHILE APPENDING
+      #*************THE PARAMS HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      #redirect_to create_bid_url(@existing_auction.id), :controller => 'bids', :action => 'create', :bid => params[:bid]
+      #redirect_to :controller => 'bids', :action => 'create', :auction_id => @existing_auction.id, :bid => params[:bid]
+      
+      redirect_to new_bid_path(@existing_auction.id)
       return false
     end
     

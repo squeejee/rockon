@@ -1,8 +1,9 @@
 <h1>Place a bid for <%= @auction.nfl_player.display_name %></h1>
 <ul>
-<li>Current bid: <em><%= number_to_currency(@auction.top_bidder.price)%></em>.
+<li><h2>Current bid: <em><%= number_to_currency(@auction.top_bidder.price)%></em>.</h2>
 <%= "<li>Top bidder: <em>#{@auction.top_bidder.user_id == current_user ? 'You' : @auction.top_bidder.user.full_name}</em>." %>
 <%= "<li>Your current max bid: <em>#{number_to_currency(@auction.top_bidder.max_price)}</em>." if @auction.top_bidder.user_id == current_user %>
+<%= "<li>Player to be dropped: <em>#{@auction.top_bidder.nfl_player.display_name}</em>." %>
 </ul>
 <%= error_messages_for :bid %>
 

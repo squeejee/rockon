@@ -75,13 +75,15 @@ class BidsController < ApplicationController
     
     unless @bid.max_price.nil?
       if @auction.top_bidder.user_id == current_user  
-        @bid = Bid.find(@top_bid.id)
+        @modified_bid = Bid.find(@top_bid.id)
         if @bid.max_price >= @top_bid.price 
           existing_bidder = true   
           success_display = true
-          @bid.update_attributes(params[:bid]) ? success_display=true : error_display=true
+          @modified_bid.update_attributes(params[:bid]) 
+          @modified_bid.save ? success_display=true : error_display=true
         else 
-          winning_bidder = false     
+          winning_bidder = false   
+          success_display = true
         end
 
       else
@@ -104,7 +106,7 @@ class BidsController < ApplicationController
         
     if existing_bidder && success_display
       flash[:notice] = "Your max bid has been updated!"
-      render(:action => 'new')
+      redirect_to new_bid_path
     elsif winning_bidder && success_display
       flash[:notice] = "Congratulations!  You are now the top bidder!" 
       redirect_to auction_url(@auction) + "/bids"

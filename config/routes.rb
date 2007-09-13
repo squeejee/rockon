@@ -11,8 +11,11 @@ ActionController::Routing::Routes.draw do |map|
   # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
   
+  #map.create_bid '/auctions/:auction_id/bid/create', :controller => 'bids', :action => 'create', :method => 'get'
+  
   map.resources :auctions do |auction|
     auction.resources :bids
+    auction.create_bid '/auctions/:auction_id/bid/create', :controller => 'bids', :action => 'create'
   end
   
   map.resources :nfl_players, :collection => {:search => :get }
@@ -43,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
   map.forgot_password '/forgot_password', :controller => 'user', :action => 'forgot_password'
   map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
-
+    
   map.connect '/:short_name/', :controller => 'stores', :action => 'show'
     
   # Allow downloading Web Service WSDL as a file with an extension
