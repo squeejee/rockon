@@ -32,7 +32,13 @@ class AdminController < ApplicationController
   
   def sync_rosters
     @players = Hpricot.XML(open("http://football9.myfantasyleague.com/2007/export?TYPE=rosters&L=18664&W="))   
-        
+    
+    #Flush and fill rosters from MFL
+    n = FantasyPlayer.find :all
+    n.each do |player|
+      player.destroy
+    end
+    
     @players.search(:franchise).each do |franchise| 
         franchise_id = franchise[:id].to_i
         
