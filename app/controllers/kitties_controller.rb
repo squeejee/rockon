@@ -13,7 +13,7 @@ class KittiesController < ApplicationController
   # GET /kitties/1
   # GET /kitties/1.xml
   def show
-    @kitty = Kitty.find(:all, :conditions => ["user_id = ?", params[:user_id]], :order=>"week_no")
+    @kitty = Kitty.find(:all, :conditions => ["user_id = ?", params[:id]], :order=>"week_no")
         
     @league_due = Kitty.sum_league_due(params[:user_id])
     @league_owes = Kitty.sum_league_owes(params[:user_id])
