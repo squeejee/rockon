@@ -15,10 +15,10 @@ class KittiesController < ApplicationController
   def show
     @kitty = Kitty.find(:all, :conditions => ["user_id = ?", params[:id]], :order=>"week_no")
         
-    @league_due = Kitty.sum_league_due(params[:user_id])
-    @league_owes = Kitty.sum_league_owes(params[:user_id])
-    @league_received = Kitty.sum_league_received(params[:user_id])
-    @league_paid = Kitty.sum_league_paid(params[:user_id])
+    @league_due = Kitty.sum_league_due(params[:id])
+    @league_owes = Kitty.sum_league_owes(params[:id])
+    @league_received = Kitty.sum_league_received(params[:id])
+    @league_paid = Kitty.sum_league_paid(params[:id])
     @user_balance = (@league_received.to_i + @league_owe.to_i) - (@league_due.to_i + @league_paid.to_i)
   end
 
