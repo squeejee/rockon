@@ -49,7 +49,7 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password '/forgot_password', :controller => 'user', :action => 'forgot_password'
   map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
     
-  map.user_kitty '/kittyies/:user_id', :controller => 'kitties', :action => 'show'
+  map.user_kitty '/kitties/:user_id', :controller => 'kitties', :action => 'show'
   
   map.connect '/:short_name/', :controller => 'stores', :action => 'show'
     
