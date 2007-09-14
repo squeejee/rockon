@@ -1,0 +1,32 @@
+
+<table class="grid" cellspacing="0" cellpadding="0" width="40%">
+  <tr>
+    <th>Week</th>
+    <th>Description</th>
+    <th>League Due</th>
+    <th>League Owes</th>
+    <th>League Received</th>
+    <th>League Paid</th>
+  </tr>
+  
+<% 
+  for kitty in @kitty 
+%>
+  <tr class="<%= cycle('odd', 'even') %>" >
+    <td class="week"><%= kitty.week_no %></td>
+    <td class="description"><%= kitty.description %></td>
+    <td class=""><%= number_to_currency(kitty.league_due) %></td>
+    <td class=""><%= number_to_currency(kitty.league_owes) %></td>
+    <td class=""><%= number_to_currency(kitty.league_received) %></td>
+    <td class=""><%= number_to_currency(kitty.league_paid) %></td>
+  </tr>
+<% end %>
+  
+  <tr class="summary">
+    <td colspan=2 class="description">BALANCE:&nbsp;&nbsp; <%= number_to_currency(@user_balance) %> </td>
+    <td class=""><%= number_to_currency(@league_due) %></td>
+    <td class=""><%= number_to_currency(@league_owes) %></td>
+    <td class=""><%= number_to_currency(@league_received) %></td>
+    <td class=""><%= number_to_currency(@league_paid) %></td>
+  </tr>
+</table>

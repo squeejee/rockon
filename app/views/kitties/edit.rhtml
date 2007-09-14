@@ -1,0 +1,12 @@
+<h1>Editing kitty</h1>
+
+<%= error_messages_for :kitty %>
+
+<% form_for(:kitty, :url => kitty_path(@kitty), :html => { :method => :put }) do |f| %>
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', kitty_path(@kitty) %> |
+<%= link_to 'Back', kitties_path %>

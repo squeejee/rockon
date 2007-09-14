@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :kitties
+
   map.resources :leagues
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -47,6 +49,8 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password '/forgot_password', :controller => 'user', :action => 'forgot_password'
   map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
     
+  map.user_kitty '/kittyies/:user_id', :controller => 'kitties', :action => 'show'
+  
   map.connect '/:short_name/', :controller => 'stores', :action => 'show'
     
   # Allow downloading Web Service WSDL as a file with an extension

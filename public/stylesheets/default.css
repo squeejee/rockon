@@ -101,7 +101,7 @@ h1 {
 }
 
 h2 {
-	font-size: 125%;
+	font-size: 115%;
 	letter-spacing: -1px;
 }
 
@@ -341,6 +341,22 @@ table.grid tr.hidden_auction {
     font-style: italic;
 }
 
+table.grid tr.summary {
+  border-top: solid 1px #ccc;
+  background: #bfbfbf;
+  font-weight: bold;  
+}
+
+table.grid td.description {
+  text-align: left;
+  font-weight: bold;  
+}
+
+table.grid td.week {
+  text-align: center;
+  font-weight: bold;  
+}
+
 table.grid td.grid-id {
   
 }
@@ -366,24 +382,34 @@ span#stat-redemption-count {
 }
 
 table.stats {
-  background: #efefef;
   width: 240px;	
   margin-top: 10px;
+  border: solid 1px #d5d5d5;
 }
 
+table.stats tr.even {  background: #efefef; } /* for use in alternating background row tables */
+
 table.stats td {
-	padding: 4px;
+	padding: 10px;
 }
 
 td.stat-label {
-  text-transform: lowercase;
+/*  text-transform: lowercase; */
   text-align: right;
 }
 
 td.stat-value {
   font-weight: bold;
   letter-spacing: -1px;
+  text-align: right;
+}
+
+table.stats th {
+  font-weight: bold;
   text-align: center;
+  padding: 3px 5px 3px 5px;
+  background: #efefef; url(/images/header-back.png) top left repeat-x;
+  border-bottom: solid 1px #ccc;
 }
 
 div#content div.user-profile-snapshot {
