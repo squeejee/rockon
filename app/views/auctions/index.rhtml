@@ -3,7 +3,7 @@
 
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
-    <th>Week</th>
+    <%= sort_header_tag("#{Auction.table_name}.week_no", :caption => 'Week') %>
     <th>Player</th>
     <th>Position</th>
     <th>Top Bidder</th>

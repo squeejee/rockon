@@ -6,13 +6,17 @@ class AuctionsController < ApplicationController
   
   auto_complete_for :nfl_player, :first_name
   
-  def index
-    @auctions = Auction.find(:all, :conditions => "expiration > '2007-08-01'", :include => [{:nfl_player=>:position}, :bids], :order => "auctions.week_no desc, positions.position_order asc" )
+  helper :sort
+  include SortHelper
+  
+  def index    
+    sort_init 'auctions.week_no', 'desc'
+    sort_update
     
-    respond_to do |format|
-      format.html # index.rhtml
-      format.xml  { render :xml => @auctions.to_xml }
-    end
+    @auctions = Auction.find(:all, :conditions => "expiration > '2007-08-01'", :include => [{:nfl_player=>:position}, :bids], :order => "#{sort_clause}, positions.position_order asc" )
+    
+    render :action => "index", :layout => false if request.xhr?
+    
   end
 
   # GET /auctions/1

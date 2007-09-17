@@ -11,28 +11,32 @@
 <body>
 
 <div id="wrapper">
-  <div id="header">
-      
+    <div id="header">
+
     <%= render :partial => 'layouts/header' -%>  
-  	
-  </div> <!--End Header-->
-  <div id="content">
-	  <%= breadcrumbs %>
-  	<% unless flash[:authorization].nil? %>
-  		<div class="error"><%= flash[:authorization] %></div>
-  	<%end %>
-      <% unless flash[:notice].nil? %>
-  		<div class="notice"><%= flash[:notice] %></div>
-  	<% end %>
-      <% unless flash[:error].nil? %>
-  		<div class="error"><%= flash[:error] %></div>
-  	<% end %>
-  	<%= yield  %>
-  </div>
-  
-	<div id="footer">
-		<div id="copyright"><span class="wildfire">Rock On!</span>  The Fantasy Football League  ::  Est. 1995</div>
-	</div>
+
+    </div> <!--End Header-->
+    <%= breadcrumbs %>
+    <div id="content">
+          <% unless flash[:authorization].nil? %>
+                    <div class="error"><%= flash[:authorization] %></div>
+          <%end %>
+          <% unless flash[:notice].nil? %>
+                    <div class="notice"><%= flash[:notice] %></div>
+          <% end %>
+          <% unless flash[:error].nil? %>
+                    <div class="error"><%= flash[:error] %></div>
+          <% end %>
+          <%= yield  %>
+    </div>
+
+    <div id="ajax-indicator" style="display:none;">
+     <span>Loading...</span>
+    </div>
+
+    <div id="footer">
+            <div id="copyright"><span class="wildfire">Rock On!</span>  The Fantasy Football League  ::  Est. 1995</div>
+    </div>
 	
 </div>
 
