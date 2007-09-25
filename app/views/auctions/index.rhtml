@@ -4,9 +4,9 @@
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
     <%= sort_header_tag("#{Auction.table_name}.week_no", :caption => 'Week') %>
-    <th>Player</th>
-    <th>Position</th>
-    <th>Top Bidder</th>
+    <%= sort_header_tag("#{NflPlayer.table_name}.last_name", :caption => 'Player') %>
+    <%= sort_header_tag("#{Position.table_name}.position_order", :caption => 'Position') %>
+    <th>Bidder</th>
     <th>Dropped Player</th>
     <th>Current Bid</th>
     <th>Time Left</th>
@@ -19,7 +19,7 @@
     
     #We use the following instead of "maximum()" in case two users have the same top bid.
     #In this case, the first bid entered takes priority.
-    top_bidder = auction.bids.find_top_bidder()
+    #top_bidder = auction.bids.find_top_bidder()
 %>
   <tr class="<%= cycle('odd', 'even') %> <%= 'hidden_auction' if auction.hidden_auction %>" >
     <td><%= auction.week_no %></td>
@@ -30,9 +30,9 @@
         <td><%= link_to auction.nfl_player.display_name, auction_path(auction) + "/bids" %></td>
     <% end %>
     <td><%= auction.hidden_auction && !auction.top_bidder? ? "XX" : auction.nfl_player.position.position_code %></td>
-    <td><%= top_bidder.user.team_name %></td>
-    <td><%= top_bidder.nfl_player.display_name %></td>
-    <td><%= number_to_currency(top_bidder.price) %></td>
+    <td><%= auction.top_bidder.user.team_name %></td>
+    <td><%= auction.top_bidder.nfl_player.display_name %></td>
+    <td><%= number_to_currency(auction.top_bidder.price) %></td>
     <td nowrap><%= auction.active? ? auction.time_remaining : "COMPLETE"%></td>
     <td><%= link_to auction.top_bidder? ? 'Edit' : 'Bid', new_bid_path(auction) if auction.active? && !auction.hidden_auction %></td>
     <td><%= link_to 'DELETE', auction_path(auction), :confirm => 'Are you sure?', :method => :delete if auction.hidden_auction && auction.top_bidder? %></td>
