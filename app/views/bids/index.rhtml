@@ -1,9 +1,10 @@
 <h1><%= @auction.nfl_player.display_name %></h1>
+<h2><%= @auction.nfl_player.position.position_code%> - <%= @auction.nfl_player.nfl_team.nfl_team_name%></h2>
 
 <% if @auction.expiration > Time.now %>
   <%="<h2>Time Remaining: <span class='wildfire'>#{@auction.time_remaining}</span></h2>"%>
 <% else %>
-  <%="This auction has ended." %>
+  <%="<p>This auction has ended.</p>" %>
 <% end %>
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
