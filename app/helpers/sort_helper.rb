@@ -141,7 +141,7 @@ module SortHelper
     options[:initial_order].nil? ? initial_order = "asc" : initial_order = options[:initial_order]
     caption = options.delete(:caption) || titleize(Inflector::humanize(column))
     #options[:title] = caption unless options[:title]
-    content_tag('th', sort_link(column, caption, initial_order))
+    content_tag('th nowrap', sort_link(column, caption, initial_order))
   end
 
   private
