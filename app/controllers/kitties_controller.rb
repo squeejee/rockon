@@ -19,7 +19,7 @@ class KittiesController < ApplicationController
     @league_owes = Kitty.sum_league_owes(params[:id])
     @league_received = Kitty.sum_league_received(params[:id])
     @league_paid = Kitty.sum_league_paid(params[:id])
-    @user_balance = (@league_received.to_i + @league_owe.to_i) - (@league_due.to_i + @league_paid.to_i)
+    @user_balance = (@league_received.to_i + @league_owes.to_i) - (@league_due.to_i + @league_paid.to_i)
   end
 
   # GET /kitties/new
