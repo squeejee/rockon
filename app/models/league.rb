@@ -1,3 +1,18 @@
+# == Schema Information
+# Schema version: 8
+#
+# Table name: leagues
+#
+#  id              :integer(11)   not null, primary key
+#  name            :string(255)   
+#  first_week_date :datetime      
+#  bid_end_day     :integer(11)   
+#  bid_end_time    :integer(11)   
+#  last_bid_week   :integer(11)   
+#  updated_at      :datetime      
+#  created_at      :datetime      
+#
+
 class League < ActiveRecord::Base
   include LeaguesHelper
   has_many :users

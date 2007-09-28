@@ -13,7 +13,14 @@ class AuctionsController < ApplicationController
     sort_init 'auctions.week_no', 'desc'
     sort_update
     
-    @auctions = Auction.find(:all, :conditions => "expiration > '2007-08-01'", :include => [{:nfl_player=>:position}, :bids], :order => "#{sort_clause}, positions.position_order asc" )
+    @week_no = params[:week_no].nil? ? League.current_week : params[:week_no]
+
+    if @week_no == "all"  
+     @auctions = Auction.find(:all, :include => [{:nfl_player=>:position}, {:bids=>:user}], :group => "auctions.id", :order => "#{sort_clause}" )
+    else
+      @auctions = Auction.find(:all, :conditions=>["week_no = ?", @week_no], :include => [{:nfl_player=>:position}, {:bids=>:user}], :group => "auctions.id", :order => "#{sort_clause}" )
+    end
+    
     
     render :action => "index", :layout => false if request.xhr?
     

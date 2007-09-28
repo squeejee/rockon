@@ -1,5 +1,16 @@
-<h1>Current Auctions</h1>
+<h1><%= @week_no == 'all' ? "All" : "Week #{@week_no}" %> Auctions</h1>
 
+<p><strong>Week: &nbsp;</strong> 
+
+    <% 
+    (1..League.current_week).each do |week|
+    %>
+        <%= link_to week, auctions_url + '?week_no=' + week.to_s%>
+    <%
+    end
+    %> | 
+    <%= link_to 'All Weeks', auctions_url + '?week_no=all'%>
+</p>
 
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
