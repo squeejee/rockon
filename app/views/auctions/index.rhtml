@@ -12,6 +12,7 @@
     <%= link_to 'All Weeks', auctions_url + '?week_no=all'%>
 </p>
 
+<strong>Total Bid Amount:</strong>  <%= number_to_currency(@total_bid_amt) %>
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
     <th>Week</th>

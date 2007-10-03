@@ -21,6 +21,10 @@ class AuctionsController < ApplicationController
       @auctions = Auction.find(:all, :conditions=>["week_no = ?", @week_no], :include => [{:nfl_player=>:position}, {:bids=>:user}], :group => "auctions.id", :order => "#{sort_clause}, position_order" )
     end
     
+    @total_bid_amt = 0
+    @auctions.each do |a|
+      @total_bid_amt += a.top_bidder.price
+    end
     
     render :action => "index", :layout => false if request.xhr?
     
