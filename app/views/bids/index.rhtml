@@ -11,6 +11,7 @@
     <th>Bidding Team</th>
     <th>Bid Amount</th>
     <th>Dropped Player</th>
+    <th>Bid Time</th>
   </tr>
   
 <% for bid in @bids %>
@@ -18,6 +19,7 @@
     <td><%= bid.user.team_name %></td>
     <td><%= number_to_currency(bid.price) %></td>
     <td><%= bid.nfl_player.display_name %></td>
+    <td><%= bid.created_at.strftime("%m/%d/%y (%a) @ %I:%M:%S %p") %></td>
   </tr>
 <% end %>
 </table>
