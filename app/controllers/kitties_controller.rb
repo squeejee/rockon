@@ -35,7 +35,17 @@ class KittiesController < ApplicationController
   # POST /kitties
   # POST /kitties.xml
   def create
-    @kitty = Kitty.new(params[:kitty])
+    a = Auction.find(:all, :conditions=>"week_no = #{params[:week_no]}")
+
+    a.each do |auction| 
+      Kitty.create(
+      {
+        :week_no =>  auction.week_no, 
+        :user_id => auction.top_bidder.user_id, 
+        :description =>  auction.top_bidder.user.full_name + " dropped " + auction.top_bidder.nfl_player.display_name + "; Picked-up " + auction.nfl_player.display_name, 
+        :league_due => auction.top_bidder.price
+      })
+    end
 
     respond_to do |format|
       if @kitty.save
