@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.2.3' unless defined? RAILS_GEM_VERSION
+#RAILS_GEM_VERSION = '1.2.4' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -58,3 +58,17 @@ end
 # Mime::Type.register "application/x-mobile", :mobile
 
 # Include your application configuration below
+
+
+# We need to require this file to send email from Gmail.
+require "smtp_tls"
+
+ActionMailer::Base.server_settings = {
+  :address  => "smtp.gmail.com",
+  :port  => 587, 
+  :domain => "praexis.com",
+  :authentication  => :plain,
+  :user_name  => "mailer@praexis.com",
+  :password  => '!SvnTrac'
+    }
+

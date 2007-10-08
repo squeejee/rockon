@@ -37,7 +37,7 @@ class UserController < ApplicationController
     @page_title = "Sign up"
     @user = User.new(params[:user])
     if captcha_valid?(params[:user][:captcha_id], params[:user][:captcha_validation])
-        @user.save!
+      @user.save!
     else
       flash[:error] = "Are you sure you're human? Please enter the text in the image below."
       render :action => 'new'
@@ -126,7 +126,7 @@ class UserController < ApplicationController
         if @user.save
           UserNotifier.deliver_reset_password(@user, new_password, home_url)
           flash[:notice] = "Your new password has been sent to #{email}."
-          redirect_to new_session_url
+          redirect_to login_url
         else
           flash[:error] = "There was an error resetting your password"
         end
