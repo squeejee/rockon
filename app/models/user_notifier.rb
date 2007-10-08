@@ -20,10 +20,20 @@ class UserNotifier < ActionMailer::Base
     @body       = {"user" => user, "new_password" => new_password, "url" => url}
   end
   
+  def auction_outbid(bid, user, auction)
+    setup_email(user)
+    @subject += bid.user.full_name + ' has outbid you for ' + auction.nfl_player.display_name
+    @body = {:user => user, 
+             :bid => bid, 
+             :auction => auction,
+             :auction_url => auction_url(auction) + "/bids"
+             }
+  end
+  
   protected
     def setup_email(user)
       @recipients  = "#{user.email}"
-      @from        = "Commish <commish@rockonffl.com>"
+      @from        = "Rock On <commish@rockonffl.com>"
       @subject     = "[Rock On] "
       @sent_on     = Time.now
       @body[:user] = user

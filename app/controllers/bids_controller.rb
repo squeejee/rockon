@@ -108,11 +108,12 @@ class BidsController < ApplicationController
       flash[:notice] = "Your max bid has been updated!"
       redirect_to new_bid_path
     elsif winning_bidder && success_display
+      UserNotifier.deliver_auction_outbid(@bid, @top_bid.user, @auction)
       flash[:notice] = "Congratulations!  You are now the top bidder!" 
       redirect_to auction_url(@auction) + "/bids"
     elsif !winning_bidder && success_display
       flash[:notice] = "Whoops!  You are going to have to bid higher than $#{@bid.max_price}!"
-      render(:action => 'new')
+      redirect_to new_bid_path
     else
       flash[:error] = "Please fill in all fields!"
       render(:action => 'new')

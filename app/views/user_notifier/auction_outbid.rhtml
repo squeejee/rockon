@@ -1,0 +1,12 @@
+<%= @user.first_name %>,
+
+You have been outbid!
+
+Player:  <%= @auction.nfl_player.display_name%>
+New Price:   <%= number_to_currency(@bid.price) %>
+Current Auction Leader:   <%= @bid.user.full_name %>
+
+So go out there and show <%= @bid.user.first_name %> who's boss!
+
+<%= @auction_url %>
+
