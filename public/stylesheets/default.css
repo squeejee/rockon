@@ -381,6 +381,36 @@ span#stat-redemption-count {
 	background: #dfc;
 }
 
+table.kitty {
+  width: 240px;	
+  margin-top: 10px;
+  border: solid 1px #d5d5d5;
+}
+
+table.kitty th {
+  font-weight: bold;
+  text-align: center;
+  padding: 3px 5px 3px 5px;
+  background: #686868; url(/images/header-back.png) top left repeat-x;
+  border-bottom: solid 1px #ccc;
+  color: #F0F0F0;
+}
+
+table.kitty td {
+  padding: 2px;
+  border: solid 1px #E8E8E8;
+}
+
+td.label{
+  font-weight: bold;
+  letter-spacing: -1px;    
+}
+
+td.item-label{
+  font-weight: bold;
+  letter-spacing: -1px;    
+}
+
 table.stats {
   width: 240px;	
   margin-top: 10px;
@@ -436,17 +466,17 @@ a.store-vanity-url {
 	margin-left: 0px;
 }
 
-#content div.features {
+#content div.kitty {
   margin-left: 0px;
 }
 
-div.feature-column {
+div.kitty-column {
   width: 230px;
-	margin: 10px;
+  margin-right: 100px;
   float: left;
 }
 
-div.feature-column p {
+div.kitty-column p {
   
 }
 
