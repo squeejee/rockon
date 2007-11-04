@@ -1,6 +1,7 @@
 <h1>The Kitty</h1>
 
-
+<div class="kitty">
+<div class="kitty-column">
 <table class="stats" cellspacing="0" cellpadding="0" width="40%">
   <tr>
     <th>Team</th>
@@ -18,3 +19,69 @@
 </tr>
 <% end %>
 </table>
+</div>
+
+<div class="kitty-column">
+<table class="kitty" cellspacing="0" cellpadding="0" width="40%">
+  <tr>
+    <th colspan=2>Kitty Totals</th>
+  </tr>
+  
+  <tr>
+    <td class="label">Total Pot:</td>
+    <td><%= number_to_currency(@total_pot) %></td>
+  </tr>
+  
+  <tr>
+    <th class="label" colspan=2>Fixed Costs</th>
+  </tr>
+  <tr>
+    <td class="item-label" nowrap>Weekly Payouts ($15*16):</td><td>($240.00)</td>
+  </tr>
+  <tr>
+    <td class="item-label">4th Place:</td><td>($20.00)</td>
+  </tr>
+  <tr>
+    <td class="item-label">5th Place:</td><td>($15.00)</td>
+  </tr>
+  <tr>
+    <td class="item-label">6th Place:</td><td>($10.00)</td>
+  </tr>
+  <tr>
+    <td class="item-label">MyFantasyLeague.com:</td><td>($70.00)</td>
+  </tr>
+  <tr>
+    <td class="item-label">Trophy Updates:</td><td>($15.00)</td>
+  </tr>
+  <tr>
+    <td class="label"></td>
+  </tr>
+  <tr>
+    <td class="label">Total Fixed Costs:</td><td class="label"><%= number_to_currency(@total_fixed_costs) %></td>
+  </tr>
+  </tr>
+  <tr>
+    <td class="label"></td>
+  </tr>
+  <tr>
+    <td class="label">FINAL POT:</td><td class="label"><%= number_to_currency(@final_pot) %></td>
+  </tr>
+  <tr>
+    <td class="label"></td>
+  </tr>    
+  <tr>
+    <th class="label" colspan=2>Winner Payouts</th>
+  </tr>
+  <tr>
+    <td class="label" nowrap>1st Place (60% of Final Pot):</td><td class="label"><%= number_to_currency(@first_place) %></td>
+  </tr>
+  <tr>
+    <td class="label" nowrap>2nd Place (25% of Final Pot):</td><td class="label"><%= number_to_currency(@second_place) %></td>
+  </tr>
+  <tr>
+    <td class="label" nowrap>3rd Place (15% of Final Pot):</td><td class="label"><%= number_to_currency(@third_place) %></td>
+  </tr>
+    
+  </table>
+</div>
+</div>
