@@ -21,7 +21,7 @@ class AdminController < ApplicationController
         nfl_player.last_name = player_name[0].strip
         nfl_player.first_name = player_name[1].strip
         nfl_player.position_id = Position.find_by_position_code(player[:position]).id
-        nfl_player.nfl_team_id = NflTeam.find_by_nfl_team_code(player[:team]).id
+        nfl_player.nfl_team_id = NflTeam.find_by_nfl_team_code(player[:team]).id rescue 33 #Set to ID 33 (free agent) if not found
         nfl_player.save
       end
     end
