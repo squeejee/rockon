@@ -41,6 +41,8 @@ class Auction < ActiveRecord::Base
       return true
     elsif League.active? && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
       return true
+    elsif ((League.find 1).first_week_date-1.week) > Time.now
+      return true
     else
       return false
     end    
