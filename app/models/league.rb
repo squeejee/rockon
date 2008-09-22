@@ -46,7 +46,7 @@ class League < ActiveRecord::Base
     
     # In order for the calculation to work correctly, we have to 
     # hard-code in a "-2" here.
-    nfl_start_week_of_year = self.nfl_start_week - 2
+    nfl_start_week_of_year = self.nfl_start_week - 1
     current_week_of_year = get_week(current_date)
     nfl_week_no = current_week_of_year - nfl_start_week_of_year
     
