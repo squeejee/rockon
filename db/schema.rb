@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080924034436) do
+ActiveRecord::Schema.define(:version => 20080924042457) do
 
   create_table "auctions", :force => true do |t|
     t.integer  "nfl_player_id", :limit => 6
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20080924034436) do
     t.string   "salt",                      :limit => 40
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
+    t.string   "time_zone"
   end
 
 end

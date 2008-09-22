@@ -73,7 +73,7 @@ class AuctionsController < ApplicationController
       #redirect_to create_bid_url(@existing_auction.id), :controller => 'bids', :action => 'create', :bid => params[:bid]
       #redirect_to :controller => 'bids', :action => 'create', :auction_id => @existing_auction.id, :bid => params[:bid]
       
-      redirect_to new_bid_path(@existing_auction.id)
+      redirect_to new_auction_bid_url(@existing_auction.id)
       return false
     end
     

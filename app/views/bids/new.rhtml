@@ -7,7 +7,7 @@
 </ul>
 <%= error_messages_for :bid %>
 
-<% form_for(:bid, :url => bids_path) do |f| %>
+<% form_for(:bid, :url => auction_bids_path) do |f| %>
 
   <div>
   <%= display_drop_player_dropdown(current_user) %>
@@ -30,4 +30,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Back', bids_path %>
+<%= link_to 'Back', auction_bids_path %>

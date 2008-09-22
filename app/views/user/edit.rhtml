@@ -21,5 +21,8 @@
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= f.password_field :password_confirmation %></p>
 
+<p><label for="Time Zone">Confirm Password</label><br/>
+<%= f.time_zone_select :time_zone, TimeZone.us_zones %>
+
 <p><%= submit_tag 'Edit User Info' %></p>
 <% end -%>

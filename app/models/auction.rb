@@ -39,7 +39,7 @@ class Auction < ActiveRecord::Base
   def self.active?
     if League.active? && Time.now.wday < League.bid_end_day 
       return true
-    elsif League.active? && Time.now.wday == League.bid_end_day && (Time.now.hour-5) < League.bid_end_time
+    elsif League.active? && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
       return true
     elsif ((League.find 1).first_week_date-1.week) > Time.now
       return true
@@ -53,7 +53,7 @@ class Auction < ActiveRecord::Base
 #  end
   
   def top_bidder?
-    top_bidder.user.id == @current_user
+    top_bidder.user.id == current_user
   end
   
   def hidden_auction
@@ -63,7 +63,7 @@ class Auction < ActiveRecord::Base
   def time_remaining
     require 'date'
     intervals = [["d", 1], ["h", 24], ["m", 60], ["s", 60]]
-    diff = self.expiration - (Time.now - 5.hours)
+    diff = self.expiration - Time.now
     elapsed = diff/(24*3600) #This is a hack to convert the seconds into days to use the below formula
     
     interval = 1.0
