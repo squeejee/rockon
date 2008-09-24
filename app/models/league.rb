@@ -73,7 +73,7 @@ class League < ActiveRecord::Base
   
   def self.auction_end_date
     
-    current_date = Time.now  
+    current_date = Time.zone.now  
     days_until_expiration = League.bid_end_day - current_date.wday
         
     #if days_until_expiration >= 0
@@ -83,13 +83,14 @@ class League < ActiveRecord::Base
       until expiration_date > ((League.find 1).first_week_date-1.week)
         expiration_date += 1.week
       end        
-            
+      
+      
       #Set the end date to 
-      end_date = DateTime.new(expiration_date.year, expiration_date.month, expiration_date.day, League.bid_end_time, 0, 0, DateTime.now.offset)
+      end_date = Time.zone.local(expiration_date.year, expiration_date.month, expiration_date.day) + League.bid_end_time.hours
       
       #If the calculated auction end date (ie Wednesday at 10PM) is greater than 2 days away, set the end date to exactly 2 days away.
-      if (Time.now+2.days).to_datetime < end_date
-        end_date = (Time.now+2.days).to_datetime
+      if (current_date+2.days).to_datetime < end_date
+        end_date = (current_date+2.days).to_datetime
       end
       
       return end_date
