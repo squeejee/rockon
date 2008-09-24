@@ -18,7 +18,7 @@ module ActiveScaffold::DataStructures
       args.flatten! # allow [] as a param
       args.each { |arg|
         arg = arg.to_sym if arg.is_a? String
-        @set << arg
+        @set << arg unless @set.include? arg # avoid duplicates
       }
     end
     alias_method :<<, :add
@@ -51,6 +51,10 @@ module ActiveScaffold::DataStructures
     # returns the number of items in the set
     def length
       @set.length
+    end
+    
+    def empty?
+      @set.empty?
     end
 
   end

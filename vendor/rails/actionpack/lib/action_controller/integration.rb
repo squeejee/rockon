@@ -1,6 +1,7 @@
-require 'dispatcher'
 require 'stringio'
 require 'uri'
+
+require 'action_controller/dispatcher'
 require 'action_controller/test_process'
 
 module ActionController
@@ -51,7 +52,13 @@ module ActionController
       # A reference to the response instance used by the last request.
       attr_reader :response
 
-      # Create an initialize a new Session instance.
+      # A running counter of the number of requests processed.
+      attr_accessor :request_count
+
+      class MultiPartNeededException < Exception
+      end
+
+      # Create and initialize a new Session instance.
       def initialize
         reset!
       end
@@ -67,19 +74,20 @@ module ActionController
         @https = false
         @cookies = {}
         @controller = @request = @response = nil
+        @request_count = 0
 
         self.host        = "www.example.com"
         self.remote_addr = "127.0.0.1"
         self.accept      = "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5"
 
-        unless @named_routes_configured
+        unless defined? @named_routes_configured
           # install the named routes in this session instance.
           klass = class<<self; self; end
-          Routing::Routes.named_routes.install(klass)
+          Routing::Routes.install_helpers(klass)
 
           # the helpers are made protected by default--we make them public for
           # easier access during testing and troubleshooting.
-          klass.send(:public, *Routing::Routes.named_routes.helpers)
+          klass.module_eval { public *Routing::Routes.named_routes.helpers }
           @named_routes_configured = true
         end
       end
@@ -117,22 +125,38 @@ module ActionController
         status
       end
 
-      # Performs a GET request, following any subsequent redirect. Note that
-      # the redirects are followed until the response is not a redirect--this
-      # means you may run into an infinite loop if your redirect loops back to
-      # itself.
-      def get_via_redirect(path, args={})
-        get path, args
+      # Performs a request using the specified method, following any subsequent
+      # redirect. Note that the redirects are followed until the response is
+      # not a redirect--this means you may run into an infinite loop if your
+      # redirect loops back to itself.
+      def request_via_redirect(http_method, path, parameters = nil, headers = nil)
+        send(http_method, path, parameters, headers)
         follow_redirect! while redirect?
         status
       end
 
-      # Performs a POST request, following any subsequent redirect. This is
-      # vulnerable to infinite loops, the same as #get_via_redirect.
-      def post_via_redirect(path, args={})
-        post path, args
-        follow_redirect! while redirect?
-        status
+      # Performs a GET request, following any subsequent redirect.
+      # See +request_via_redirect+ for more information.
+      def get_via_redirect(path, parameters = nil, headers = nil)
+        request_via_redirect(:get, path, parameters, headers)
+      end
+
+      # Performs a POST request, following any subsequent redirect.
+      # See +request_via_redirect+ for more information.
+      def post_via_redirect(path, parameters = nil, headers = nil)
+        request_via_redirect(:post, path, parameters, headers)
+      end
+
+      # Performs a PUT request, following any subsequent redirect.
+      # See +request_via_redirect+ for more information.
+      def put_via_redirect(path, parameters = nil, headers = nil)
+        request_via_redirect(:put, path, parameters, headers)
+      end
+
+      # Performs a DELETE request, following any subsequent redirect.
+      # See +request_via_redirect+ for more information.
+      def delete_via_redirect(path, parameters = nil, headers = nil)
+        request_via_redirect(:delete, path, parameters, headers)
       end
 
       # Returns +true+ if the last response was a redirect.
@@ -142,33 +166,33 @@ module ActionController
 
       # Performs a GET request with the given parameters. The parameters may
       # be +nil+, a Hash, or a string that is appropriately encoded
-      # (application/x-www-form-urlencoded or multipart/form-data).  The headers
-      # should be a hash.  The keys will automatically be upcased, with the
+      # (<tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt>).
+      # The headers should be a hash. The keys will automatically be upcased, with the
       # prefix 'HTTP_' added if needed.
       #
-      # You can also perform POST, PUT, DELETE, and HEAD requests with #post,
-      # #put, #delete, and #head.
-      def get(path, parameters=nil, headers=nil)
+      # You can also perform POST, PUT, DELETE, and HEAD requests with +post+,
+      # +put+, +delete+, and +head+.
+      def get(path, parameters = nil, headers = nil)
         process :get, path, parameters, headers
       end
 
       # Performs a POST request with the given parameters. See get() for more details.
-      def post(path, parameters=nil, headers=nil)
+      def post(path, parameters = nil, headers = nil)
         process :post, path, parameters, headers
       end
 
       # Performs a PUT request with the given parameters. See get() for more details.
-      def put(path, parameters=nil, headers=nil)
+      def put(path, parameters = nil, headers = nil)
         process :put, path, parameters, headers
       end
 
       # Performs a DELETE request with the given parameters. See get() for more details.
-      def delete(path, parameters=nil, headers=nil)
+      def delete(path, parameters = nil, headers = nil)
         process :delete, path, parameters, headers
       end
 
       # Performs a HEAD request with the given parameters. See get() for more details.
-      def head(path, parameters=nil, headers=nil)
+      def head(path, parameters = nil, headers = nil)
         process :head, path, parameters, headers
       end
 
@@ -179,19 +203,10 @@ module ActionController
       # parameters are +nil+, a hash, or a url-encoded or multipart string;
       # the headers are a hash.  Keys are automatically upcased and prefixed
       # with 'HTTP_' if not already.
-      #
-      # This method used to omit the request_method parameter, assuming it
-      # was :post. This was deprecated in Rails 1.2.4. Always pass the request
-      # method as the first argument.
       def xml_http_request(request_method, path, parameters = nil, headers = nil)
-        unless request_method.is_a?(Symbol)
-          ActiveSupport::Deprecation.warn 'xml_http_request now takes the request_method (:get, :post, etc.) as the first argument. It used to assume :post, so add the :post argument to your existing method calls to silence this warning.'
-          request_method, path, parameters, headers = :post, request_method, path, parameters
-        end
-
         headers ||= {}
         headers['X-Requested-With'] = 'XMLHttpRequest'
-        headers['Accept'] = 'text/javascript, text/html, application/xml, text/xml, */*'
+        headers['Accept'] ||= 'text/javascript, text/html, application/xml, text/xml, */*'
 
         process(request_method, path, parameters, headers)
       end
@@ -204,15 +219,18 @@ module ActionController
       end
 
       private
-        class MockCGI < CGI #:nodoc:
+        class StubCGI < CGI #:nodoc:
           attr_accessor :stdinput, :stdoutput, :env_table
 
-          def initialize(env, input=nil)
+          def initialize(env, stdinput = nil)
             self.env_table = env
-            self.stdinput = StringIO.new(input || "")
             self.stdoutput = StringIO.new
 
-            super()
+            super
+
+            stdinput.set_encoding(Encoding::BINARY) if stdinput.respond_to?(:set_encoding)
+            stdinput.force_encoding(Encoding::BINARY) if stdinput.respond_to?(:force_encoding)
+            @stdinput = stdinput.is_a?(IO) ? stdinput : StringIO.new(stdinput || '')
           end
         end
 
@@ -226,7 +244,7 @@ module ActionController
         end
 
         # Performs the actual request.
-        def process(method, path, parameters=nil, headers=nil)
+        def process(method, path, parameters = nil, headers = nil)
           data = requestify(parameters)
           path = interpret_uri(path) if path =~ %r{://}
           path = "/#{path}" unless path[0] == ?/
@@ -258,14 +276,15 @@ module ActionController
           end
 
           unless ActionController::Base.respond_to?(:clear_last_instantiation!)
-            ActionController::Base.send(:include, ControllerCapture)
+            ActionController::Base.module_eval { include ControllerCapture }
           end
 
           ActionController::Base.clear_last_instantiation!
 
-          cgi = MockCGI.new(env, data)
-          Dispatcher.dispatch(cgi, ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS, cgi.stdoutput)
+          cgi = StubCGI.new(env, data)
+          ActionController::Dispatcher.dispatch(cgi, ActionController::CgiRequest::DEFAULT_SESSION_OPTIONS, cgi.stdoutput)
           @result = cgi.stdoutput.string
+          @request_count += 1
 
           @controller = ActionController::Base.last_instantiation
           @request = @controller.request
@@ -280,25 +299,29 @@ module ActionController
 
           parse_result
           return status
+        rescue MultiPartNeededException
+          boundary = "----------XnJLe9ZIbbGUYtzPQJ16u1"
+          status = process(method, path, multipart_body(parameters, boundary), (headers || {}).merge({"CONTENT_TYPE" => "multipart/form-data; boundary=#{boundary}"}))
+          return status
         end
 
         # Parses the result of the response and extracts the various values,
         # like cookies, status, headers, etc.
         def parse_result
-          headers, result_body = @result.split(/\r\n\r\n/, 2)
+          response_headers, result_body = @result.split(/\r\n\r\n/, 2)
 
           @headers = Hash.new { |h,k| h[k] = [] }
-          headers.each_line do |line|
+          response_headers.to_s.each_line do |line|
             key, value = line.strip.split(/:\s*/, 2)
             @headers[key.downcase] << value
           end
 
           (@headers['set-cookie'] || [] ).each do |string|
-            name, value = string.match(/^(.*?)=(.*?);/)[1,2]
+            name, value = string.match(/^([^=]*)=([^;]*);/)[1,2]
             @cookies[name] = value
           end
 
-          @status, @status_message = @headers["status"].first.split(/ /)
+          @status, @status_message = @headers["status"].first.to_s.split(/ /)
           @status = @status.to_i
         end
 
@@ -310,14 +333,14 @@ module ActionController
           end
         end
 
-        # Get a temporarly URL writer object
+        # Get a temporary URL writer object
         def generic_url_rewriter
-          cgi = MockCGI.new('REQUEST_METHOD' => "GET",
+          cgi = StubCGI.new('REQUEST_METHOD' => "GET",
                             'QUERY_STRING'   => "",
                             "REQUEST_URI"    => "/",
                             "HTTP_HOST"      => host,
                             "SERVER_PORT"    => https? ? "443" : "80",
-                            "HTTPS"          => https? ? "on" : "off")                          
+                            "HTTPS"          => https? ? "on" : "off")
           ActionController::UrlRewriter.new(ActionController::CgiRequest.new(cgi), {})
         end
 
@@ -328,7 +351,9 @@ module ActionController
         # Convert the given parameters to a request string. The parameters may
         # be a string, +nil+, or a Hash.
         def requestify(parameters, prefix=nil)
-          if Hash === parameters
+          if TestUploadedFile === parameters
+            raise MultiPartNeededException
+          elsif Hash === parameters
             return nil if parameters.empty?
             parameters.map { |k,v| requestify(v, name_with_prefix(prefix, k)) }.join("&")
           elsif Array === parameters
@@ -340,6 +365,46 @@ module ActionController
           end
         end
 
+        def multipart_requestify(params, first=true)
+          returning Hash.new do |p|
+            params.each do |key, value|
+              k = first ? CGI.escape(key.to_s) : "[#{CGI.escape(key.to_s)}]"
+              if Hash === value
+                multipart_requestify(value, false).each do |subkey, subvalue|
+                  p[k + subkey] = subvalue
+                end
+              else
+                p[k] = value
+              end
+            end
+          end
+        end
+
+        def multipart_body(params, boundary)
+          multipart_requestify(params).map do |key, value|
+            if value.respond_to?(:original_filename)
+              File.open(value.path) do |f|
+                f.set_encoding(Encoding::BINARY) if f.respond_to?(:set_encoding)
+
+                <<-EOF
+--#{boundary}\r
+Content-Disposition: form-data; name="#{key}"; filename="#{CGI.escape(value.original_filename)}"\r
+Content-Type: #{value.content_type}\r
+Content-Length: #{File.stat(value.path).size}\r
+\r
+#{f.read}\r
+EOF
+              end
+            else
+<<-EOF
+--#{boundary}\r
+Content-Disposition: form-data; name="#{key}"\r
+\r
+#{value}\r
+EOF
+            end
+          end.join("")+"--#{boundary}--\r"
+        end
     end
 
     # A module used to extend ActionController::Base, so that integration tests
@@ -365,6 +430,76 @@ module ActionController
           controller = new_without_capture(*args)
           self.last_instantiation ||= controller
           controller
+        end
+      end
+    end
+
+    module Runner
+      # Reset the current session. This is useful for testing multiple sessions
+      # in a single test case.
+      def reset!
+        @integration_session = open_session
+      end
+
+      %w(get post put head delete cookies assigns
+         xml_http_request get_via_redirect post_via_redirect).each do |method|
+        define_method(method) do |*args|
+          reset! unless @integration_session
+          # reset the html_document variable, but only for new get/post calls
+          @html_document = nil unless %w(cookies assigns).include?(method)
+          returning @integration_session.send!(method, *args) do
+            copy_session_variables!
+          end
+        end
+      end
+
+      # Open a new session instance. If a block is given, the new session is
+      # yielded to the block before being returned.
+      #
+      #   session = open_session do |sess|
+      #     sess.extend(CustomAssertions)
+      #   end
+      #
+      # By default, a single session is automatically created for you, but you
+      # can use this method to open multiple sessions that ought to be tested
+      # simultaneously.
+      def open_session
+        session = Integration::Session.new
+
+        # delegate the fixture accessors back to the test instance
+        extras = Module.new { attr_accessor :delegate, :test_result }
+        if self.class.respond_to?(:fixture_table_names)
+          self.class.fixture_table_names.each do |table_name|
+            name = table_name.tr(".", "_")
+            next unless respond_to?(name)
+            extras.send!(:define_method, name) { |*args| delegate.send(name, *args) }
+          end
+        end
+
+        # delegate add_assertion to the test case
+        extras.send!(:define_method, :add_assertion) { test_result.add_assertion }
+        session.extend(extras)
+        session.delegate = self
+        session.test_result = @_result
+
+        yield session if block_given?
+        session
+      end
+
+      # Copy the instance variables from the current session instance into the
+      # test instance.
+      def copy_session_variables! #:nodoc:
+        return unless @integration_session
+        %w(controller response request).each do |var|
+          instance_variable_set("@#{var}", @integration_session.send!(var))
+        end
+      end
+
+      # Delegate unhandled messages to the current session instance.
+      def method_missing(sym, *args, &block)
+        reset! unless @integration_session
+        returning @integration_session.send!(sym, *args, &block) do
+          copy_session_variables!
         end
       end
     end
@@ -446,6 +581,8 @@ module ActionController
   #       end
   #   end
   class IntegrationTest < Test::Unit::TestCase
+    include Integration::Runner
+
     # Work around a bug in test/unit caused by the default test being named
     # as a symbol (:default_test), which causes regex test filters
     # (like "ruby test.rb -n /foo/") to fail because =~ doesn't work on
@@ -491,71 +628,6 @@ module ActionController
         @_use_instantiated_fixtures ?
           @use_instantiated_fixtures :
           superclass.use_instantiated_fixtures
-      end
-    end
-
-    # Reset the current session. This is useful for testing multiple sessions
-    # in a single test case.
-    def reset!
-      @integration_session = open_session
-    end
-
-    %w(get post put head delete cookies assigns xml_http_request).each do |method|
-      define_method(method) do |*args|
-        reset! unless @integration_session
-        # reset the html_document variable, but only for new get/post calls
-        @html_document = nil unless %w(cookies assigns).include?(method)
-        returning @integration_session.send(method, *args) do
-          copy_session_variables!
-        end
-      end
-    end
-
-    # Open a new session instance. If a block is given, the new session is
-    # yielded to the block before being returned.
-    #
-    #   session = open_session do |sess|
-    #     sess.extend(CustomAssertions)
-    #   end
-    #
-    # By default, a single session is automatically created for you, but you
-    # can use this method to open multiple sessions that ought to be tested
-    # simultaneously.
-    def open_session
-      session = Integration::Session.new
-
-      # delegate the fixture accessors back to the test instance
-      extras = Module.new { attr_accessor :delegate, :test_result }
-      self.class.fixture_table_names.each do |table_name|
-        name = table_name.tr(".", "_")
-        next unless respond_to?(name)
-        extras.send(:define_method, name) { |*args| delegate.send(name, *args) }
-      end
-
-      # delegate add_assertion to the test case
-      extras.send(:define_method, :add_assertion) { test_result.add_assertion }
-      session.extend(extras)
-      session.delegate = self
-      session.test_result = @_result
-
-      yield session if block_given?
-      session
-    end
-
-    # Copy the instance variables from the current session instance into the
-    # test instance.
-    def copy_session_variables! #:nodoc:
-      return unless @integration_session
-      %w(controller response request).each do |var|
-        instance_variable_set("@#{var}", @integration_session.send(var))
-      end
-    end
-
-    # Delegate unhandled messages to the current session instance.
-    def method_missing(sym, *args, &block)
-      reset! unless @integration_session
-      returning @integration_session.send(sym, *args, &block) do
-        copy_session_variables!
       end
     end
   end

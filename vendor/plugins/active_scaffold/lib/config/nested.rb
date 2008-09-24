@@ -8,9 +8,12 @@ module ActiveScaffold::Config
 
     # global level configuration
     # --------------------------
+    cattr_accessor :shallow_delete
+    @@shallow_delete = false
 
     # instance-level configuration
     # ----------------------------
+    attr_accessor :shallow_delete
 
     # Add a nested ActionLink
     def add_link(label, models)
@@ -20,7 +23,7 @@ module ActiveScaffold::Config
     # the label for this Nested action. used for the header.
     attr_writer :label
     def label
-      @label ? as_(@label) : "#{as_('Add From Existing')} #{@core.label.singularize}"
+      @label ? as_(@label) : "#{as_('Add Existing')} #{@core.label.singularize}"
     end
 
   end

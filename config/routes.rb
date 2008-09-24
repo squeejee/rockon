@@ -34,8 +34,8 @@ ActionController::Routing::Routes.draw do |map|
   end
   
 #  map.admin_kitty 'admin/kitty', :controller => 'admin/kitty'
-  map.sync_nfl_players '/admin/sync_nfl_players', :controller => 'admin', :action => 'sync_nfl_players'
-  map.sync_rosters '/admin/sync_rosters', :controller => 'admin', :action => 'sync_rosters'
+  map.sync_nfl_players '/admin/sync_nfl_players', :controller => 'admins', :action => 'sync_nfl_players'
+  map.sync_rosters '/admin/sync_rosters', :controller => 'admins', :action => 'sync_rosters'
   
   map.resources :leagues
   
@@ -50,9 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password '/reset_password', :controller => 'users', :action => 'reset_password'
     
   map.user_kitty '/kitties/:user_id', :controller => 'kitties', :action => 'show'
-  
-  map.connect '/:short_name/', :controller => 'stores', :action => 'show'
-    
+      
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'

@@ -29,11 +29,21 @@ module ActiveScaffold::Actions
 
       respond_to do |type|
         type.html do
-          if successful?
-            flash[:info] = as_('Created %s', @record.to_label)
-            return_to_main
+          if params[:iframe]=='true' # was this an iframe post ?
+            responds_to_parent do
+              if successful?
+                render :action => 'create.rjs', :layout => false
+              else
+                render :action => 'form_messages.rjs', :layout => false
+              end
+            end
           else
-            render(:action => 'create_form', :layout => true)
+            if successful?
+              flash[:info] = as_('Created %s', @record.to_label)
+              return_to_main
+            else
+              render(:action => 'create_form', :layout => true)
+            end
           end
         end
         type.js do
@@ -51,6 +61,8 @@ module ActiveScaffold::Actions
     # May be overridden to customize the behavior (add default values, for instance)
     def do_new
       @record = active_scaffold_config.model.new
+      apply_constraints_to_record(@record)
+      @record
     end
 
     # A somewhat complex method to actually create a new record. The complexity is from support for subforms and associated records.
@@ -59,7 +71,7 @@ module ActiveScaffold::Actions
       begin
         active_scaffold_config.model.transaction do
           @record = update_record_from_params(active_scaffold_config.model.new, active_scaffold_config.create.columns, params[:record])
-          apply_constraints_to_record(@record)
+          apply_constraints_to_record(@record, :allow_autosave => true)
           before_create_save(@record)
           self.successful = [@record.valid?, @record.associated_valid?].all? {|v| v == true} # this syntax avoids a short-circuit
           if successful?

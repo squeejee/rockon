@@ -44,8 +44,8 @@ module ActiveRecord
         reflections[aggregation].is_a?(AggregateReflection) ? reflections[aggregation] : nil
       end
 
-      # Returns an array of AssociationReflection objects for all the aggregations in the class. If you only want to reflect on a
-      # certain association type, pass in the symbol (:has_many, :has_one, :belongs_to) for that as the first parameter. 
+      # Returns an array of AssociationReflection objects for all the associations in the class. If you only want to reflect on a
+      # certain association type, pass in the symbol (<tt>:has_many</tt>, <tt>:has_one</tt>, <tt>:belongs_to</tt>) for that as the first parameter.
       # Example:
       #
       #   Account.reflect_on_all_associations             # returns an array of all associations
@@ -56,7 +56,7 @@ module ActiveRecord
         macro ? association_reflections.select { |reflection| reflection.macro == macro } : association_reflections
       end
 
-      # Returns the AssociationReflection object for the named +aggregation+ (use the symbol). Example:
+      # Returns the AssociationReflection object for the named +association+ (use the symbol). Example:
       #
       #   Account.reflect_on_association(:owner) # returns the owner AssociationReflection
       #   Invoice.reflect_on_association(:line_items).macro  # returns :has_many
@@ -71,52 +71,56 @@ module ActiveRecord
     # those classes. Objects of AggregateReflection and AssociationReflection are returned by the Reflection::ClassMethods.
     class MacroReflection
       attr_reader :active_record
+
       def initialize(macro, name, options, active_record)
         @macro, @name, @options, @active_record = macro, name, options, active_record
       end
 
-      # Returns the name of the macro, so it would return :balance for "composed_of :balance, :class_name => 'Money'" or
-      # :clients for "has_many :clients".
+      # Returns the name of the macro.  For example, <tt>composed_of :balance, :class_name => 'Money'</tt> will return
+      # <tt>:balance</tt> or for <tt>has_many :clients</tt> it will return <tt>:clients</tt>.
       def name
         @name
       end
 
-      # Returns the name of the macro, so it would return :composed_of for
-      # "composed_of :balance, :class_name => 'Money'" or :has_many for "has_many :clients".
+      # Returns the macro type. For example, <tt>composed_of :balance, :class_name => 'Money'</tt> will return <tt>:composed_of</tt>
+      # or for <tt>has_many :clients</tt> will return <tt>:has_many</tt>.
       def macro
         @macro
       end
 
-      # Returns the hash of options used for the macro, so it would return { :class_name => "Money" } for
-      # "composed_of :balance, :class_name => 'Money'" or {} for "has_many :clients".
+      # Returns the hash of options used for the macro.  For example, it would return <tt>{ :class_name => "Money" }</tt> for
+      # <tt>composed_of :balance, :class_name => 'Money'</tt> or +{}+ for <tt>has_many :clients</tt>.
       def options
         @options
       end
 
-      # Returns the class for the macro, so "composed_of :balance, :class_name => 'Money'" would return the Money class and
-      # "has_many :clients" would return the Client class.
-      def klass() end
-        
-      def class_name
-        @class_name ||= name_to_class_name(name.id2name)
+      # Returns the class for the macro.  For example, <tt>composed_of :balance, :class_name => 'Money'</tt> returns the Money
+      # class and <tt>has_many :clients</tt> returns the Client class.
+      def klass
+        @klass ||= class_name.constantize
       end
 
+      # Returns the class name for the macro.  For example, <tt>composed_of :balance, :class_name => 'Money'</tt> returns <tt>'Money'</tt>
+      # and <tt>has_many :clients</tt> returns <tt>'Client'</tt>.
+      def class_name
+        @class_name ||= options[:class_name] || derive_class_name
+      end
+
+      # Returns +true+ if +self+ and +other_aggregation+ have the same +name+ attribute, +active_record+ attribute,
+      # and +other_aggregation+ has an options hash assigned to it.
       def ==(other_aggregation)
         name == other_aggregation.name && other_aggregation.options && active_record == other_aggregation.active_record
       end
+
+      private
+        def derive_class_name
+          name.to_s.camelize
+        end
     end
 
 
     # Holds all the meta-data about an aggregation as it was specified in the Active Record class.
     class AggregateReflection < MacroReflection #:nodoc:
-      def klass
-        @klass ||= Object.const_get(options[:class_name] || class_name)
-      end
-
-      private
-        def name_to_class_name(name)
-          name.capitalize.gsub(/_(.)/) { |s| $1.capitalize }
-        end
     end
 
     # Holds all the meta-data about an association as it was specified in the Active Record class.
@@ -129,18 +133,14 @@ module ActiveRecord
         @table_name ||= klass.table_name
       end
 
-      def primary_key_name
-        return @primary_key_name if @primary_key_name
-        case
-          when macro == :belongs_to
-            @primary_key_name = options[:foreign_key] || class_name.foreign_key
-          when options[:as]
-            @primary_key_name = options[:foreign_key] || "#{options[:as]}_id"
-          else
-            @primary_key_name = options[:foreign_key] || active_record.name.foreign_key
-        end
+      def quoted_table_name
+        @quoted_table_name ||= klass.quoted_table_name
       end
-      
+
+      def primary_key_name
+        @primary_key_name ||= options[:foreign_key] || derive_primary_key_name
+      end
+
       def association_foreign_key
         @association_foreign_key ||= @options[:association_foreign_key] || class_name.foreign_key
       end
@@ -153,22 +153,34 @@ module ActiveRecord
         end
       end
 
+      # Returns the AssociationReflection object specified in the <tt>:through</tt> option
+      # of a HasManyThrough or HasOneThrough association. Example:
+      #
+      #   class Post < ActiveRecord::Base
+      #     has_many :taggings
+      #     has_many :tags, :through => :taggings
+      #   end
+      #
+      #   tags_reflection = Post.reflect_on_association(:tags)
+      #   taggings_reflection = tags_reflection.through_reflection
+      #
       def through_reflection
         @through_reflection ||= options[:through] ? active_record.reflect_on_association(options[:through]) : false
       end
 
-      # Gets an array of possible :through source reflection names
+      # Gets an array of possible <tt>:through</tt> source reflection names:
       #
-      #   [singularized, pluralized]
+      #   [:singularized, :pluralized]
       #
       def source_reflection_names
         @source_reflection_names ||= (options[:source] ? [options[:source]] : [name.to_s.singularize, name]).collect { |n| n.to_sym }
       end
 
-      # Gets the source of the through reflection.  It checks both a singularized and pluralized form for :belongs_to or :has_many.
-      # (The :tags association on Tagging below)
+      # Gets the source of the through reflection.  It checks both a singularized and pluralized form for <tt>:belongs_to</tt> or <tt>:has_many</tt>.
+      # (The <tt>:tags</tt> association on Tagging below.)
       # 
-      #   class Post
+      #   class Post < ActiveRecord::Base
+      #     has_many :taggings
       #     has_many :tags, :through => :taggings
       #   end
       #
@@ -202,19 +214,24 @@ module ActiveRecord
       end
 
       private
-        def name_to_class_name(name)
-          if name =~ /::/
-            name
+        def derive_class_name
+          # get the class_name of the belongs_to association of the through reflection
+          if through_reflection
+            options[:source_type] || source_reflection.class_name
           else
-            if options[:class_name]
-              options[:class_name]
-            elsif through_reflection # get the class_name of the belongs_to association of the through reflection
-              options[:source_type] || source_reflection.class_name
-            else
-              class_name = name.to_s.camelize
-              class_name = class_name.singularize if [ :has_many, :has_and_belongs_to_many ].include?(macro)
-              class_name
-            end
+            class_name = name.to_s.camelize
+            class_name = class_name.singularize if [ :has_many, :has_and_belongs_to_many ].include?(macro)
+            class_name
+          end
+        end
+
+        def derive_primary_key_name
+          if macro == :belongs_to
+            "#{name}_id"
+          elsif options[:as]
+            "#{options[:as]}_id"
+          else
+            active_record.name.foreign_key
           end
         end
     end

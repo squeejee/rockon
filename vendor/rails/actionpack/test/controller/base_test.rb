@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../abstract_unit'
-require 'test/unit'
+require 'abstract_unit'
 require 'pp' # require 'pp' early to prevent hidden_methods from not picking up the pretty-print methods until too late
 
 # Provide some controller to run the tests on.
@@ -49,6 +48,15 @@ protected
   
 end
 
+class DefaultUrlOptionsController < ActionController::Base
+  def default_url_options_action
+  end
+
+  def default_url_options(options = nil)
+    { :host => 'www.override.com', :action => 'new', :bacon => 'chunky' }
+  end
+end
+
 class ControllerClassTests < Test::Unit::TestCase
   def test_controller_path
     assert_equal 'empty', EmptyController.controller_path
@@ -75,23 +83,24 @@ class ControllerInstanceTests < Test::Unit::TestCase
   def test_action_methods
     @empty_controllers.each do |c|
       hide_mocha_methods_from_controller(c)
-      assert_equal Set.new, c.send(:action_methods), "#{c.controller_path} should be empty!"
+      assert_equal Set.new, c.send!(:action_methods), "#{c.controller_path} should be empty!"
     end
     @non_empty_controllers.each do |c|
       hide_mocha_methods_from_controller(c)
-      assert_equal Set.new('public_action'), c.send(:action_methods), "#{c.controller_path} should not be empty!"
+      assert_equal Set.new(%w(public_action)), c.send!(:action_methods), "#{c.controller_path} should not be empty!"
     end
   end
-  
+
   protected
-  
-  # Mocha adds methods to Object which are then included in the public_instance_methods
-  # This method hides those from the controller so the above tests won't know the difference
-  def hide_mocha_methods_from_controller(controller)
-    mocha_methods = [:expects, :metaclass, :mocha, :mocha_inspect, :reset_mocha, :stubba_object, :stubba_method, :stubs, :verify, :__is_a__, :__metaclass__]
-    controller.class.send(:hide_action, *mocha_methods)
-  end
-  
+    # Mocha adds some public instance methods to Object that would be
+    # considered actions, so explicitly hide_action them.
+    def hide_mocha_methods_from_controller(controller)
+      mocha_methods = [
+        :expects, :mocha, :mocha_inspect, :reset_mocha, :stubba_object,
+        :stubba_method, :stubs, :verify, :__metaclass__, :__is_a__, :to_matcher,
+      ]
+      controller.class.send!(:hide_action, *mocha_methods)
+    end
 end
 
 
@@ -118,7 +127,7 @@ class PerformActionTest < Test::Unit::TestCase
   
   def test_method_missing_is_not_an_action_name
     use_controller MethodMissingController
-    assert ! @controller.send(:action_methods).include?('method_missing')
+    assert ! @controller.send!(:action_methods).include?('method_missing')
     
     get :method_missing
     assert_response :success
@@ -132,5 +141,43 @@ class PerformActionTest < Test::Unit::TestCase
     
     get :another_hidden_action
     assert_response 404
+  end
+end
+
+class DefaultUrlOptionsTest < Test::Unit::TestCase
+  def setup
+    @controller = DefaultUrlOptionsController.new
+
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+
+    @request.host = 'www.example.com'
+  end
+
+  def test_default_url_options_are_used_if_set
+    ActionController::Routing::Routes.draw do |map|
+      map.default_url_options 'default_url_options', :controller => 'default_url_options'
+      map.connect ':controller/:action/:id'
+    end
+
+    get :default_url_options_action # Make a dummy request so that the controller is initialized properly.
+
+    assert_equal 'http://www.override.com/default_url_options/new?bacon=chunky', @controller.url_for(:controller => 'default_url_options')
+    assert_equal 'http://www.override.com/default_url_options?bacon=chunky', @controller.send(:default_url_options_url)
+  ensure
+    ActionController::Routing::Routes.load!
+  end
+end
+
+class EnsureNamedRoutesWorksTicket22BugTest < Test::Unit::TestCase
+  def test_named_routes_still_work
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :things
+    end
+    EmptyController.send :include, ActionController::UrlWriter
+
+    assert_equal '/things', EmptyController.new.send(:things_path)
+  ensure
+    ActionController::Routing::Routes.load!
   end
 end

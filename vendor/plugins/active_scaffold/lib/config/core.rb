@@ -22,6 +22,15 @@ module ActiveScaffold::Config
     cattr_accessor :theme
     @@theme = :default
 
+    # lets you disable the DHTML history
+    def self.dhtml_history=(val)
+      @@dhtml_history = val
+    end
+    def self.dhtml_history?
+      @@dhtml_history ? true : false
+    end
+    @@dhtml_history = true
+
     # action links are used by actions to tie together. you can use them, too! this is a collection of ActiveScaffold::DataStructures::ActionLink objects.
     cattr_reader :action_links
     @@action_links = ActiveScaffold::DataStructures::ActionLinks.new
@@ -56,7 +65,9 @@ module ActiveScaffold::Config
     # provides read/write access to the local Columns DataStructure
     attr_reader :columns
     def columns=(val)
-      @columns = ActiveScaffold::DataStructures::Columns.new(self.model, *val)
+      @columns._inheritable = val.collect {|c| c.to_sym}
+      # Add virtual columns
+      @columns << val.collect {|c| c.to_sym unless @columns[c.to_sym]}.compact
     end
 
     # lets you override the global ActiveScaffold frontend for a specific controller
@@ -86,12 +97,14 @@ module ActiveScaffold::Config
       @actions = self.class.actions.clone
 
       # create a new default columns datastructure, since it doesn't make sense before now
-      column_names = self.model.columns.collect{ |c| c.name.to_sym }.sort_by { |c| c.to_s }
+      attribute_names = self.model.columns.collect{ |c| c.name.to_sym }.sort_by { |c| c.to_s }
       association_column_names = self.model.reflect_on_all_associations.collect{ |a| a.name.to_sym }.sort_by { |c| c.to_s }
-      column_names += association_column_names
-      column_names -= self.class.ignore_columns.collect { |c| c.to_sym }
-      column_names -= self.model.reflect_on_all_associations.collect{|a| "#{a.name}_type".to_sym if a.options[:polymorphic]}.compact
-      self.columns = column_names
+      @columns = ActiveScaffold::DataStructures::Columns.new(self.model, attribute_names + association_column_names)
+
+      # and then, let's remove some columns from the inheritable set.
+      @columns.exclude(*self.class.ignore_columns)
+      @columns.exclude(*@columns.find_all { |c| c.column and (c.column.primary or c.column.name =~ /(_id|_count)$/) }.collect {|c| c.name})
+      @columns.exclude(*self.model.reflect_on_all_associations.collect{|a| :"#{a.name}_type" if a.options[:polymorphic]}.compact)
 
       # inherit the global frontend
       @frontend = self.class.frontend
@@ -139,7 +152,6 @@ module ActiveScaffold::Config
       end
       super
     end
-
     # some utility methods
     # --------------------
 
@@ -151,26 +163,39 @@ module ActiveScaffold::Config
       @model ||= @model_id.to_s.camelize.constantize
     end
 
-    def self.asset_path(type, filename)
-      "active_scaffold/#{ActiveScaffold::Config::Core.frontend.to_s}/#{filename}"
+    # warning - this won't work as a per-request dynamic attribute in rails 2.0.  You'll need to interact with Controller#generic_view_paths
+    def inherited_view_paths
+      @inherited_view_paths||=[]
     end
 
-    def self.javascripts
-      javascript_dir = File.join(RAILS_ROOT, "vendor", "plugins", ActiveScaffold::Config::Core.plugin_directory, "frontends", ActiveScaffold::Config::Core.frontend.to_s, "javascripts")
-      Dir.entries(javascript_dir).reject { |e| !e.match(/\.js/) }
+    # must be a class method so the layout doesn't depend on a controller that uses active_scaffold
+    # note that this is unaffected by per-controller frontend configuration.
+    def self.asset_path(filename, frontend = self.frontend)
+      "active_scaffold/#{frontend}/#{filename}"
     end
 
+    # must be a class method so the layout doesn't depend on a controller that uses active_scaffold
+    # note that this is unaffected by per-controller frontend configuration.
+    def self.javascripts(frontend = self.frontend)
+      javascript_dir = File.join(Rails.public_path, "javascripts", asset_path('', frontend))
+      Dir.entries(javascript_dir).reject { |e| !e.match(/\.js$/) or (!self.dhtml_history? and e.match('dhtml_history')) }
+    end
+    
     # the ActiveScaffold-specific template paths
-    def self.template_search_path
-      search_path = []
+    # an instance method. this is the only place that pays attention to per-controller frontend configuration.
+    # note: for the rails 1.2.x rendering, this needs to be relative to app/views.
+    def template_search_path(frontend = self.frontend)
+      frontends_path = "../../vendor/plugins/#{ActiveScaffold::Config::Core.plugin_directory}/frontends"
+
+      search_path = self.inherited_view_paths.clone
       search_path << 'active_scaffold_overrides'
-      search_path <<  "../../vendor/plugins/#{ActiveScaffold::Config::Core.plugin_directory}/frontends/#{ActiveScaffold::Config::Core.frontend.to_s}/views" if ActiveScaffold::Config::Core.frontend.to_sym != :default
-      search_path << "../../vendor/plugins/#{ActiveScaffold::Config::Core.plugin_directory}/frontends/default/views"
+      search_path << "#{frontends_path}/#{frontend}/views" if frontend.to_sym != :default
+      search_path << "#{frontends_path}/default/views"
       return search_path
     end
 
     def self.available_frontends
-      frontends_dir = File.join(RAILS_ROOT, "vendor", "plugins", ActiveScaffold::Config::Core.plugin_directory, "frontends")
+      frontends_dir = File.join(Rails.root, "vendor", "plugins", ActiveScaffold::Config::Core.plugin_directory, "frontends")
       Dir.entries(frontends_dir).reject { |e| e.match(/^\./) } # Get rid of files that start with .
     end
   end

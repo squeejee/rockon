@@ -3,9 +3,7 @@ class AuctionsController < ApplicationController
   # GET /auctions.xml
   
   before_filter :login_required, :except=>[:index]
-  
-  auto_complete_for :nfl_player, :first_name
-  
+    
   helper :sort
   include SortHelper
   
@@ -18,7 +16,7 @@ class AuctionsController < ApplicationController
     if @week_no == "all"  
      @auctions = Auction.find(:all, :include => [{:nfl_player=>:position}, {:bids=>:user}], :group => "auctions.id", :order => "#{sort_clause}, position_order" )
     else
-      @auctions = Auction.find(:all, :conditions=>["week_no = ?", @week_no], :include => [{:nfl_player=>:position}, {:bids=>:user}], :group => "auctions.id", :order => "#{sort_clause}, position_order" )
+      @auctions = Auction.find(:all, :conditions=>["week_no = ?", @week_no], :include => [{:nfl_player=>:position}, {:bids=>:user}], :group => "auctions.id", :order => "#{sort_clause}, positions.position_order" )
     end
     
     @total_bid_amt = 0

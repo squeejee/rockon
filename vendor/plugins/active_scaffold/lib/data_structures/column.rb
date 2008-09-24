@@ -1,14 +1,23 @@
 module ActiveScaffold::DataStructures
   class Column
     include ActiveScaffold::Configurable
-    
+
     attr_reader :active_record_class
-    
+
     # this is the name of the getter on the ActiveRecord model. it is the only absolutely required attribute ... all others will be inferred from this name.
     attr_accessor :name
 
+    # Whether to enable inplace editing for this column. Currently works for text columns, in the List.
+    attr_accessor :inplace_edit
+
     # Whether this column set is collapsed by default in contexts where collapsing is supported
     attr_accessor :collapsed
+    
+    # Any extra parameters this particular column uses.  This is for create/update purposes.
+    def params
+      # lazy initialize
+      @params ||= Set.new
+    end
 
     # the display-name of the column. this will be used, for instance, as the column title in the table and as the field name in the form.
     attr_writer :label
@@ -45,31 +54,54 @@ module ActiveScaffold::DataStructures
         @sort = value ? true : false # force true or false
       end
     end
-    
+
     def sort
       self.initialize_sort if @sort === true
       @sort
     end
-    
+
     def sortable?
       sort != false && !sort.nil?
     end
-    
+
     # a configuration helper for the self.sort property. simply provides a method syntax instead of setter syntax.
     def sort_by(options)
       self.sort = options
     end
 
     # supported options:
-    #   * :select will display a simple <select> (or collection of checkboxes) on the form to (dis)associate records
-    #   * :crud (default) will display a sub-form
-    attr_writer :ui_type
-    def ui_type
-      @ui_type || (column.type if column)
+    #   * for association columns
+    #     * :select - displays a simple <select> or a collection of checkboxes to (dis)associate records
+    attr_writer :form_ui
+    def form_ui
+      @form_ui
+    end
+
+    attr_writer :list_ui
+    def list_ui
+      @list_ui || @form_ui
+    end
+
+    # DEPRECATED
+    alias :ui_type :form_ui
+    def ui_type=(val)
+      ::ActiveSupport::Deprecation.warn("config.columns[:#{name}].ui_type will disappear in version 2.0. Please use config.columns[:#{name}].form_ui instead.", caller)
+      self.form_ui = val
+    end
+
+    # a place to store dev's column specific options
+    attr_accessor :options
+    def options
+      @options || {}
     end
 
     # associate an action_link with this column
     attr_reader :link
+
+    # this should not only delete any existing link but also prevent column links from being automatically added by later routines
+    def clear_link
+      @link = false
+    end
 
     def set_link(action, options = {})
       if action.is_a? ActiveScaffold::DataStructures::ActionLink
@@ -93,9 +125,9 @@ module ActiveScaffold::DataStructures
     # a collection of associations to pre-load when finding the records on a page
     attr_reader :includes
     def includes=(value)
-      @includes = value.is_a?(Array) ? value : [value] # automatically convert to an array  
+      @includes = value.is_a?(Array) ? value : [value] # automatically convert to an array
     end
-    
+
     # describes how to search on a column
     #   search = true           default, uses intelligent search sql
     #   search = "CONCAT(a, b)" define your own sql for searching. this should be the "left-side" of a WHERE condition. the operator and value will be supplied by ActiveScaffold.
@@ -158,7 +190,8 @@ module ActiveScaffold::DataStructures
       @table = active_record_class.table_name
 
       # default all the configurable variables
-      self.label = self.name.to_s.titleize
+      self.label = @column.human_name unless @column.nil?
+      self.label ||= self.name.to_s.titleize
       self.css_class = ''
       self.required = false
       self.sort = true

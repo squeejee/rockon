@@ -1,6 +1,13 @@
 <% url_options = params_for(:action => :update) -%>
-<% if request.xhr? -%>
-<%= form_remote_tag :url => url_options,
+<%=
+if request.xhr?
+  if active_scaffold_config.update.multipart?  # file_uploads
+    form_remote_upload_tag url_options.merge({:iframe => true}),
+                           :id => element_form_id(:action => :update),
+                           :class => 'update',
+                           :method => :put
+  else
+    form_remote_tag :url => url_options,
                     :after => "$('#{loading_indicator_id(:action => :update, :id => params[:id])}').style.visibility = 'visible'; Form.disable('#{element_form_id(:action => :update)}');",
                     :complete => "$('#{loading_indicator_id(:action => :update, :id => params[:id])}').style.visibility = 'hidden'; Form.enable('#{element_form_id(:action => :update)}');",
                     :failure => "ActiveScaffold.report_500_response('#{active_scaffold_id}')",
@@ -9,16 +16,18 @@
                       :id => element_form_id(:action => :update),
                       :class => 'update',
                       :method => :put
-                    } %>
+                    }
+  end
+else
+  form_tag url_options,
+           :id => element_form_id(:action => :update),
+           :multipart => active_scaffold_config.update.multipart?,
+           :class => 'update',
+           :method => :put
+end
+%>
 
-<% else -%>
-<%= form_tag url_options,
-             :id => element_form_id(:action => :update),
-             :multipart => active_scaffold_config.update.multipart?,
-             :class => 'create' %>
-<% end -%>
-
-  <h4><%= @record.to_label.nil? ? active_scaffold_config.update.label : as_('Update %s', @record.to_label) %></h4>
+  <h4><%= @record.to_label.nil? ? active_scaffold_config.update.label : as_('Update %s', clean_column_value(@record.to_label)) %></h4>
 
   <% if request.xhr? -%>
     <div id="<%= element_messages_id(:action => :update) %>" class="messages-container"><%= error_messages_for :record %></div>

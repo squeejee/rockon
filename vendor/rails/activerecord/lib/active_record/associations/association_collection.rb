@@ -3,29 +3,101 @@ require 'set'
 module ActiveRecord
   module Associations
     class AssociationCollection < AssociationProxy #:nodoc:
+      def initialize(owner, reflection)
+        super
+        construct_sql
+      end
+      
+      def find(*args)
+        options = args.extract_options!
+
+        # If using a custom finder_sql, scan the entire collection.
+        if @reflection.options[:finder_sql]
+          expects_array = args.first.kind_of?(Array)
+          ids           = args.flatten.compact.uniq.map(&:to_i)
+
+          if ids.size == 1
+            id = ids.first
+            record = load_target.detect { |r| id == r.id }
+            expects_array ? [ record ] : record
+          else
+            load_target.select { |r| ids.include?(r.id) }
+          end
+        else
+          conditions = "#{@finder_sql}"
+          if sanitized_conditions = sanitize_sql(options[:conditions])
+            conditions << " AND (#{sanitized_conditions})"
+          end
+          
+          options[:conditions] = conditions
+
+          if options[:order] && @reflection.options[:order]
+            options[:order] = "#{options[:order]}, #{@reflection.options[:order]}"
+          elsif @reflection.options[:order]
+            options[:order] = @reflection.options[:order]
+          end
+          
+          # Build options specific to association
+          construct_find_options!(options)
+          
+          merge_options_from_reflection!(options)
+          
+          # Pass through args exactly as we received them.
+          args << options
+          @reflection.klass.find(*args)
+        end
+      end
+      
+      # Fetches the first one using SQL if possible.
+      def first(*args)
+        if fetch_first_or_last_using_find? args
+          find(:first, *args)
+        else
+          load_target unless loaded?
+          @target.first(*args)
+        end
+      end
+
+      # Fetches the last one using SQL if possible.
+      def last(*args)
+        if fetch_first_or_last_using_find? args
+          find(:last, *args)
+        else
+          load_target unless loaded?
+          @target.last(*args)
+        end
+      end
+
       def to_ary
         load_target
         @target.to_ary
       end
-  
+
       def reset
         reset_target!
         @loaded = false
+      end
+
+      def build(attributes = {})
+        if attributes.is_a?(Array)
+          attributes.collect { |attr| build(attr) }
+        else
+          build_record(attributes) { |record| set_belongs_to_association_for(record) }
+        end
       end
 
       # Add +records+ to this association.  Returns +self+ so method calls may be chained.  
       # Since << flattens its argument list and inserts each record, +push+ and +concat+ behave identically.
       def <<(*records)
         result = true
-        load_target
+        load_target if @owner.new_record?
 
         @owner.transaction do
           flatten_deeper(records).each do |record|
             raise_on_type_mismatch(record)
-            callback(:before_add, record)
-            result &&= insert_record(record) unless @owner.new_record?
-            @target << record
-            callback(:after_add, record)
+            add_record_to_target_with_callbacks(record) do |r|
+              result &&= insert_record(record) unless @owner.new_record?
+            end
           end
         end
 
@@ -34,29 +106,34 @@ module ActiveRecord
 
       alias_method :push, :<<
       alias_method :concat, :<<
-                      
+
       # Remove all records from this association
       def delete_all
         load_target
         delete(@target)
         reset_target!
       end
-
+      
       # Calculate sum using SQL, not Enumerable
-      def sum(*args, &block)
-        calculate(:sum, *args, &block)
+      def sum(*args)
+        if block_given?
+          calculate(:sum, *args) { |*block_args| yield(*block_args) }
+        else
+          calculate(:sum, *args)
+        end
       end
 
       # Remove +records+ from this association.  Does not destroy +records+.
       def delete(*records)
         records = flatten_deeper(records)
         records.each { |record| raise_on_type_mismatch(record) }
-        records.reject! { |record| @target.delete(record) if record.new_record? }
-        return if records.empty?
         
         @owner.transaction do
           records.each { |record| callback(:before_remove, record) }
-          delete_records(records)
+          
+          old_records = records.reject {|r| r.new_record? }
+          delete_records(old_records) if old_records.any?
+          
           records.each do |record|
             @target.delete(record)
             callback(:after_remove, record)
@@ -66,9 +143,9 @@ module ActiveRecord
 
       # Removes all records from this association.  Returns +self+ so method calls may be chained.
       def clear
-        return self if length.zero? # forces load_target if hasn't happened already
+        return self if length.zero? # forces load_target if it hasn't happened already
 
-        if @reflection.options[:dependent] && @reflection.options[:dependent] == :delete_all
+        if @reflection.options[:dependent] && @reflection.options[:dependent] == :destroy
           destroy_all
         else          
           delete_all
@@ -84,19 +161,22 @@ module ActiveRecord
 
         reset_target!
       end
-
-      def create(attributes = {})
-        # Can't use Base.create since the foreign key may be a protected attribute.
-        if attributes.is_a?(Array)
-          attributes.collect { |attr| create(attr) }
+      
+      def create(attrs = {})
+        if attrs.is_a?(Array)
+          attrs.collect { |attr| create(attr) }
         else
-          record = build(attributes)
-          if @owner.new_record?
-            ActiveSupport::Deprecation.warn("Calling .create on a has_many association without saving its owner will not work in rails 2.0, you probably want .build instead")
-          else
+          create_record(attrs) do |record|
+            yield(record) if block_given?
             record.save
           end
-          record
+        end
+      end
+
+      def create!(attrs = {})
+        create_record(attrs) do |record|
+          yield(record) if block_given?
+          record.save!
         end
       end
 
@@ -104,7 +184,7 @@ module ActiveRecord
       # calling collection.size if it has. If it's more likely than not that the collection does have a size larger than zero
       # and you need to fetch that collection afterwards, it'll take one less SELECT query if you use length.
       def size
-        if loaded? && !@reflection.options[:uniq]
+        if @owner.new_record? || (loaded? && !@reflection.options[:uniq])
           @target.size
         elsif !loaded? && !@reflection.options[:uniq] && @target.is_a?(Array)
           unsaved_records = Array(@target.detect { |r| r.new_record? })
@@ -122,6 +202,14 @@ module ActiveRecord
 
       def empty?
         size.zero?
+      end
+
+      def any?
+        if block_given?
+          method_missing(:any?) { |*block_args| yield(*block_args) }
+        else
+          !empty?
+        end
       end
 
       def uniq(collection = self)
@@ -150,7 +238,61 @@ module ActiveRecord
         end
       end
 
+      def include?(record)
+        return false unless record.is_a?(@reflection.klass)
+        load_target if @reflection.options[:finder_sql] && !loaded?
+        return @target.include?(record) if loaded?
+        exists?(record)
+      end
+
       protected
+        def construct_find_options!(options)
+        end
+        
+        def load_target
+          if !@owner.new_record? || foreign_key_present
+            begin
+              if !loaded?
+                if @target.is_a?(Array) && @target.any?
+                  @target = find_target + @target.find_all {|t| t.new_record? }
+                else
+                  @target = find_target
+                end
+              end
+            rescue ActiveRecord::RecordNotFound
+              reset
+            end
+          end
+
+          loaded if target
+          target
+        end
+        
+        def method_missing(method, *args)
+          if @target.respond_to?(method) || (!@reflection.klass.respond_to?(method) && Class.respond_to?(method))
+            if block_given?
+              super { |*block_args| yield(*block_args) }
+            else
+              super
+            end
+          elsif @reflection.klass.scopes.include?(method)
+            @reflection.klass.scopes[method].call(self, *args)
+          else          
+            with_scope(construct_scope) do
+              if block_given?
+                @reflection.klass.send(method, *args) { |*block_args| yield(*block_args) }
+              else
+                @reflection.klass.send(method, *args)
+              end
+            end
+          end
+        end
+
+        # overloaded in derived Association classes to provide useful scoping depending on association type.
+        def construct_scope
+          {}
+        end
+
         def reset_target!
           @target = Array.new
         end
@@ -167,28 +309,57 @@ module ActiveRecord
         end
 
       private
-        def callback(method, record)
-          callbacks_for(method).each do |callback|
-            case callback
-              when Symbol
-                @owner.send(callback, record)
-              when Proc, Method
-                callback.call(@owner, record)
-              else
-                if callback.respond_to?(method)
-                  callback.send(method, @owner, record)
-                else
-                  raise ActiveRecordError, "Callbacks must be a symbol denoting the method to call, a string to be evaluated, a block to be invoked, or an object responding to the callback method."
-                end
-            end
+
+        def create_record(attrs)
+          attrs.update(@reflection.options[:conditions]) if @reflection.options[:conditions].is_a?(Hash)
+          ensure_owner_is_not_new
+          record = @reflection.klass.send(:with_scope, :create => construct_scope[:create]) { @reflection.klass.new(attrs) }
+          if block_given?
+            add_record_to_target_with_callbacks(record) { |*block_args| yield(*block_args) }
+          else
+            add_record_to_target_with_callbacks(record)
           end
         end
-        
+
+        def build_record(attrs)
+          attrs.update(@reflection.options[:conditions]) if @reflection.options[:conditions].is_a?(Hash)
+          record = @reflection.klass.new(attrs)
+          if block_given?
+            add_record_to_target_with_callbacks(record) { |*block_args| yield(*block_args) }
+          else
+            add_record_to_target_with_callbacks(record)
+          end
+        end
+
+        def add_record_to_target_with_callbacks(record)
+          callback(:before_add, record)
+          yield(record) if block_given?
+          @target ||= [] unless loaded?
+          @target << record
+          callback(:after_add, record)
+          record
+        end
+
+        def callback(method, record)
+          callbacks_for(method).each do |callback|
+            ActiveSupport::Callbacks::Callback.new(method, callback, record).call(@owner, record)
+          end
+        end
+
         def callbacks_for(callback_name)
           full_callback_name = "#{callback_name}_for_#{@reflection.name}"
           @owner.class.read_inheritable_attribute(full_callback_name.to_sym) || []
-        end
+        end   
         
+        def ensure_owner_is_not_new
+          if @owner.new_record?
+            raise ActiveRecord::RecordNotSaved, "You cannot call create unless the parent is saved"
+          end
+        end
+
+        def fetch_first_or_last_using_find?(args)
+          args.first.kind_of?(Hash) || !(loaded? || @owner.new_record? || @reflection.options[:finder_sql] || !@target.blank? || args.first.kind_of?(Integer))
+        end
     end
   end
 end

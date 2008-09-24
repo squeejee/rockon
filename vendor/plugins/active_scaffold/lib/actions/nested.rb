@@ -1,12 +1,12 @@
 module ActiveScaffold::Actions
+  # The Nested module basically handles automatically linking controllers together. It does this by creating column links with the right parameters, and by providing any supporting systems (like a /:controller/nested action for returning associated scaffolds).
   module Nested
 
     def self.included(base)
       super
-      base.active_scaffold_config.list.columns.each do |column|
-        column.set_link('nested', :parameters => {:associations => column.name.to_sym}) if column.association and column.link.nil? and column.plural_association?
-      end
       base.before_filter :include_habtm_actions
+      # TODO: it's a bit wasteful to run this routine every page load.
+      base.before_filter :links_for_associations
     end
 
     def nested
@@ -26,16 +26,53 @@ module ActiveScaffold::Actions
       @record = find_if_allowed(params[:id], :read)
     end
 
+    # Create the automatic column links. Note that this has to happen when configuration is *done*, because otherwise the Nested module could be disabled. Actually, it could still be disabled later, couldn't it?
+    # TODO: This should really be a post-config routine, instead of a before_filter.
+    def links_for_associations
+      active_scaffold_config.list.columns.each do |column|
+        # if column.link == false we won't create a link. that's how a dev can suppress the auto links.
+        if column.association and column.link.nil?
+          if column.plural_association?
+            # note: we can't create nested scaffolds on :through associations because there's no reverse association.
+            column.set_link('nested', :parameters => {:associations => column.name.to_sym}) #unless column.through_association?
+          elsif not column.polymorphic_association?
+            parent_controller = params[:controller]
+            begin
+              controller = self.class.active_scaffold_controller_for(column.association.klass)
+            rescue ActiveScaffold::ControllerNotFound
+              next
+            end
+            # TODO: allow both update and show
+            # TODO: check whether ('show' || 'update') is included on remote controller
+            column.set_link('show', :controller => controller.controller_path, :parameters => {:parent_controller => params[:controller]})
+          end
+        end
+      end
+    end
+
     def include_habtm_actions
       if nested_habtm?
         # Production mode is ok with adding a link everytime the scaffold is nested - we ar not ok with that.
-        active_scaffold_config.action_links.add('new_existing', :label => as_('Add From Existing'), :type => :table, :security_method => :add_existing_authorized?) unless active_scaffold_config.action_links['new_existing']
+        active_scaffold_config.action_links.add('new_existing', :label => 'Add Existing', :type => :table, :security_method => :add_existing_authorized?) unless active_scaffold_config.action_links['new_existing']
+        if active_scaffold_config.nested.shallow_delete
+          active_scaffold_config.action_links.add('destroy_existing', :label => 'Remove', :type => :record, :confirm => 'Are you sure?', :method => :delete, :position => false, :security_method => :delete_existing_authorized?) unless active_scaffold_config.action_links['destroy_existing']
+          active_scaffold_config.action_links.delete("destroy") if active_scaffold_config.action_links['destroy']
+        end
+        
         self.class.module_eval do
           include ActiveScaffold::Actions::Nested::ChildMethods
-        end
+          # we need specifically to tell action_controller to add these public methods as action_methods
+          ActiveScaffold::Actions::Nested::ChildMethods.public_instance_methods.each{|m| self.action_methods.add m }
+        end unless self.class.included_modules.include?(ActiveScaffold::Actions::Nested::ChildMethods)
       else
         # Production mode is caching this link into a non nested scaffold
         active_scaffold_config.action_links.delete('new_existing') if active_scaffold_config.action_links['new_existing']
+        
+        if active_scaffold_config.nested.shallow_delete
+          active_scaffold_config.action_links.delete("destroy_existing") if active_scaffold_config.action_links['destroy_existing']
+          active_scaffold_config.action_links.add('destroy', :label => 'Delete', :type => :record, :confirm => 'Are you sure?', :method => :delete, :position => false, :security_method => :delete_existing_authorized?) unless active_scaffold_config.action_links['destroy']
+        end
+        
       end
     end
 
@@ -45,10 +82,11 @@ module ActiveScaffold::Actions
 
     def nested_habtm?
       begin
-        return active_scaffold_config.columns[nested_association].association.macro == :has_and_belongs_to_many if nested?
+        a = active_scaffold_config.columns[nested_association]
+        return a.association.macro == :has_and_belongs_to_many if a and nested?
         false
       rescue
-        raise ActiveScaffold::MalformedConstraint, constraint_error(nested_association), caller
+        raise ActiveScaffold::MalformedConstraint, constraint_error(active_scaffold_config.model, nested_association), caller
       end
     end
 
@@ -70,9 +108,10 @@ module ActiveScaffold::Actions::Nested
 
     def self.included(base)
       super
-      base.verify :method => :post,
-                  :only => :add_existing,
-                  :redirect_to => { :action => :index }
+      # This .verify method call is clashing with other non .add_existing actions. How do we do this correctly? Can we make it action specific.
+      # base.verify :method => :post,
+      #             :only => :add_existing,
+      #             :redirect_to => { :action => :index }
     end
 
     def new_existing
@@ -117,6 +156,23 @@ module ActiveScaffold::Actions::Nested
       end
     end
 
+    def destroy_existing
+      return redirect_to(params.merge(:action => :delete)) if request.get?
+
+      do_destroy_existing
+
+      respond_to do |type|
+        type.html do
+          flash[:info] = as_('Deleted %s', @record.to_label)
+          return_to_main
+        end
+        type.js { render(:action => 'destroy.rjs', :layout => false) }
+        type.xml { render :xml => successful? ? "" : response_object.to_xml, :content_type => Mime::XML, :status => response_status }
+        type.json { render :text => successful? ? "" : response_object.to_json, :content_type => Mime::JSON, :status => response_status }
+        type.yaml { render :text => successful? ? "" : response_object.to_yaml, :content_type => Mime::YAML, :status => response_status }
+      end
+    end
+    
     protected
 
     def after_create_save(record)
@@ -139,11 +195,16 @@ module ActiveScaffold::Actions::Nested
       parent_record.save
     end
 
-    def do_destroy_association
-      parent_model, id, association = nested_action_from_params
-      parent_record = find_if_allowed(id, :update, parent_model)
-      @record = parent_record.send("roles").find(params[:id])
-      @record.destroy
+    def do_destroy_existing
+      if active_scaffold_config.nested.shallow_delete
+        parent_model, id, association = nested_action_from_params
+        @record = find_if_allowed(id, :update, parent_model)
+        collection = @record.send(association)
+        assoc_record = collection.find(params[:id])
+        collection.delete(assoc_record)
+      else
+        do_destroy
+      end
     end
 
   end

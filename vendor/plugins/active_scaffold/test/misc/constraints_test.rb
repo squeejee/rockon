@@ -76,8 +76,9 @@ class ConstraintsTestObject
   def self.before_filter(*args); end
   attr_accessor :active_scaffold_joins
   attr_accessor :active_scaffold_config
+  attr_accessor :params
   def merge_conditions(old, new)
-    new
+    [old, new].compact.flatten
   end
 
   # mixin the constraint code
@@ -88,6 +89,7 @@ class ConstraintsTestObject
 
   def initialize
     @active_scaffold_joins = []
+    @params = {}
   end
 end
 
@@ -104,6 +106,9 @@ class ConstraintsTest < Test::Unit::TestCase
     assert_constraint_condition({:roles => 4}, ['roles_users.role_id = ?', 4], 'find all users with role #4')
     # has_one (vs polymorphic)
     assert_constraint_condition({:address => 11}, ['addresses.id = ?', 11], 'find the user with address #11')
+    # reverse of a has_many :through
+    assert_constraint_condition({:subscription => {:service => 5}}, ['services.id = ?', 5], 'find all users subscribed to service #5')
+    assert(@test_object.active_scaffold_joins.include?({:subscription => :service}), 'multi-level association include')
 
     @test_object.active_scaffold_config = config_for('subscription')
     # belongs_to (vs has_one)
@@ -118,7 +123,9 @@ class ConstraintsTest < Test::Unit::TestCase
     assert_constraint_condition({:users => 7}, ['users.id = ?', 7], 'find the service with user #7')
 
     @test_object.active_scaffold_config = config_for('address')
-    # belongs_to polymorphic ... can't really constrain.
+    # belongs_to :polymorphic => true
+    @test_object.params[:parent_model] = 'User'
+    assert_constraint_condition({:addressable => 14}, ['addresses.addressable_id = ?', 14, 'addresses.addressable_type = ?', 'User'], 'find all addresses for user #14')
   end
 
   def test_constraint_conditions_for_configured_associations
@@ -129,6 +136,8 @@ class ConstraintsTest < Test::Unit::TestCase
     assert_constraint_condition({:other_roles => 4}, ['roles_users.role_id = ?', 4], 'find all users with role #4')
     # has_one (vs polymorphic)
     assert_constraint_condition({:other_address => 11}, ['addresses.id = ?', 11], 'find the user with address #11')
+    # reverse of a has_many :through
+    assert_constraint_condition({:other_subscription => {:other_service => 5}}, ['services.id = ?', 5], 'find all users subscribed to service #5')
 
     @test_object.active_scaffold_config = config_for('other_subscription')
     # belongs_to (vs has_one)
@@ -143,7 +152,9 @@ class ConstraintsTest < Test::Unit::TestCase
     assert_constraint_condition({:other_users => 7}, ['users.id = ?', 7], 'find the service with user #7')
 
     @test_object.active_scaffold_config = config_for('other_address')
-    # belongs_to polymorphic ... can't really constrain.
+    # belongs_to :polymorphic => true
+    @test_object.params[:parent_model] = 'OtherUser'
+    assert_constraint_condition({:other_addressable => 14}, ['addresses.other_addressable_id = ?', 14, 'addresses.other_addressable_type = ?', 'OtherUser'], 'find all addresses for user #14')
   end
 
   def test_constraint_conditions_for_normal_attributes

@@ -28,17 +28,18 @@ module ActiveScaffold::Config
     # provides access to the list of columns specifically meant for the Form to use
     def columns
       unless @columns # lazy evaluation
-        self.columns = @core.columns.content_column_names
+        self.columns = @core.columns._inheritable
         self.columns.exclude :created_on, :created_at, :updated_on, :updated_at
         self.columns.exclude *@core.columns.collect{|c| c.name if c.polymorphic_association?}.compact
       end
       @columns
     end
+    
     def columns=(val)
       @columns = ActiveScaffold::DataStructures::ActionColumns.new(*val)
       @columns.action = self
     end
-
+    
     # whether the form should be multipart
     attr_writer :multipart
     def multipart?

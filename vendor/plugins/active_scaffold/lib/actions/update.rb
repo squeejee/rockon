@@ -29,11 +29,21 @@ module ActiveScaffold::Actions
 
       respond_to do |type|
         type.html do
-          if successful?
-            flash[:info] = as_('Updated %s', @record.to_label)
-            return_to_main
-          else
-            render(:action => 'update_form', :layout => true)
+          if params[:iframe]=='true' # was this an iframe post ?
+            responds_to_parent do
+              if successful?
+                render :action => 'update.rjs', :layout => false
+              else
+                render :action => 'form_messages.rjs', :layout => false
+              end
+            end
+          else # just a regular post
+            if successful?
+              flash[:info] = as_('Updated %s', @record.to_label)
+              return_to_main
+            else
+              render(:action => 'update_form', :layout => true)
+            end
           end
         end
         type.js do
@@ -43,6 +53,12 @@ module ActiveScaffold::Actions
         type.json { render :text => response_object.to_json, :content_type => Mime::JSON, :status => response_status }
         type.yaml { render :text => response_object.to_yaml, :content_type => Mime::YAML, :status => response_status }
       end
+    end
+
+    # for inline (inlist) editing
+    def update_column
+      do_update_column
+      render :action => 'update_column.rjs', :layout => false
     end
 
     protected
@@ -61,9 +77,11 @@ module ActiveScaffold::Actions
         active_scaffold_config.model.transaction do
           @record = update_record_from_params(@record, active_scaffold_config.update.columns, params[:record])
           before_update_save(@record)
-          # can't 'and' these together because they must *both* happen
           self.successful = [@record.valid?, @record.associated_valid?].all? {|v| v == true} # this syntax avoids a short-circuit
-          @record.save! and @record.save_associated! if successful?
+          if successful?
+            @record.save! and @record.save_associated!
+            after_update_save(@record)
+          end
         end
       rescue ActiveRecord::RecordInvalid
       rescue ActiveRecord::StaleObjectError
@@ -72,8 +90,18 @@ module ActiveScaffold::Actions
       end
     end
 
+    def do_update_column
+      @record = find_if_allowed(params[:id], :update)
+      if @record.authorized_for?(:action => :update, :column => params[:column])
+        @record.update_attributes(params[:column] => params[:value])
+      end
+    end
+
     # override this method if you want to inject data in the record (or its associated objects) before the save
     def before_update_save(record); end
+
+    # override this method if you want to do something after the save
+    def after_update_save(record); end
 
     # The default security delegates to ActiveRecordPermissions.
     # You may override the method to customize.

@@ -39,7 +39,6 @@ show_blank_record = false unless column.association.klass.authorized_for?(:actio
     <% end -%>
   </tbody>
 </table>
-
 <%= render :partial => 'form_association_footer', :locals => {:parent_record => parent_record, :column => column, :associated => associated} -%>
 </div>
 <% @record = parent_record -%>

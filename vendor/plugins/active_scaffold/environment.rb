@@ -33,20 +33,7 @@ require 'finder'
 require 'constraints'
 require 'attribute_params'
 require 'active_record_permissions'
-
-require 'helpers/active_scaffold_helpers'
-require 'helpers/id_helpers'
-require 'helpers/list_helpers'
-require 'helpers/form_helpers'
-
-require 'extensions/action_view'
-require 'extensions/action_controller'
-require 'extensions/active_record'
-require 'extensions/array'
-require 'extensions/hashes_in_url_for'
-require 'extensions/nil_id_in_url_params'
-require 'extensions/resources'
-require 'extensions/reverse_associations'
+require 'responds_to_parent'
 
 ##
 ## Autoloading for some directories
@@ -73,43 +60,24 @@ end
 ##
 ## Preload other directories
 ##
+Dir["#{File.dirname __FILE__}/lib/extensions/*.rb"].each { |file| require file }
+Dir["#{File.dirname __FILE__}/lib/helpers/*.rb"].each do |file|
+  require file unless ['view_helpers.rb', 'controller_helpers.rb'].include? File.basename(file)
+end
+require 'helpers/view_helpers'
+require 'helpers/controller_helpers'
+
+## 
+## Load the bridge infrastructure
+## 
+require 'bridges/bridge.rb'
+
 
 ##
 ## Inject includes for ActiveScaffold libraries
 ##
-
 ActionController::Base.send(:include, ActiveScaffold)
-ActionController::Base.send(:include, ActionView::Helpers::ActiveScaffoldIdHelpers)
-ActionView::Base.send(:include, ActionView::Helpers::ActiveScaffoldHelpers)
-ActionView::Base.send(:include, ActionView::Helpers::ActiveScaffoldIdHelpers)
-ActionView::Base.send(:include, ActionView::Helpers::ActiveScaffoldListHelpers)
-ActionView::Base.send(:include, ActionView::Helpers::ActiveScaffoldFormHelpers)
+ActionController::Base.send(:include, RespondsToParent)
+ActionController::Base.send(:include, ActiveScaffold::Helpers::ControllerHelpers)
+ActionView::Base.send(:include, ActiveScaffold::Helpers::ViewHelpers)
 
-##
-## Add MIME type for JSON (backwards compat)
-##
-unless Mime.const_defined?(:JSON)
-  # Rails 1.1 Method
-  # Register a new Mime::Type
-  Mime::JSON = Mime::Type.new 'application/json', :json, %w( text/json )
-  Mime::LOOKUP["application/json"] = Mime::JSON
-  Mime::LOOKUP["text/json"] = Mime::JSON
-
-  # Its default handler in responder
-  class ActionController::MimeResponds::Responder
-
-    DEFAULT_BLOCKS[:json] = %q{
-      Proc.new do
-        render(:action => "#{action_name}.rjson", :content_type => Mime::JSON, :layout => false)
-      end
-    }
-
-    for mime_type in %w( json )
-      eval <<-EOT
-        def #{mime_type}(&block)
-           custom(Mime::#{mime_type.upcase}, &block)
-        end
-      EOT
-    end
-  end
-end
