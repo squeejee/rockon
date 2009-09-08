@@ -26,7 +26,7 @@ class Auction < ActiveRecord::Base
   
   #This is to determine if a specific auction is active
   def active?
-    if League.active? && League.current_week == week_no && Time.now < self.expiration
+    if League.active? && League.current_week == week_no && Time.zone.now < self.expiration
       return true
 #    elsif League.active? && League.current_week == week_no && Time.now.wday == self.expiration.wday && Time.now.hour < self.expiration.hour
 #      return true
@@ -37,11 +37,7 @@ class Auction < ActiveRecord::Base
   
   #This is created to determine if auctions are still active for the week in general.
   def self.active?
-    if League.active? && Time.now.wday < League.bid_end_day 
-      return true
-    elsif League.active? && Time.now.wday == League.bid_end_day && Time.now.hour < League.bid_end_time
-      return true
-    elsif ((League.find 1).first_week_date-1.week) > Time.now
+    if League.active? && Time.zone.now < League.auction_end_date
       return true
     else
       return false

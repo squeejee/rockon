@@ -3,7 +3,7 @@
 #############################################################
 
 set :application, "rockon"
-set :deploy_to, "/mnt/app/#{application}"
+set :deploy_to, "/var/www/rails/#{application}"
 
 #############################################################
 #	Settings
@@ -17,7 +17,7 @@ set :use_sudo, false
 #############################################################
 
 set :user, "app"
-set :domain, "squeejee.com"
+set :domain, "tracker.squeejee.com"
 server domain, :app, :web
 role :db, domain, :primary => true
 

@@ -28,9 +28,9 @@ ActionController::Routing::Routes.draw do |map|
   map.home '', :controller => 'auctions'  
   
   map.resource :admin do |admin|
-    admin.resources :users, :name_prefix => 'admin_', :controller => 'admin/user'
-    admin.resources :nfl_players, :name_prefix => 'admin_', :controller => 'admin/nfl_players'
-    admin.resources :kitties, :name_prefix => 'admin_', :controller => 'admin/kitty'
+    admin.resources :users, :name_prefix => 'admin_', :controller => 'admin/user', :active_scaffold => true
+    admin.resources :nfl_players, :name_prefix => 'admin_', :controller => 'admin/nfl_players', :active_scaffold => true
+    admin.resources :kitties, :name_prefix => 'admin_', :controller => 'admin/kitty', :active_scaffold => true
   end
   
 #  map.admin_kitty 'admin/kitty', :controller => 'admin/kitty'

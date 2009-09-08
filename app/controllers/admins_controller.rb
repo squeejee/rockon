@@ -11,7 +11,7 @@ class AdminsController < ApplicationController
   end  
   
   def sync_nfl_players    
-    @players = Hpricot.XML(open("http://football10.myfantasyleague.com/2008/export?TYPE=players&L=20054")) 
+    @players = Hpricot.XML(open("http://football10.myfantasyleague.com/2009/export?TYPE=players&L=23609&W=")) 
     
     @players.search(:player).each do |player|
       if %w[QB RB WR TE Def PK].include?(player[:position]) && player[:id].to_i > NflPlayer.maximum('id').to_i
@@ -31,7 +31,7 @@ class AdminsController < ApplicationController
   end
   
   def sync_rosters
-    @players = Hpricot.XML(open("http://football10.myfantasyleague.com/2008/export?TYPE=rosters&L=20054"))   
+    @players = Hpricot.XML(open("http://football10.myfantasyleague.com/2009/export?TYPE=rosters&L=23609&W="))   
     
     #Flush and fill rosters from MFL
     n = FantasyPlayer.find :all
