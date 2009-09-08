@@ -58,6 +58,6 @@ task :copy_config_files, :roles => :app do
 end
 
 
-after :deploy, "passenger:restart"
+#after :deploy, "passenger:restart"
 
 
