@@ -1,5 +1,5 @@
 <%= error_messages_for :user %>
-<% form_for :user, :url => update_user_path do |f| -%>
+<% form_for :user, :url => update_user_path(@user.id) do |f| -%>
 <p><label for="login">Login</label><br/>
 <%= f.text_field :login %></p>
 
@@ -22,7 +22,7 @@
 <%= f.password_field :password_confirmation %></p>
 
 <p><label for="Time Zone">Confirm Password</label><br/>
-<%= f.time_zone_select :time_zone, TimeZone.us_zones %>
+<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
 
 <p><%= submit_tag 'Edit User Info' %></p>
 <% end -%>
