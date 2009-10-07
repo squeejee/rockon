@@ -94,6 +94,8 @@ class AuctionsController < ApplicationController
           format.html { redirect_to auction_url(@auction) + "/bids" }
           format.xml  { head :created, :location => auction_url(@auction) }
         else
+          flash[:error] = 'Auction was NOT created. Please try again.'
+          @auction.delete
           format.html { render :action => "new" }
           format.xml  { render :xml => @auction.errors.to_xml }
         end
