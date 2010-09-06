@@ -4,7 +4,7 @@ class KittiesController < ApplicationController
   def index
     @kitties = Kitty.balance
     @total_pot = Kitty.sum(:league_due)
-    @total_fixed_costs = 295
+    @total_fixed_costs = 290
     @final_pot = @total_pot-@total_fixed_costs
     @first_place = @final_pot * 0.6
     @second_place = @final_pot * 0.25
