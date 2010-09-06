@@ -1,0 +1,3 @@
+rack --version '~>= 1.0.0'
+hpricot
+rails --version '2.3.4'

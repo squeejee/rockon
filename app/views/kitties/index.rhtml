@@ -14,7 +14,7 @@
 %>
   <tr class="<%= cycle('odd', 'even') %>" >
     <td class="stat-label" nowrap><%= kitty.first_name + " " + kitty.last_name %></td>
-    <td class="stat-value"><%= number_to_currency(kitty.balance) %></td>
+    <td class="stat-value" nowrap><%= number_to_currency(kitty.balance) %></td>
     <td><%= link_to "details", user_kitty_path(kitty.user_id) %></td>
 </tr>
 <% end %>
@@ -36,7 +36,7 @@
     <th class="label" colspan=2>Fixed Costs</th>
   </tr>
   <tr>
-    <td class="item-label" nowrap>Weekly Payouts ($15 + ($10*15)):</td><td>($165.00)</td>
+    <td class="item-label" nowrap>Weekly Payouts $10*16:</td><td>$160.00</td>
   </tr>
   <tr>
     <td class="item-label">4th Place:</td><td>($20.00)</td>
