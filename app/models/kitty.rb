@@ -24,7 +24,7 @@ class Kitty < ActiveRecord::Base
             u.team_name, sum((coalesce(k.League_Owes, 0)+coalesce(k.League_Received, 0))-(coalesce(k.League_Due, 0)+coalesce(k.League_Paid, 0))) as balance 
             FROM users u 
             INNER JOIN kitties k ON u.id = k.user_id 
-            group by u.id, u.team_name
+            group by u.id, u.team_name, u.first_name, u.last_name
             order by u.first_name, u.team_name  
 SQL_STRING
     
