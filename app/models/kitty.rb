@@ -20,7 +20,7 @@ class Kitty < ActiveRecord::Base
   
   def self.balance
     sql = <<SQL_STRING
-            SELECT u.id as user_id, coalesce(u.first_name, "") as first_name, coalesce(u.last_name, "") as last_name,
+            SELECT u.id as user_id, u.first_name, u.last_name,
             u.team_name, sum((coalesce(k.League_Owes, 0)+coalesce(k.League_Received, 0))-(coalesce(k.League_Due, 0)+coalesce(k.League_Paid, 0))) as balance 
             FROM users u 
             INNER JOIN kitties k ON u.id = k.user_id 
