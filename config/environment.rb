@@ -72,6 +72,6 @@ end
     :port => "587",
     :domain => "squeejee.com",
     :authentication => :plain,
-    :user_name => "rockon",
+    :user_name => "rockon@squeejee.com",
     :password => "RockOn!"
   }
