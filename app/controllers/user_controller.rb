@@ -124,7 +124,7 @@ class UserController < ApplicationController
         new_password = User.generate_password
         @user.password = new_password
         if @user.save
-          UserNotifier.deliver_reset_password(@user, new_password)
+          UserNotifier.deliver_reset_password(@user, new_password, home_url)
           flash[:notice] = "Your new password has been sent to #{email}."
           redirect_to login_url
         else
