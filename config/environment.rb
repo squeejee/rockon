@@ -65,14 +65,13 @@ end
 
 
 # We need to require this file to send email from Gmail.
-# require "smtp_tls"
-# 
-# ActionMailer::Base.smtp_settings = {
-#   :address  => "smtp.gmail.com",
-#   :port  => 587, 
-#   :domain => "praexis.com",
-#   :authentication  => :plain,
-#   :user_name  => "mailer@praexis.com",
-#   :password  => '!SvnTrac'
-#     }
 
+ ActionMailer::Base.smtp_settings = {
+    :tls => true,
+    :address => "smtp.gmail.com",
+    :port => "587",
+    :domain => "squeejee.com",
+    :authentication => :plain,
+    :user_name => "rockon",
+    :password => "RockOn!"
+  }
