@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   session :session_key => '_rockon_session_id'
   
   before_filter :set_user_time_zone
+  before_filter :mailer_set_url_options
   
   include AuthenticatedSystem  
     
@@ -17,6 +18,10 @@ class ApplicationController < ActionController::Base
   
   def set_user_time_zone
     Time.zone = User.find(current_user).time_zone if logged_in?
+  end
+  
+  def mailer_set_url_options
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
   
 end
