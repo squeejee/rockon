@@ -8,7 +8,7 @@
 <% end %>
 <table class="grid" cellspacing="0" cellpadding="0">
   <tr>
-    <th>Bidding Team</th>
+    <th>Bidder</th>
     <th>Bid Amount</th>
     <th>Dropped Player</th>
     <th>Bid Time</th>
@@ -16,7 +16,7 @@
   
 <% for bid in @bids %>
   <tr>
-    <td><%= bid.user.team_name %></td>
+    <td><%= bid.user.full_name %></td>
     <td><%= number_to_currency(bid.price) %></td>
     <td><%= bid.nfl_player.display_name %></td>
     <td><%= bid.created_at.strftime("%a, %m/%d/%y %I:%M:%S %p") %></td>

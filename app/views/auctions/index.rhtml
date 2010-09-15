@@ -42,7 +42,7 @@
         <td><%= link_to auction.nfl_player.display_name, auction_path(auction) + "/bids" %></td>
     <% end %>
     <td><%= auction.hidden_auction && !auction.top_bidder? ? "XX" : auction.nfl_player.position.position_code %></td>
-    <td><%= auction.top_bidder.user.team_name %></td>
+    <td><%= auction.top_bidder.user.first_name %></td>
     <td><%= auction.top_bidder.nfl_player.display_name %></td>
     <td><%= number_to_currency(auction.top_bidder.price) %></td>
     <td nowrap><%= auction.active? ? auction.time_remaining : "COMPLETE"%></td>
