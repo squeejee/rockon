@@ -37,7 +37,7 @@ SQL_STRING
             FROM kitties k 
             where k.league_owes > 0
             group by k.description
-            order by k.week_no
+            order by k.description
 SQL_STRING
     
     find_by_sql sql
