@@ -31,6 +31,29 @@ SQL_STRING
     find_by_sql sql
   end
   
+  def self.league_costs
+    sql = <<SQL_STRING
+            SELECT k.description, sum(k.league_owes) as league_owes
+            FROM kitties k 
+            where k.league_owes > 0
+            group by k.description
+            order by k.week_no
+SQL_STRING
+    
+    find_by_sql sql
+  end
+  
+  def self.total_pot
+    Kitty.sum(:league_due)
+  end
+  
+  def self.total_costs
+    Kitty.sum(:league_owes)
+  end
+  
+  def self.final_pot
+    Kitty.total_pot - Kitty.total_costs
+  end
 
   def self.sum_league_due(user_id = current_user)
     return Kitty.sum(:league_due, :conditions => ["user_id = ?", user_id])

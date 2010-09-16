@@ -3,9 +3,10 @@ class KittiesController < ApplicationController
   # GET /kitties.xml
   def index
     @kitties = Kitty.balance
-    @total_pot = Kitty.sum(:league_due)
-    @total_fixed_costs = 290
-    @final_pot = @total_pot-@total_fixed_costs
+    @league_costs = Kitty.league_costs
+    @total_pot = Kitty.total_pot
+    @total_fixed_costs = Kitty.total_costs
+    @final_pot = Kitty.final_pot
     @first_place = @final_pot * 0.6
     @second_place = @final_pot * 0.25
     @third_place = @final_pot * 0.15
