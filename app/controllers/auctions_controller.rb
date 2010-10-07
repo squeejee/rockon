@@ -13,6 +13,8 @@ class AuctionsController < ApplicationController
     
     @week_no = params[:week_no].nil? ? League.current_week : params[:week_no]
 
+    sort_clause = "users.first_name"
+
     if @week_no == "all"  
      @auctions = Auction.find(:all, :include => [{:nfl_player=>:position}, {:bids=>:user}], :order => "#{sort_clause}, positions.position_order" )
     else
